@@ -9,15 +9,17 @@ class AmiiboClient {
 
   AmiiboClient(this._client);
 
-  Future<List<AmiiboModel>> getAmiiboList() async {
-    final amiiboUrl = '$baseUrl/api/amiibo/';
+  Future<List<AmiiboModel>> getAmiiboList({String param}) async {
+    final query = param != null ? '?type=${param}' : null;
+    final amiiboUrl = '$baseUrl/api/amiibo/${query ?? ''}';
     final amiiboResponse = await _client.get(amiiboUrl);
 
     if (amiiboResponse.statusCode != 200) {
       throw Exception('error getting data');
     }
 
-    final amiiboJsonList = jsonDecode(amiiboResponse.body)['amiibo'] as List<dynamic>;
+    final amiiboJsonList =
+        jsonDecode(amiiboResponse.body)['amiibo'] as List<dynamic>;
 
     return amiiboJsonList
         .map((amiiboJson) => AmiiboModel.fromJson(amiiboJson))
