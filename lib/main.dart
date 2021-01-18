@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/home.ui.dart';
+import 'package:flutter_amiibo_responsive/view/home.ui.dart';
 
 void main() {
   runApp(MyApp());

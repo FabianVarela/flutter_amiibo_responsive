@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo.client.dart';
-import 'package:flutter_amiibo_responsive/detail_page.ui.dart';
+import 'package:flutter_amiibo_responsive/view/detail_page.ui.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
