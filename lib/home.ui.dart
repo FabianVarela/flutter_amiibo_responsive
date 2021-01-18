@@ -15,17 +15,72 @@ class HomePageUI extends StatefulWidget {
 }
 
 class _HomePageUIState extends State<HomePageUI> {
+  String _type;
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+  Widget build(BuildContext context) =>
+      (MediaQuery.of(context).size.width >= 840)
+          ? Scaffold(
+              appBar: _setAppBar(),
+              body: Row(
+                children: <Widget>[
+                  Expanded(flex: 2, child: _setDrawerBody()),
+                  Expanded(flex: 5, child: _setFutureList()),
+                ],
+              ),
+            )
+          : Scaffold(
+              appBar: _setAppBar(),
+              drawer: Drawer(child: _setDrawerBody()),
+              body: _setFutureList(),
+            );
+
+  Widget _setAppBar() => AppBar(
         title: Text(
           widget.title,
           style: GoogleFonts.nunito(fontSize: 24),
         ),
-      ),
-      body: FutureBuilder(
-        future: AmiiboClient(Client()).getAmiiboList(),
+      );
+
+  Widget _setDrawerBody() {
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        DrawerHeader(
+          decoration: BoxDecoration(color: Colors.blueGrey),
+          child: Container(
+            alignment: AlignmentDirectional.bottomStart,
+            child: Text(
+              'Amiibo App',
+              style: GoogleFonts.nunito(
+                fontSize: 24,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        _menuItem(Icons.list, 'All', () => _setType()),
+        _menuItem(Icons.account_box, 'Figure', () => _setType(type: 'figure')),
+        _menuItem(Icons.card_membership, 'Card', () => _setType(type: 'card')),
+        _menuItem(Icons.wallpaper, 'Yarn', () => _setType(type: 'yarn')),
+      ],
+    );
+  }
+
+  Widget _menuItem(IconData icon, String text, Function onPress) => ListTile(
+        onTap: onPress,
+        leading: Icon(icon),
+        title: Text(
+          text,
+          style: GoogleFonts.nunito(
+            fontSize: 16,
+            fontWeight: FontWeight.w300,
+          ),
+        ),
+      );
+
+  Widget _setFutureList() => FutureBuilder(
+        future: AmiiboClient(Client()).getAmiiboList(param: _type),
         builder: (_, AsyncSnapshot<List<AmiiboModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -41,33 +96,30 @@ class _HomePageUIState extends State<HomePageUI> {
 
           return Container();
         },
-      ),
-    );
-  }
+      );
 
-  Widget _setErrorText(String error) {
-    return Center(
-      child: Text(
-        error ?? 'Error',
-        style: GoogleFonts.nunito(
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
+  Widget _setErrorText(String error) => Center(
+        child: Text(
+          error ?? 'Error',
+          style: GoogleFonts.nunito(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
-      ),
-    );
-  }
+      );
 
-  Widget _setAmiiboList(List<AmiiboModel> amiibos) {
-    return GridView.extent(
-      maxCrossAxisExtent: 200,
-      mainAxisSpacing: 8,
-      crossAxisSpacing: 8,
-      padding: const EdgeInsets.all(8),
-      childAspectRatio: 1 / 1.2,
-      children: amiibos.map((amiibo) => _GridItem(amiibo: amiibo)).toList(),
-    );
-  }
+  Widget _setAmiiboList(List<AmiiboModel> amiibos) => GridView.extent(
+        maxCrossAxisExtent:
+            MediaQuery.of(context).size.width >= 600 ? 300 : 200,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        padding: const EdgeInsets.all(8),
+        childAspectRatio: 1 / 1.2,
+        children: amiibos.map((amiibo) => _GridItem(amiibo: amiibo)).toList(),
+      );
+
+  void _setType({String type}) => setState(() => _type = type);
 }
 
 class _GridItem extends StatelessWidget {
@@ -76,38 +128,38 @@ class _GridItem extends StatelessWidget {
   final AmiiboModel amiibo;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => DetailPage(amiibo: amiibo)),
-          );
-        },
-        child: GridTile(
-          child: Hero(
-            tag: '${amiibo.head}_${amiibo.tail}',
-            child: Image.network(
-              amiibo.imageUrl,
-              fit: BoxFit.cover,
+  Widget build(BuildContext context) => Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => DetailPage(amiibo: amiibo)),
+            );
+          },
+          child: GridTile(
+            child: Hero(
+              tag: '${amiibo.head}_${amiibo.tail}',
+              child: Image.network(
+                amiibo.imageUrl,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          footer: GridTileBar(
-            backgroundColor: Colors.black45,
-            title: Text(
-              amiibo.name,
-              style: GoogleFonts.nunito(fontSize: 16),
-            ),
-            subtitle: Text(
-              amiibo.gameSeries,
-              style: GoogleFonts.nunito(fontSize: 14),
+            footer: GridTileBar(
+              backgroundColor: Colors.black45,
+              title: Text(
+                amiibo.name,
+                style: GoogleFonts.nunito(fontSize: 16),
+              ),
+              subtitle: Text(
+                amiibo.gameSeries,
+                style: GoogleFonts.nunito(fontSize: 14),
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
