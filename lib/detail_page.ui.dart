@@ -10,6 +10,8 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -17,40 +19,66 @@ class DetailPage extends StatelessWidget {
           style: GoogleFonts.nunito(fontSize: 24),
         ),
       ),
-      body: ListView(
-        children: <Widget>[
-          _setImage(),
-          _setTitleSection(),
-          _setButtonSection(),
-          _setDescriptionSection(),
-        ],
+      body: OrientationBuilder(
+        builder: (_, orientation) =>
+            (size.width >= 600 || orientation == Orientation.landscape)
+                ? SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                _setImage(),
+                                _setTitleSection(),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                _setButtonSection(),
+                                _setDescriptionSection(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : ListView(
+                    children: <Widget>[
+                      _setImage(),
+                      _setTitleSection(),
+                      _setButtonSection(),
+                      _setDescriptionSection(),
+                    ],
+                  ),
       ),
     );
   }
 
-  Widget _setImage() {
-    return Hero(
-      tag: '${amiibo.head}_${amiibo.tail}',
-      child: Image.network(
-        amiibo.imageUrl,
-        height: 350,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
+  Widget _setImage() => Hero(
+        tag: '${amiibo.head}_${amiibo.tail}',
+        child: Image.network(
+          amiibo.imageUrl,
+          height: 350,
+          fit: BoxFit.cover,
+        ),
+      );
 
-  Widget _setButtonSection() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _setButtonItem(Icons.shopping_bag, 'Buy article', Colors.blueGrey),
-          _setButtonItem(Icons.favorite, 'Add favorite', Colors.blueGrey),
-          _setButtonItem(Icons.share, 'Share to...', Colors.blueGrey),
-        ],
-      ),
-    );
-  }
+  Widget _setButtonSection() => Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _setButtonItem(Icons.shopping_bag, 'Buy article', Colors.blueGrey),
+            _setButtonItem(Icons.favorite, 'Add favorite', Colors.blueGrey),
+            _setButtonItem(Icons.share, 'Share to...', Colors.blueGrey),
+          ],
+        ),
+      );
 
   Widget _setButtonItem(IconData icon, String text, Color color) {
     return InkWell(
@@ -78,61 +106,57 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget _setTitleSection() {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    amiibo.name,
-                    style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.bold,
+  Widget _setTitleSection() => Container(
+        padding: const EdgeInsets.all(24),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      amiibo.name,
+                      style: GoogleFonts.nunito(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Text(
-                  amiibo.amiiboSeries,
-                  style: GoogleFonts.nunito(
-                    color: Colors.grey[500],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Icon(
-            Icons.art_track,
-            color: Colors.blueGrey[500],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: Text(
-              amiibo.type,
-              style: GoogleFonts.nunito(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+                  Text(
+                    amiibo.amiiboSeries,
+                    style: GoogleFonts.nunito(
+                      color: Colors.grey[500],
+                    ),
+                  )
+                ],
               ),
             ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _setDescriptionSection() {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Text(
-        Utilities.setLoremText(),
-        style: GoogleFonts.nunito(
-          fontSize: 16,
+            Icon(
+              Icons.art_track,
+              color: Colors.blueGrey[500],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Text(
+                amiibo.type,
+                style: GoogleFonts.nunito(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
         ),
-      ),
-    );
-  }
+      );
+
+  Widget _setDescriptionSection() => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Text(
+          Utilities.setLoremText(),
+          style: GoogleFonts.nunito(
+            fontSize: 16,
+          ),
+        ),
+      );
 }
