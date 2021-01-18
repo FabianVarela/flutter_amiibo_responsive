@@ -1,6 +1,6 @@
 # flutter_amiibo_responsive
 
-Create app connect with amiibo API and setresponsive
+App that connect with Amiibo API and set responsive design
 
 ## Getting Started
 
