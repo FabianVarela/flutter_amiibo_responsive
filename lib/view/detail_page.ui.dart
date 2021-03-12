@@ -4,7 +4,7 @@ import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({Key key, this.amiibo}) : super(key: key);
+  const DetailPage({Key? key, required this.amiibo}) : super(key: key);
 
   final AmiiboModel amiibo;
 

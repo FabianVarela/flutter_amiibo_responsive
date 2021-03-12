@@ -2,15 +2,15 @@ import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 
 class AmiiboModel {
   AmiiboModel({
-    this.amiiboSeries,
-    this.character,
-    this.gameSeries,
-    this.head,
-    this.imageUrl,
-    this.name,
+    required this.amiiboSeries,
+    required this.character,
+    required this.gameSeries,
+    required this.head,
+    required this.imageUrl,
+    required this.name,
     this.releaseDate,
-    this.tail,
-    this.type,
+    required this.tail,
+    required this.type,
   });
 
   final String amiiboSeries;
@@ -19,7 +19,7 @@ class AmiiboModel {
   final String head;
   final String imageUrl;
   final String name;
-  final ReleaseDate releaseDate;
+  final ReleaseDate? releaseDate;
   final String tail;
   final String type;
 
@@ -38,12 +38,17 @@ class AmiiboModel {
 }
 
 class ReleaseDate {
-  ReleaseDate({this.australia, this.europe, this.japan, this.northAm});
+  ReleaseDate({
+    this.australia,
+    this.europe,
+    this.japan,
+    this.northAm,
+  });
 
-  final DateTime australia;
-  final DateTime europe;
-  final DateTime japan;
-  final DateTime northAm;
+  final DateTime? australia;
+  final DateTime? europe;
+  final DateTime? japan;
+  final DateTime? northAm;
 
   factory ReleaseDate.fromJson(Map<String, dynamic> json) {
     return ReleaseDate(

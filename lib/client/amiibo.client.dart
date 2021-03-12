@@ -9,10 +9,12 @@ class AmiiboClient {
 
   AmiiboClient(this._client);
 
-  Future<List<AmiiboModel>> getAmiiboList({String param}) async {
-    final query = param != null ? '?type=${param}' : null;
-    final amiiboUrl = '$baseUrl/api/amiibo/${query ?? ''}';
-    final amiiboResponse = await _client.get(amiiboUrl);
+  Future<List<AmiiboModel>> getAmiiboList(String? param) async {
+    final queryParams = param != null ? <String, dynamic>{'type': param} : null;
+
+    final amiiboResponse = await _client.get(
+      Uri.https('www.amiiboapi.com', '/api/amiibo/', queryParams),
+    );
 
     if (amiiboResponse.statusCode != 200) {
       throw Exception('error getting data');

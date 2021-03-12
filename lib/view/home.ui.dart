@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class HomePageUI extends StatefulWidget {
-  HomePageUI({Key key, this.title}) : super(key: key);
+  HomePageUI({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -15,7 +15,13 @@ class HomePageUI extends StatefulWidget {
 }
 
 class _HomePageUIState extends State<HomePageUI> {
-  String _type;
+  late String? _type;
+
+  @override
+  void initState() {
+    _type = null;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) =>
@@ -35,7 +41,7 @@ class _HomePageUIState extends State<HomePageUI> {
               body: _setFutureList(),
             );
 
-  Widget _setAppBar() => AppBar(
+  PreferredSizeWidget? _setAppBar() => AppBar(
         title: Text(
           widget.title,
           style: GoogleFonts.nunito(fontSize: 24),
@@ -67,7 +73,8 @@ class _HomePageUIState extends State<HomePageUI> {
     );
   }
 
-  Widget _menuItem(IconData icon, String text, Function onPress) => ListTile(
+  Widget _menuItem(IconData icon, String text, void Function() onPress) =>
+      ListTile(
         onTap: onPress,
         leading: Icon(icon),
         title: Text(
@@ -80,7 +87,7 @@ class _HomePageUIState extends State<HomePageUI> {
       );
 
   Widget _setFutureList() => FutureBuilder(
-        future: AmiiboClient(Client()).getAmiiboList(param: _type),
+        future: AmiiboClient(Client()).getAmiiboList(_type),
         builder: (_, AsyncSnapshot<List<AmiiboModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -88,7 +95,7 @@ class _HomePageUIState extends State<HomePageUI> {
 
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
-              return _setAmiiboList(snapshot.data);
+              return _setAmiiboList(snapshot.data!);
             } else if (snapshot.hasError) {
               return _setErrorText((snapshot.error as dynamic).message);
             }
@@ -98,7 +105,7 @@ class _HomePageUIState extends State<HomePageUI> {
         },
       );
 
-  Widget _setErrorText(String error) => Center(
+  Widget _setErrorText(String? error) => Center(
         child: Text(
           error ?? 'Error',
           style: GoogleFonts.nunito(
@@ -119,11 +126,11 @@ class _HomePageUIState extends State<HomePageUI> {
         children: amiibos.map((amiibo) => _GridItem(amiibo: amiibo)).toList(),
       );
 
-  void _setType({String type}) => setState(() => _type = type);
+  void _setType({String? type}) => setState(() => _type = type);
 }
 
 class _GridItem extends StatelessWidget {
-  const _GridItem({Key key, @required this.amiibo}) : super(key: key);
+  const _GridItem({Key? key, required this.amiibo}) : super(key: key);
 
   final AmiiboModel amiibo;
 
@@ -141,13 +148,6 @@ class _GridItem extends StatelessWidget {
             );
           },
           child: GridTile(
-            child: Hero(
-              tag: '${amiibo.head}_${amiibo.tail}',
-              child: Image.network(
-                amiibo.imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
             footer: GridTileBar(
               backgroundColor: Colors.black45,
               title: Text(
@@ -157,6 +157,13 @@ class _GridItem extends StatelessWidget {
               subtitle: Text(
                 amiibo.gameSeries,
                 style: GoogleFonts.nunito(fontSize: 14),
+              ),
+            ),
+            child: Hero(
+              tag: '${amiibo.head}_${amiibo.tail}',
+              child: Image.network(
+                amiibo.imageUrl,
+                fit: BoxFit.cover,
               ),
             ),
           ),
