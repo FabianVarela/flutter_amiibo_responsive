@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
 import 'package:flutter_amiibo_responsive/utils/utilities.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({Key? key, required this.amiibo}) : super(key: key);
@@ -16,7 +15,7 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           amiibo.name,
-          style: GoogleFonts.nunito(fontSize: 24),
+          style: TextStyle(fontSize: 24),
         ),
       ),
       body: OrientationBuilder(
@@ -94,10 +93,7 @@ class DetailPage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 8),
               child: Text(
                 text.toUpperCase(),
-                style: GoogleFonts.nunito(
-                  fontSize: 12,
-                  color: color,
-                ),
+                style: TextStyle(fontSize: 12, color: color),
               ),
             )
           ],
@@ -118,16 +114,12 @@ class DetailPage extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text(
                       amiibo.name,
-                      style: GoogleFonts.nunito(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   Text(
                     amiibo.amiiboSeries,
-                    style: GoogleFonts.nunito(
-                      color: Colors.grey[500],
-                    ),
+                    style: TextStyle(color: Colors.grey[500]),
                   )
                 ],
               ),
@@ -140,10 +132,7 @@ class DetailPage extends StatelessWidget {
               padding: const EdgeInsets.only(left: 4),
               child: Text(
                 amiibo.type,
-                style: GoogleFonts.nunito(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             )
           ],
@@ -154,9 +143,7 @@ class DetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Text(
           Utilities.setLoremText(),
-          style: GoogleFonts.nunito(
-            fontSize: 16,
-          ),
+          style: TextStyle(fontSize: 16),
         ),
       );
 }
