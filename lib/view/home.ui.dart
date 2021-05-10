@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo.client.dart';
-import 'package:flutter_amiibo_responsive/view/detail_page.ui.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_amiibo_responsive/view/widgets/grid_item.dart';
+import 'package:flutter_amiibo_responsive/view/widgets/loading_list.dart';
 import 'package:http/http.dart';
 
 class HomePageUI extends StatefulWidget {
@@ -27,7 +27,9 @@ class _HomePageUIState extends State<HomePageUI> {
   Widget build(BuildContext context) =>
       (MediaQuery.of(context).size.width >= 840)
           ? Scaffold(
-              appBar: _setAppBar(),
+              appBar: AppBar(
+                title: Text(widget.title, style: TextStyle(fontSize: 24)),
+              ),
               body: Row(
                 children: <Widget>[
                   Expanded(flex: 2, child: _setDrawerBody()),
@@ -36,17 +38,12 @@ class _HomePageUIState extends State<HomePageUI> {
               ),
             )
           : Scaffold(
-              appBar: _setAppBar(),
+              appBar: AppBar(
+                title: Text(widget.title, style: TextStyle(fontSize: 24)),
+              ),
               drawer: Drawer(child: _setDrawerBody()),
               body: _setFutureList(),
             );
-
-  PreferredSizeWidget? _setAppBar() => AppBar(
-        title: Text(
-          widget.title,
-          style: GoogleFonts.nunito(fontSize: 24),
-        ),
-      );
 
   Widget _setDrawerBody() {
     return ListView(
@@ -58,10 +55,7 @@ class _HomePageUIState extends State<HomePageUI> {
             alignment: AlignmentDirectional.bottomStart,
             child: Text(
               'Amiibo App',
-              style: GoogleFonts.nunito(
-                fontSize: 24,
-                color: Colors.white,
-              ),
+              style: TextStyle(fontSize: 24, color: Colors.white),
             ),
           ),
         ),
@@ -79,10 +73,7 @@ class _HomePageUIState extends State<HomePageUI> {
         leading: Icon(icon),
         title: Text(
           text,
-          style: GoogleFonts.nunito(
-            fontSize: 16,
-            fontWeight: FontWeight.w300,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
         ),
       );
 
@@ -90,7 +81,7 @@ class _HomePageUIState extends State<HomePageUI> {
         future: AmiiboClient(Client()).getAmiiboList(_type),
         builder: (_, AsyncSnapshot<List<AmiiboModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return LoadingList();
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
@@ -108,7 +99,7 @@ class _HomePageUIState extends State<HomePageUI> {
   Widget _setErrorText(String? error) => Center(
         child: Text(
           error ?? 'Error',
-          style: GoogleFonts.nunito(
+          style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -116,57 +107,17 @@ class _HomePageUIState extends State<HomePageUI> {
         ),
       );
 
-  Widget _setAmiiboList(List<AmiiboModel> amiibos) => GridView.extent(
-        maxCrossAxisExtent:
-            MediaQuery.of(context).size.width >= 600 ? 300 : 200,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        padding: const EdgeInsets.all(8),
-        childAspectRatio: 1 / 1.2,
-        children: amiibos.map((amiibo) => _GridItem(amiibo: amiibo)).toList(),
-      );
+  Widget _setAmiiboList(List<AmiiboModel> amiibos) {
+    final size = MediaQuery.of(context).size;
+    return GridView.extent(
+      maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      padding: const EdgeInsets.all(8),
+      childAspectRatio: 1 / 1.2,
+      children: amiibos.map((amiibo) => GridItem(amiibo: amiibo)).toList(),
+    );
+  }
 
   void _setType({String? type}) => setState(() => _type = type);
-}
-
-class _GridItem extends StatelessWidget {
-  const _GridItem({Key? key, required this.amiibo}) : super(key: key);
-
-  final AmiiboModel amiibo;
-
-  @override
-  Widget build(BuildContext context) => Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => DetailPage(amiibo: amiibo)),
-            );
-          },
-          child: GridTile(
-            footer: GridTileBar(
-              backgroundColor: Colors.black45,
-              title: Text(
-                amiibo.name,
-                style: GoogleFonts.nunito(fontSize: 16),
-              ),
-              subtitle: Text(
-                amiibo.gameSeries,
-                style: GoogleFonts.nunito(fontSize: 14),
-              ),
-            ),
-            child: Hero(
-              tag: '${amiibo.head}_${amiibo.tail}',
-              child: Image.network(
-                amiibo.imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-      );
 }
