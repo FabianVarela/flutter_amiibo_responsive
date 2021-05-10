@@ -4,27 +4,23 @@ import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
 import 'package:http/http.dart';
 
 class AmiiboClient {
-  final String baseUrl = 'https://www.amiiboapi.com';
-  final Client _client;
+  AmiiboClient(this._client) : _baseUrl = 'www.amiiboapi.com';
 
-  AmiiboClient(this._client);
+  final Client _client;
+  final String _baseUrl;
 
   Future<List<AmiiboModel>> getAmiiboList(String? param) async {
     final queryParams = param != null ? <String, dynamic>{'type': param} : null;
 
-    final amiiboResponse = await _client.get(
-      Uri.https('www.amiiboapi.com', '/api/amiibo/', queryParams),
+    final response = await _client.get(
+      Uri.https(_baseUrl, '/api/amiibo/', queryParams),
     );
 
-    if (amiiboResponse.statusCode != 200) {
+    if (response.statusCode != 200) {
       throw Exception('error getting data');
     }
 
-    final amiiboJsonList =
-        jsonDecode(amiiboResponse.body)['amiibo'] as List<dynamic>;
-
-    return amiiboJsonList
-        .map((amiiboJson) => AmiiboModel.fromJson(amiiboJson))
-        .toList();
+    final amiiboList = jsonDecode(response.body)['amiibo'] as List<dynamic>;
+    return amiiboList.map((item) => AmiiboModel.fromJson(item)).toList();
   }
 }
