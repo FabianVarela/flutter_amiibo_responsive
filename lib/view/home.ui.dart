@@ -6,9 +6,7 @@ import 'package:flutter_amiibo_responsive/view/widgets/loading_list.dart';
 import 'package:http/http.dart';
 
 class HomePageUI extends StatefulWidget {
-  HomePageUI({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const HomePageUI({Key? key}) : super(key: key);
 
   @override
   _HomePageUIState createState() => _HomePageUIState();
@@ -28,7 +26,7 @@ class _HomePageUIState extends State<HomePageUI> {
       (MediaQuery.of(context).size.width >= 840)
           ? Scaffold(
               appBar: AppBar(
-                title: Text(widget.title, style: TextStyle(fontSize: 24)),
+                title: Text('Amiibo App', style: TextStyle(fontSize: 24)),
               ),
               body: Row(
                 children: <Widget>[
@@ -39,7 +37,7 @@ class _HomePageUIState extends State<HomePageUI> {
             )
           : Scaffold(
               appBar: AppBar(
-                title: Text(widget.title, style: TextStyle(fontSize: 24)),
+                title: Text('Amiibo App', style: TextStyle(fontSize: 24)),
               ),
               drawer: Drawer(child: _setDrawerBody()),
               body: _setFutureList(),
@@ -60,9 +58,9 @@ class _HomePageUIState extends State<HomePageUI> {
           ),
         ),
         _menuItem(Icons.list, 'All', () => _setType()),
-        _menuItem(Icons.account_box, 'Figure', () => _setType(type: 'figure')),
-        _menuItem(Icons.card_membership, 'Card', () => _setType(type: 'card')),
-        _menuItem(Icons.wallpaper, 'Yarn', () => _setType(type: 'yarn')),
+        _menuItem(Icons.account_box, 'Figure', () => _setType('figure')),
+        _menuItem(Icons.card_membership, 'Card', () => _setType('card')),
+        _menuItem(Icons.wallpaper, 'Yarn', () => _setType('yarn')),
       ],
     );
   }
@@ -115,9 +113,11 @@ class _HomePageUIState extends State<HomePageUI> {
       crossAxisSpacing: 8,
       padding: const EdgeInsets.all(8),
       childAspectRatio: 1 / 1.2,
-      children: amiibos.map((amiibo) => GridItem(amiibo: amiibo)).toList(),
+      children: <Widget>[
+        for (var i = 0; i < amiibos.length; i++) GridItem(amiibo: amiibos[i])
+      ],
     );
   }
 
-  void _setType({String? type}) => setState(() => _type = type);
+  void _setType([String? type]) => setState(() => _type = type);
 }

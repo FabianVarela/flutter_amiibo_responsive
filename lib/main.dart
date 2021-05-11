@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: HomePageUI(title: 'Amiibo App'),
+      home: HomePageUI(),
     );
   }
 }
