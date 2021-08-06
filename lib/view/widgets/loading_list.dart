@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 class LoadingList extends StatelessWidget {
+  const LoadingList({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -16,7 +18,6 @@ class LoadingList extends StatelessWidget {
       children: <Widget>[
         for (var i = 0; i < fakeList.length; i++)
           Shimmer(
-            direction: ShimmerDirection.fromLTRB(),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.grey.shade300,
