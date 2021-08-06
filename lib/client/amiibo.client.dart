@@ -17,10 +17,15 @@ class AmiiboClient {
     );
 
     if (response.statusCode != 200) {
-      throw Exception('error getting data');
+      throw Exception();
     }
 
-    final amiiboList = jsonDecode(response.body)['amiibo'] as List<dynamic>;
-    return amiiboList.map((item) => AmiiboModel.fromJson(item)).toList();
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    final amiiboList = json['amiibo'] as List<dynamic>;
+
+    return amiiboList.map((dynamic item) {
+      final castItem = item as Map<String, dynamic>;
+      return AmiiboModel.fromJson(castItem);
+    }).toList();
   }
 }
