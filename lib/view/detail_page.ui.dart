@@ -13,10 +13,7 @@ class DetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          amiibo.name,
-          style: TextStyle(fontSize: 24),
-        ),
+        title: Text(amiibo.name, style: const TextStyle(fontSize: 24)),
       ),
       body: OrientationBuilder(
         builder: (_, orientation) =>
@@ -68,22 +65,20 @@ class DetailPage extends StatelessWidget {
         ),
       );
 
-  Widget _setButtonSection() => Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _setButtonItem(Icons.shopping_bag, 'Buy article', Colors.blueGrey),
-            _setButtonItem(Icons.favorite, 'Add favorite', Colors.blueGrey),
-            _setButtonItem(Icons.share, 'Share to...', Colors.blueGrey),
-          ],
-        ),
+  Widget _setButtonSection() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _setButtonItem(Icons.shopping_bag, 'Buy article', Colors.blueGrey),
+          _setButtonItem(Icons.favorite, 'Add favorite', Colors.blueGrey),
+          _setButtonItem(Icons.share, 'Share to...', Colors.blueGrey),
+        ],
       );
 
   Widget _setButtonItem(IconData icon, String text, Color color) {
     return InkWell(
       onTap: () {},
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -114,7 +109,7 @@ class DetailPage extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text(
                       amiibo.name,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   Text(
@@ -132,7 +127,10 @@ class DetailPage extends StatelessWidget {
               padding: const EdgeInsets.only(left: 4),
               child: Text(
                 amiibo.type,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             )
           ],
@@ -143,7 +141,7 @@ class DetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Text(
           Utilities.setLoremText(),
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
       );
 }
