@@ -3,7 +3,7 @@ import 'package:flutter_amiibo_responsive/client/amiibo.client.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
 import 'package:flutter_amiibo_responsive/view/detail_page.ui.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/grid_item.dart';
-import 'package:flutter_amiibo_responsive/view/widgets/loading_list.dart';
+import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
 import 'package:http/http.dart';
 
 class HomePageUI extends StatefulWidget {
@@ -23,26 +23,27 @@ class _HomePageUIState extends State<HomePageUI> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      (MediaQuery.of(context).size.width >= 840)
-          ? Scaffold(
-              appBar: AppBar(
-                title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
-              ),
-              body: Row(
-                children: <Widget>[
-                  Expanded(flex: 2, child: _setDrawerBody()),
-                  Expanded(flex: 5, child: _setFutureList()),
-                ],
-              ),
-            )
-          : Scaffold(
-              appBar: AppBar(
-                title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
-              ),
-              drawer: Drawer(child: _setDrawerBody()),
-              body: _setFutureList(),
-            );
+  Widget build(BuildContext context) {
+    return (MediaQuery.of(context).size.width >= 840)
+        ? Scaffold(
+            appBar: AppBar(
+              title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
+            ),
+            body: Row(
+              children: <Widget>[
+                Expanded(flex: 2, child: _setDrawerBody()),
+                Expanded(flex: 5, child: _setFutureList()),
+              ],
+            ),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
+            ),
+            drawer: Drawer(child: _setDrawerBody()),
+            body: _setFutureList(),
+          );
+  }
 
   Widget _setDrawerBody() {
     return ListView(
@@ -66,48 +67,50 @@ class _HomePageUIState extends State<HomePageUI> {
     );
   }
 
-  Widget _menuItem(IconData icon, String text, void Function() onPress) =>
-      ListTile(
-        onTap: onPress,
-        leading: Icon(icon),
-        title: Text(
-          text,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-        ),
-      );
+  Widget _menuItem(IconData icon, String text, VoidCallback onPress) {
+    return ListTile(
+      onTap: onPress,
+      leading: Icon(icon),
+      title: Text(
+        text,
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+      ),
+    );
+  }
 
-  Widget _setFutureList() => FutureBuilder(
-        future: AmiiboClient(Client()).getAmiiboList(_type),
-        builder: (_, AsyncSnapshot<List<AmiiboModel>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingList();
+  Widget _setFutureList() {
+    return FutureBuilder(
+      future: AmiiboClient(Client()).getAmiiboList(_type),
+      builder: (_, AsyncSnapshot<List<AmiiboModel>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const ShimmerGridLoading();
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            return _setAmiiboList(snapshot.data!);
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text(
+                'Error to get data',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            );
           }
+        }
 
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              return _setAmiiboList(snapshot.data!);
-            } else if (snapshot.hasError) {
-              return _setErrorText('Error to get data');
-            }
-          }
-
-          return Container();
-        },
-      );
-
-  Widget _setErrorText(String? error) => Center(
-        child: Text(
-          error ?? 'Error',
-          style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-      );
+        return Container();
+      },
+    );
+  }
 
   Widget _setAmiiboList(List<AmiiboModel> amiibos) {
     final size = MediaQuery.of(context).size;
+
     return GridView.extent(
       maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
       mainAxisSpacing: 8,
