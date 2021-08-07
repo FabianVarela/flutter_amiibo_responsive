@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GridItem extends StatelessWidget {
-  const GridItem({Key? key, required this.amiibo, required this.onSelectAmiibo})
-      : super(key: key);
+class AmiiboItem extends StatelessWidget {
+  const AmiiboItem({
+    Key? key,
+    required this.amiibo,
+    required this.onSelectAmiibo,
+  }) : super(key: key);
 
   final AmiiboModel amiibo;
   final VoidCallback onSelectAmiibo;
