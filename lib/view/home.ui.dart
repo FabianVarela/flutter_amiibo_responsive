@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo.client.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
 import 'package:flutter_amiibo_responsive/view/detail_page.ui.dart';
+import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/grid_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
 import 'package:http/http.dart';
@@ -24,63 +25,87 @@ class _HomePageUIState extends State<HomePageUI> {
 
   @override
   Widget build(BuildContext context) {
-    return (MediaQuery.of(context).size.width >= 840)
-        ? Scaffold(
-            appBar: AppBar(
-              title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
-            ),
-            body: Row(
-              children: <Widget>[
-                Expanded(flex: 2, child: _setDrawerBody()),
-                Expanded(flex: 5, child: _setFutureList()),
-              ],
-            ),
-          )
-        : Scaffold(
-            appBar: AppBar(
-              title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
-            ),
-            drawer: Drawer(child: _setDrawerBody()),
-            body: _setFutureList(),
-          );
-  }
+    final size = MediaQuery.of(context).size;
 
-  Widget _setDrawerBody() {
-    return ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        DrawerHeader(
-          decoration: const BoxDecoration(color: Colors.blueGrey),
-          child: Container(
-            alignment: AlignmentDirectional.bottomStart,
-            child: const Text(
-              'Amiibo App',
-              style: TextStyle(fontSize: 24, color: Colors.white),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
+        backgroundColor: Colors.redAccent,
+      ),
+      drawer: size.width >= 840
+          ? null
+          : Drawer(
+              child: DrawerMenu(
+                onTapAll: () {
+                  _popDrawer(context);
+                  _setType();
+                },
+                onTapFigure: () {
+                  _popDrawer(context);
+                  _setType('figure');
+                },
+                onTapCard: () {
+                  _popDrawer(context);
+                  _setType('card');
+                },
+                onTapYarn: () {
+                  _popDrawer(context);
+                  _setType('yarn');
+                },
+                onTapBand: () {
+                  _popDrawer(context);
+                  _setType('band');
+                },
+              ),
             ),
-          ),
-        ),
-        _menuItem(Icons.list, 'All', _setType),
-        _menuItem(Icons.account_box, 'Figure', () => _setType('figure')),
-        _menuItem(Icons.card_membership, 'Card', () => _setType('card')),
-        _menuItem(Icons.wallpaper, 'Yarn', () => _setType('yarn')),
-      ],
-    );
-  }
-
-  Widget _menuItem(IconData icon, String text, VoidCallback onPress) {
-    return ListTile(
-      onTap: onPress,
-      leading: Icon(icon),
-      title: Text(
-        text,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+      body: OrientationBuilder(
+        builder: (_, orientation) {
+          return (orientation == Orientation.landscape || size.width >= 840)
+              ? Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: DrawerMenu(
+                        onTapAll: _setType,
+                        onTapFigure: () => _setType('figure'),
+                        onTapCard: () => _setType('card'),
+                        onTapYarn: () => _setType('yarn'),
+                        onTapBand: () => _setType('band'),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: _AmiiboList(type: _type, onTapAmiibo: _goToDetail),
+                    ),
+                  ],
+                )
+              : _AmiiboList(type: _type, onTapAmiibo: _goToDetail);
+        },
       ),
     );
   }
 
-  Widget _setFutureList() {
+  Future<void> _goToDetail(AmiiboModel amiibo) => Navigator.push<void>(
+      context, MaterialPageRoute(builder: (_) => DetailPage(amiibo: amiibo)));
+
+  void _popDrawer(BuildContext context) => Navigator.of(context).pop();
+
+  void _setType([String? type]) => setState(() => _type = type);
+}
+
+class _AmiiboList extends StatelessWidget {
+  const _AmiiboList({Key? key, required this.type, required this.onTapAmiibo})
+      : super(key: key);
+
+  final String? type;
+  final ValueSetter<AmiiboModel> onTapAmiibo;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return FutureBuilder(
-      future: AmiiboClient(Client()).getAmiiboList(_type),
+      future: AmiiboClient(Client()).getAmiiboList(type),
       builder: (_, AsyncSnapshot<List<AmiiboModel>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const ShimmerGridLoading();
@@ -88,7 +113,22 @@ class _HomePageUIState extends State<HomePageUI> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
-            return _setAmiiboList(snapshot.data!);
+            final amiiboList = snapshot.data!;
+
+            return GridView.extent(
+              maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              padding: const EdgeInsets.all(8),
+              childAspectRatio: 1 / 1.2,
+              children: <Widget>[
+                for (var i = 0; i < amiiboList.length; i++)
+                  GridItem(
+                    amiibo: amiiboList[i],
+                    onSelectAmiibo: () => onTapAmiibo(amiiboList[i]),
+                  )
+              ],
+            );
           } else if (snapshot.hasError) {
             return const Center(
               child: Text(
@@ -103,32 +143,8 @@ class _HomePageUIState extends State<HomePageUI> {
           }
         }
 
-        return Container();
+        return const Offstage();
       },
     );
   }
-
-  Widget _setAmiiboList(List<AmiiboModel> amiibos) {
-    final size = MediaQuery.of(context).size;
-
-    return GridView.extent(
-      maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
-      mainAxisSpacing: 8,
-      crossAxisSpacing: 8,
-      padding: const EdgeInsets.all(8),
-      childAspectRatio: 1 / 1.2,
-      children: <Widget>[
-        for (var i = 0; i < amiibos.length; i++)
-          GridItem(
-            amiibo: amiibos[i],
-            onSelectAmiibo: () => _goToDetail(amiibos[i]),
-          )
-      ],
-    );
-  }
-
-  Future<void> _goToDetail(AmiiboModel amiibo) => Navigator.push<void>(
-      context, MaterialPageRoute(builder: (_) => DetailPage(amiibo: amiibo)));
-
-  void _setType([String? type]) => setState(() => _type = type);
 }

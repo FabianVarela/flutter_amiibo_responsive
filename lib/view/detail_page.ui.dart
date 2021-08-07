@@ -15,80 +15,93 @@ class DetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(amiibo.name, style: const TextStyle(fontSize: 24)),
+        backgroundColor: Colors.redAccent,
       ),
       body: OrientationBuilder(
         builder: (_, orientation) {
           return (size.width >= 600 || orientation == Orientation.landscape)
               ? SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              _setImage(),
-                              _setTitleSection(),
-                            ],
-                          ),
+                  padding: const EdgeInsets.all(24),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            _AmiiboImage(
+                              tagId: '${amiibo.head}_${amiibo.tail}',
+                              imageUrl: amiibo.imageUrl,
+                            ),
+                            _AmiiboDetail(
+                              name: amiibo.name,
+                              series: amiibo.amiiboSeries,
+                              type: amiibo.type,
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              _setButtonSection(),
-                              _setDescriptionSection(),
-                            ],
-                          ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: const <Widget>[
+                            _AmiiboButtons(),
+                            _AmiiboDescription(),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 )
               : ListView(
                   children: <Widget>[
-                    _setImage(),
-                    _setTitleSection(),
-                    _setButtonSection(),
-                    _setDescriptionSection(),
+                    _AmiiboImage(
+                      tagId: '${amiibo.head}_${amiibo.tail}',
+                      imageUrl: amiibo.imageUrl,
+                    ),
+                    _AmiiboDetail(
+                      name: amiibo.name,
+                      series: amiibo.amiiboSeries,
+                      type: amiibo.type,
+                    ),
+                    const _AmiiboButtons(),
+                    const _AmiiboDescription(),
                   ],
                 );
         },
       ),
     );
   }
+}
 
-  Widget _setImage() {
+class _AmiiboImage extends StatelessWidget {
+  const _AmiiboImage({Key? key, required this.tagId, required this.imageUrl})
+      : super(key: key);
+
+  final String tagId;
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
     return Hero(
-      tag: '${amiibo.head}_${amiibo.tail}',
-      child: Image.network(amiibo.imageUrl, height: 350, fit: BoxFit.cover),
+      tag: tagId,
+      child: Image.network(imageUrl, height: 350, fit: BoxFit.cover),
     );
   }
+}
 
-  Widget _setButtonSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const <Widget>[
-        VerticalIconButton(
-          icon: Icons.shopping_bag,
-          text: 'Buy article',
-          color: Colors.blueGrey,
-        ),
-        VerticalIconButton(
-          icon: Icons.favorite,
-          text: 'Add favorite',
-          color: Colors.blueGrey,
-        ),
-        VerticalIconButton(
-          icon: Icons.share,
-          text: 'Share to...',
-          color: Colors.blueGrey,
-        ),
-      ],
-    );
-  }
+class _AmiiboDetail extends StatelessWidget {
+  const _AmiiboDetail({
+    Key? key,
+    required this.name,
+    required this.series,
+    required this.type,
+  }) : super(key: key);
 
-  Widget _setTitleSection() {
+  final String name;
+  final String series;
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Row(
@@ -100,14 +113,11 @@ class DetailPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    amiibo.name,
+                    name,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(
-                  amiibo.amiiboSeries,
-                  style: TextStyle(color: Colors.grey[500]),
-                )
+                Text(series, style: TextStyle(color: Colors.grey[500])),
               ],
             ),
           ),
@@ -115,16 +125,49 @@ class DetailPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: Text(
-              amiibo.type,
+              type,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
-          )
+          ),
         ],
       ),
     );
   }
+}
 
-  Widget _setDescriptionSection() {
+class _AmiiboButtons extends StatelessWidget {
+  const _AmiiboButtons({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: const <Widget>[
+        VerticalIconButton(
+          icon: Icons.shopping_bag,
+          text: 'Buy article',
+          color: Colors.green,
+        ),
+        VerticalIconButton(
+          icon: Icons.favorite,
+          text: 'Add favorite',
+          color: Colors.green,
+        ),
+        VerticalIconButton(
+          icon: Icons.share,
+          text: 'Share to...',
+          color: Colors.green,
+        ),
+      ],
+    );
+  }
+}
+
+class _AmiiboDescription extends StatelessWidget {
+  const _AmiiboDescription({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Text(
