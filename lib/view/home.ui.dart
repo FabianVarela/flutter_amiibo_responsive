@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo.client.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
-import 'package:flutter_amiibo_responsive/view/detail_page.ui.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
 import 'package:http/http.dart';
 
 class HomePageUI extends StatefulWidget {
-  const HomePageUI({Key? key}) : super(key: key);
+  const HomePageUI({Key? key, required this.onGoToDetail}) : super(key: key);
+
+  final ValueSetter<AmiiboModel> onGoToDetail;
 
   @override
   _HomePageUIState createState() => _HomePageUIState();
@@ -19,8 +20,8 @@ class _HomePageUIState extends State<HomePageUI> {
 
   @override
   void initState() {
-    _type = null;
     super.initState();
+    _type = null;
   }
 
   @override
@@ -75,18 +76,18 @@ class _HomePageUIState extends State<HomePageUI> {
                     ),
                     Expanded(
                       flex: 5,
-                      child: _AmiiboList(type: _type, onTapAmiibo: _goToDetail),
+                      child: _AmiiboList(
+                        type: _type,
+                        onTapAmiibo: widget.onGoToDetail,
+                      ),
                     ),
                   ],
                 )
-              : _AmiiboList(type: _type, onTapAmiibo: _goToDetail);
+              : _AmiiboList(type: _type, onTapAmiibo: widget.onGoToDetail);
         },
       ),
     );
   }
-
-  Future<void> _goToDetail(AmiiboModel amiibo) => Navigator.push<void>(
-      context, MaterialPageRoute(builder: (_) => DetailPage(amiibo: amiibo)));
 
   void _popDrawer(BuildContext context) => Navigator.of(context).pop();
 
