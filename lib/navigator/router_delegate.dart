@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/navigator/page.dart';
 
 class AmiiboRouterDelegate extends RouterDelegate<Object>

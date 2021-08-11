@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/client/amiibo.client.dart';
-import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
+import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';

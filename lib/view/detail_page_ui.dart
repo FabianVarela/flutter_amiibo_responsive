@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:http/http.dart';
 
 class AmiiboClient {
