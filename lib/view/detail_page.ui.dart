@@ -3,8 +3,8 @@ import 'package:flutter_amiibo_responsive/model/amiibo.model.dart';
 import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';
 
-class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key, required this.amiibo}) : super(key: key);
+class DetailPageUI extends StatelessWidget {
+  const DetailPageUI({Key? key, required this.amiibo}) : super(key: key);
 
   final AmiiboModel amiibo;
 
