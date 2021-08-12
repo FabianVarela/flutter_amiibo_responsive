@@ -27,18 +27,13 @@ class AmiiboRouterDelegate extends RouterDelegate<Object>
       observers: [_heroController],
       key: navigatorKey,
       pages: <Page<dynamic>>[
-        HomePage(
-          onGoToDetail: (model) => amiiboModel = model,
-        ),
-        if (amiiboModel != null)
-          DetailPage(
-            amiiboModel: amiiboModel!,
-          ),
+        HomePage(onGoToDetail: (model) => amiiboModel = model),
+        if (amiiboModel != null) DetailPage(amiiboModel: amiiboModel!),
       ],
       onPopPage: (route, dynamic result) {
         if (!route.didPop(result)) return false;
 
-        amiiboModel = null;
+        if (amiiboModel != null) amiiboModel = null;
         return true;
       },
     );
