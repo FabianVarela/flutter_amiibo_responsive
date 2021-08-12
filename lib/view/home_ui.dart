@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
+import 'package:flutter_amiibo_responsive/bloc/amiibo_cubit.dart';
+import 'package:flutter_amiibo_responsive/bloc/amiibo_state.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
-import 'package:http/http.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageUI extends StatefulWidget {
   const HomePageUI({Key? key, required this.onGoToDetail}) : super(key: key);
@@ -16,12 +17,10 @@ class HomePageUI extends StatefulWidget {
 }
 
 class _HomePageUIState extends State<HomePageUI> {
-  late String? _type;
-
   @override
   void initState() {
     super.initState();
-    _type = null;
+    _setType();
   }
 
   @override
@@ -76,14 +75,11 @@ class _HomePageUIState extends State<HomePageUI> {
                     ),
                     Expanded(
                       flex: 5,
-                      child: _AmiiboList(
-                        type: _type,
-                        onTapAmiibo: widget.onGoToDetail,
-                      ),
+                      child: _AmiiboList(onTapAmiibo: widget.onGoToDetail),
                     ),
                   ],
                 )
-              : _AmiiboList(type: _type, onTapAmiibo: widget.onGoToDetail);
+              : _AmiiboList(onTapAmiibo: widget.onGoToDetail);
         },
       ),
     );
@@ -91,30 +87,39 @@ class _HomePageUIState extends State<HomePageUI> {
 
   void _popDrawer(BuildContext context) => Navigator.of(context).pop();
 
-  void _setType([String? type]) => setState(() => _type = type);
+  void _setType([String? type]) =>
+      context.read<AmiiboCubit>().fetchAmiiboData(type);
 }
 
 class _AmiiboList extends StatelessWidget {
-  const _AmiiboList({Key? key, required this.type, required this.onTapAmiibo})
-      : super(key: key);
+  const _AmiiboList({Key? key, required this.onTapAmiibo}) : super(key: key);
 
-  final String? type;
   final ValueSetter<AmiiboModel> onTapAmiibo;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return FutureBuilder(
-      future: AmiiboClient(Client()).getAmiiboList(type),
-      builder: (_, AsyncSnapshot<List<AmiiboModel>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const ShimmerGridLoading();
-        }
+    return BlocBuilder<AmiiboCubit, AmiiboState>(
+      builder: (_, state) {
+        switch (state.status) {
+          case AmiiboStatus.initial:
+            return const ShimmerGridLoading();
+          case AmiiboStatus.success:
+            final list = state.amiiboList;
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            final amiiboList = snapshot.data!;
+            if (list.isEmpty) {
+              return const Center(
+                child: Text(
+                  'No data found',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              );
+            }
 
             return GridView.extent(
               maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
@@ -123,14 +128,14 @@ class _AmiiboList extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               childAspectRatio: 1 / 1.2,
               children: <Widget>[
-                for (var i = 0; i < amiiboList.length; i++)
+                for (var i = 0; i < list.length; i++)
                   AmiiboItem(
-                    amiibo: amiiboList[i],
-                    onSelectAmiibo: () => onTapAmiibo(amiiboList[i]),
+                    amiibo: list[i],
+                    onSelectAmiibo: () => onTapAmiibo(list[i]),
                   )
               ],
             );
-          } else if (snapshot.hasError) {
+          case AmiiboStatus.failure:
             return const Center(
               child: Text(
                 'Error to get data',
@@ -141,10 +146,7 @@ class _AmiiboList extends StatelessWidget {
                 ),
               ),
             );
-          }
         }
-
-        return const Offstage();
       },
     );
   }
