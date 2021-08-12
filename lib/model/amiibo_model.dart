@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 
-class AmiiboModel {
-  AmiiboModel({
+class AmiiboModel extends Equatable {
+  const AmiiboModel({
     required this.amiiboSeries,
     required this.character,
     required this.gameSeries,
@@ -35,10 +36,23 @@ class AmiiboModel {
   final ReleaseDate? releaseDate;
   final String tail;
   final String type;
+
+  @override
+  List<Object?> get props => [
+        amiiboSeries,
+        character,
+        gameSeries,
+        head,
+        imageUrl,
+        name,
+        releaseDate,
+        tail,
+        type
+      ];
 }
 
-class ReleaseDate {
-  ReleaseDate({
+class ReleaseDate extends Equatable {
+  const ReleaseDate({
     this.australia,
     this.europe,
     this.japan,
@@ -66,4 +80,7 @@ class ReleaseDate {
   final DateTime? europe;
   final DateTime? japan;
   final DateTime? northAm;
+
+  @override
+  List<Object?> get props => [australia, europe, japan, northAm];
 }
