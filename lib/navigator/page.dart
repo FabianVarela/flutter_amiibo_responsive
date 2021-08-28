@@ -26,9 +26,12 @@ class DetailPage extends Page<dynamic> {
 
   @override
   Route createRoute(BuildContext context) {
-    return MaterialPageRoute<dynamic>(
+    return PageRouteBuilder<dynamic>(
       settings: this,
-      builder: (_) => DetailPageUI(amiibo: amiiboModel),
+      pageBuilder: (_, animation, __) => FadeTransition(
+        opacity: animation,
+        child: DetailPageUI(amiibo: amiiboModel),
+      ),
     );
   }
 }
