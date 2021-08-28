@@ -1,73 +1,124 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
+import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
+import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_state.dart';
 import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DetailPageUI extends StatelessWidget {
-  const DetailPageUI({Key? key, required this.amiibo}) : super(key: key);
+class DetailPageUI extends StatefulWidget {
+  const DetailPageUI({Key? key, required this.amiiboId}) : super(key: key);
 
-  final AmiiboModel amiibo;
+  final String amiiboId;
+
+  @override
+  _DetailPageUIState createState() => _DetailPageUIState();
+}
+
+class _DetailPageUIState extends State<DetailPageUI> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<AmiiboItemCubit>().fetchAmiiboItem(widget.amiiboId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(amiibo.name, style: const TextStyle(fontSize: 24)),
-        backgroundColor: Colors.redAccent,
-      ),
-      body: OrientationBuilder(
-        builder: (_, orientation) {
-          return (size.width >= 600 || orientation == Orientation.landscape)
-              ? SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
+    return BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
+      builder: (_, state) {
+        String? title;
+        Widget? child;
+
+        switch (state.status) {
+          case AmiiboItemStatus.initial:
+            title = 'Loading';
+            child = const Center(
+              child: CircularProgressIndicator(color: Colors.redAccent),
+            );
+            break;
+          case AmiiboItemStatus.success:
+            final item = state.amiiboItem!;
+
+            title = item.name;
+            child = OrientationBuilder(
+              builder: (_, orientation) {
+                return (width >= 600 || orientation == Orientation.landscape)
+                    ? SingleChildScrollView(
+                        padding: const EdgeInsets.all(24),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            _AmiiboImage(
-                              tagId: '${amiibo.head}_${amiibo.tail}',
-                              imageUrl: amiibo.imageUrl,
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  _AmiiboImage(
+                                    tagId: '${item.head}_${item.tail}',
+                                    imageUrl: item.imageUrl,
+                                  ),
+                                  _AmiiboDetail(
+                                    name: item.name,
+                                    series: item.amiiboSeries,
+                                    type: item.type,
+                                  ),
+                                ],
+                              ),
                             ),
-                            _AmiiboDetail(
-                              name: amiibo.name,
-                              series: amiibo.amiiboSeries,
-                              type: amiibo.type,
+                            Expanded(
+                              child: Column(
+                                children: const <Widget>[
+                                  _AmiiboButtons(),
+                                  _AmiiboDescription(),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: const <Widget>[
-                            _AmiiboButtons(),
-                            _AmiiboDescription(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : ListView(
-                  children: <Widget>[
-                    _AmiiboImage(
-                      tagId: '${amiibo.head}_${amiibo.tail}',
-                      imageUrl: amiibo.imageUrl,
-                    ),
-                    _AmiiboDetail(
-                      name: amiibo.name,
-                      series: amiibo.amiiboSeries,
-                      type: amiibo.type,
-                    ),
-                    const _AmiiboButtons(),
-                    const _AmiiboDescription(),
-                  ],
-                );
-        },
-      ),
+                      )
+                    : ListView(
+                        children: <Widget>[
+                          _AmiiboImage(
+                            tagId: '${item.head}_${item.tail}',
+                            imageUrl: item.imageUrl,
+                          ),
+                          _AmiiboDetail(
+                            name: item.name,
+                            series: item.amiiboSeries,
+                            type: item.type,
+                          ),
+                          const _AmiiboButtons(),
+                          const _AmiiboDescription(),
+                        ],
+                      );
+              },
+            );
+            break;
+          case AmiiboItemStatus.failure:
+            title = 'Error';
+            child = const Center(
+              child: Text(
+                'Error to get data',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            );
+            break;
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.redAccent,
+            title: Text(
+              title,
+              style: const TextStyle(fontSize: 24),
+            ),
+          ),
+          body: child,
+        );
+      },
     );
   }
 }
