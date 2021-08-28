@@ -12,6 +12,15 @@ class AmiiboRouterDelegate extends RouterDelegate<Object>
   @override
   GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
 
+  String? _amiiboType;
+
+  String? get amiiboType => _amiiboType;
+
+  set amiiboType(String? value) {
+    _amiiboType = value;
+    notifyListeners();
+  }
+
   AmiiboModel? _amiiboModel;
 
   AmiiboModel? get amiiboModel => _amiiboModel;
@@ -27,7 +36,11 @@ class AmiiboRouterDelegate extends RouterDelegate<Object>
       observers: [_heroController],
       key: navigatorKey,
       pages: <Page<dynamic>>[
-        HomePage(onGoToDetail: (model) => amiiboModel = model),
+        HomePage(
+          type: amiiboType,
+          onChangeType: (type) => amiiboType = type,
+          onGoToDetail: (model) => amiiboModel = model,
+        ),
         if (amiiboModel != null) DetailPage(amiiboModel: amiiboModel!),
       ],
       onPopPage: (route, dynamic result) {

@@ -8,8 +8,15 @@ import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageUI extends StatefulWidget {
-  const HomePageUI({Key? key, required this.onGoToDetail}) : super(key: key);
+  const HomePageUI({
+    Key? key,
+    this.type,
+    required this.onChangeType,
+    required this.onGoToDetail,
+  }) : super(key: key);
 
+  final String? type;
+  final ValueSetter<String?> onChangeType;
   final ValueSetter<AmiiboModel> onGoToDetail;
 
   @override
@@ -20,7 +27,7 @@ class _HomePageUIState extends State<HomePageUI> {
   @override
   void initState() {
     super.initState();
-    _setType();
+    _setType(widget.type);
   }
 
   @override
@@ -36,26 +43,11 @@ class _HomePageUIState extends State<HomePageUI> {
           ? null
           : Drawer(
               child: DrawerMenu(
-                onTapAll: () {
-                  _popDrawer(context);
-                  _setType();
-                },
-                onTapFigure: () {
-                  _popDrawer(context);
-                  _setType('figure');
-                },
-                onTapCard: () {
-                  _popDrawer(context);
-                  _setType('card');
-                },
-                onTapYarn: () {
-                  _popDrawer(context);
-                  _setType('yarn');
-                },
-                onTapBand: () {
-                  _popDrawer(context);
-                  _setType('band');
-                },
+                onTapAll: () => widget.onChangeType(null),
+                onTapFigure: () => widget.onChangeType('figure'),
+                onTapCard: () => widget.onChangeType('card'),
+                onTapYarn: () => widget.onChangeType('yarn'),
+                onTapBand: () => widget.onChangeType('band'),
               ),
             ),
       body: OrientationBuilder(
@@ -66,11 +58,11 @@ class _HomePageUIState extends State<HomePageUI> {
                     Expanded(
                       flex: 2,
                       child: DrawerMenu(
-                        onTapAll: _setType,
-                        onTapFigure: () => _setType('figure'),
-                        onTapCard: () => _setType('card'),
-                        onTapYarn: () => _setType('yarn'),
-                        onTapBand: () => _setType('band'),
+                        onTapAll: () => widget.onChangeType(null),
+                        onTapFigure: () => widget.onChangeType('figure'),
+                        onTapCard: () => widget.onChangeType('card'),
+                        onTapYarn: () => widget.onChangeType('yarn'),
+                        onTapBand: () => widget.onChangeType('band'),
                       ),
                     ),
                     Expanded(
@@ -85,9 +77,7 @@ class _HomePageUIState extends State<HomePageUI> {
     );
   }
 
-  void _popDrawer(BuildContext context) => Navigator.of(context).pop();
-
-  void _setType([String? type]) =>
+  void _setType(String? type) =>
       context.read<AmiiboListCubit>().fetchAmiiboData(type);
 }
 

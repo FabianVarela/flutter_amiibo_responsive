@@ -4,16 +4,25 @@ import 'package:flutter_amiibo_responsive/view/detail_page_ui.dart';
 import 'package:flutter_amiibo_responsive/view/home_ui.dart';
 
 class HomePage extends Page<dynamic> {
-  const HomePage({required this.onGoToDetail})
-      : super(key: const ValueKey('HomePage'));
+  HomePage({
+    this.type,
+    required this.onChangeType,
+    required this.onGoToDetail,
+  }) : super(key: ValueKey('HomePage_${type ?? 'none'}'));
 
+  final String? type;
+  final ValueSetter<String?> onChangeType;
   final ValueSetter<AmiiboModel> onGoToDetail;
 
   @override
   Route createRoute(BuildContext context) {
     return MaterialPageRoute<dynamic>(
       settings: this,
-      builder: (_) => HomePageUI(onGoToDetail: onGoToDetail),
+      builder: (_) => HomePageUI(
+        type: type,
+        onChangeType: onChangeType,
+        onGoToDetail: onGoToDetail,
+      ),
     );
   }
 }
