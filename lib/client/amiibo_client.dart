@@ -9,16 +9,15 @@ class AmiiboClient {
   final Client _client;
   final String _baseUrl;
 
+  static const String _apiPath = '/api/amiibo/';
+
   Future<List<AmiiboModel>> getAmiiboList(String? param) async {
     final queryParams = param != null ? <String, dynamic>{'type': param} : null;
-
     final response = await _client.get(
-      Uri.https(_baseUrl, '/api/amiibo/', queryParams),
+      Uri.https(_baseUrl, _apiPath, queryParams),
     );
 
-    if (response.statusCode != 200) {
-      throw Exception();
-    }
+    if (response.statusCode != 200) throw Exception();
 
     final json = jsonDecode(response.body) as Map<String, dynamic>;
     final amiiboList = json['amiibo'] as List<dynamic>;
@@ -27,5 +26,19 @@ class AmiiboClient {
       final castItem = item as Map<String, dynamic>;
       return AmiiboModel.fromJson(castItem);
     }).toList();
+  }
+
+  Future<AmiiboModel> getAmiiboItem(String id) async {
+    final queryParams = <String, dynamic>{'id': id};
+    final response = await _client.get(
+      Uri.https(_baseUrl, _apiPath, queryParams),
+    );
+
+    if (response.statusCode != 200) throw Exception();
+
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    final amiiboItem = json['amiibo'] as Map<String, dynamic>;
+
+    return AmiiboModel.fromJson(amiiboItem);
   }
 }

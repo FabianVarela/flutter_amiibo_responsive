@@ -8,4 +8,7 @@ class AmiiboRepository {
 
   Future<List<AmiiboModel>> getAmiiboList(String? param) =>
       _amiiboClient.getAmiiboList(param);
+
+  Future<AmiiboModel> getAmiiboItem(String id) =>
+      _amiiboClient.getAmiiboItem(id);
 }
