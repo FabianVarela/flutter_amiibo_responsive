@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
-import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
@@ -17,7 +16,7 @@ class HomePageUI extends StatefulWidget {
 
   final String? type;
   final ValueSetter<String?> onChangeType;
-  final ValueSetter<AmiiboModel> onGoToDetail;
+  final ValueSetter<String> onGoToDetail;
 
   @override
   _HomePageUIState createState() => _HomePageUIState();
@@ -27,7 +26,7 @@ class _HomePageUIState extends State<HomePageUI> {
   @override
   void initState() {
     super.initState();
-    _setType(widget.type);
+    context.read<AmiiboListCubit>().fetchAmiiboData(widget.type);
   }
 
   @override
@@ -76,15 +75,12 @@ class _HomePageUIState extends State<HomePageUI> {
       ),
     );
   }
-
-  void _setType(String? type) =>
-      context.read<AmiiboListCubit>().fetchAmiiboData(type);
 }
 
 class _AmiiboList extends StatelessWidget {
   const _AmiiboList({Key? key, required this.onTapAmiibo}) : super(key: key);
 
-  final ValueSetter<AmiiboModel> onTapAmiibo;
+  final ValueSetter<String> onTapAmiibo;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +117,8 @@ class _AmiiboList extends StatelessWidget {
                 for (var i = 0; i < list.length; i++)
                   AmiiboItem(
                     amiibo: list[i],
-                    onSelectAmiibo: () => onTapAmiibo(list[i]),
+                    onSelectAmiibo: () =>
+                        onTapAmiibo('${list[i].head}${list[i].tail}'),
                   )
               ],
             );
