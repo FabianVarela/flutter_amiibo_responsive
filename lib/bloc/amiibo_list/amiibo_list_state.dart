@@ -1,22 +1,22 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 
-enum AmiiboStatus { initial, success, failure }
+enum AmiiboListStatus { initial, success, failure }
 
-class AmiiboState extends Equatable {
-  const AmiiboState({
-    this.status = AmiiboStatus.initial,
+class AmiiboListState extends Equatable {
+  const AmiiboListState({
+    this.status = AmiiboListStatus.initial,
     this.amiiboList = const <AmiiboModel>[],
   });
 
-  final AmiiboStatus status;
+  final AmiiboListStatus status;
   final List<AmiiboModel> amiiboList;
 
-  AmiiboState copyWith({
-    AmiiboStatus? status,
+  AmiiboListState copyWith({
+    AmiiboListStatus? status,
     List<AmiiboModel>? amiiboList,
   }) {
-    return AmiiboState(
+    return AmiiboListState(
       status: status ?? this.status,
       amiiboList: amiiboList ?? this.amiiboList,
     );

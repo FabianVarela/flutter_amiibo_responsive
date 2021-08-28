@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_cubit.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_state.dart';
+import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
+import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
@@ -88,7 +88,7 @@ class _HomePageUIState extends State<HomePageUI> {
   void _popDrawer(BuildContext context) => Navigator.of(context).pop();
 
   void _setType([String? type]) =>
-      context.read<AmiiboCubit>().fetchAmiiboData(type);
+      context.read<AmiiboListCubit>().fetchAmiiboData(type);
 }
 
 class _AmiiboList extends StatelessWidget {
@@ -100,12 +100,12 @@ class _AmiiboList extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return BlocBuilder<AmiiboCubit, AmiiboState>(
+    return BlocBuilder<AmiiboListCubit, AmiiboListState>(
       builder: (_, state) {
         switch (state.status) {
-          case AmiiboStatus.initial:
+          case AmiiboListStatus.initial:
             return const ShimmerGridLoading();
-          case AmiiboStatus.success:
+          case AmiiboListStatus.success:
             final list = state.amiiboList;
 
             if (list.isEmpty) {
@@ -135,7 +135,7 @@ class _AmiiboList extends StatelessWidget {
                   )
               ],
             );
-          case AmiiboStatus.failure:
+          case AmiiboListStatus.failure:
             return const Center(
               child: Text(
                 'Error to get data',

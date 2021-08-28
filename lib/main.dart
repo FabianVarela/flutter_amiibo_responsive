@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_cubit.dart';
+import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
 import 'package:flutter_amiibo_responsive/navigator/router_delegate.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AmiiboCubit(AmiiboRepository(AmiiboClient(Client()))),
+      create: (_) => AmiiboListCubit(AmiiboRepository(AmiiboClient(Client()))),
       child: MaterialApp(
         title: 'Amiibo Responsive App',
         theme: ThemeData(
