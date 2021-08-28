@@ -35,31 +35,50 @@ class DrawerMenu extends StatelessWidget {
           ),
         ),
         ListTile(
-          onTap: onTapAll,
+          onTap: () {
+            onTapAll();
+            _onPopMenuDrawer(context);
+          },
           leading: const Icon(Icons.list, color: Colors.green),
           title: const Text('All', style: textStyle),
         ),
         ListTile(
-          onTap: onTapFigure,
+          onTap: () {
+            onTapFigure();
+            _onPopMenuDrawer(context);
+          },
           leading: const Icon(Icons.account_box, color: Colors.green),
           title: const Text('Figure', style: textStyle),
         ),
         ListTile(
-          onTap: onTapCard,
+          onTap: () {
+            onTapCard();
+            _onPopMenuDrawer(context);
+          },
           leading: const Icon(Icons.card_membership, color: Colors.green),
           title: const Text('Card', style: textStyle),
         ),
         ListTile(
-          onTap: onTapYarn,
+          onTap: () {
+            onTapYarn();
+            _onPopMenuDrawer(context);
+          },
           leading: const Icon(Icons.wallpaper, color: Colors.green),
           title: const Text('Yarn', style: textStyle),
         ),
         ListTile(
-          onTap: onTapBand,
+          onTap: () {
+            onTapBand();
+            _onPopMenuDrawer(context);
+          },
           leading: const Icon(Icons.watch, color: Colors.green),
           title: const Text('Band', style: textStyle),
         ),
       ],
     );
+  }
+
+  void _onPopMenuDrawer(BuildContext context) {
+    if (MediaQuery.of(context).size.width < 840) Navigator.of(context).pop();
   }
 }
