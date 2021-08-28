@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/navigator/page.dart';
+import 'package:flutter_amiibo_responsive/navigator/amiibo_pages.dart';
 
 class AmiiboRouterDelegate extends RouterDelegate<Object>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<Object> {
