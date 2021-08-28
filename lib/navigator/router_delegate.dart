@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/navigator/page.dart';
 
 class AmiiboRouterDelegate extends RouterDelegate<Object>
@@ -21,12 +20,12 @@ class AmiiboRouterDelegate extends RouterDelegate<Object>
     notifyListeners();
   }
 
-  AmiiboModel? _amiiboModel;
+  String? _amiiboId;
 
-  AmiiboModel? get amiiboModel => _amiiboModel;
+  String? get amiiboId => _amiiboId;
 
-  set amiiboModel(AmiiboModel? value) {
-    _amiiboModel = value;
+  set amiiboId(String? value) {
+    _amiiboId = value;
     notifyListeners();
   }
 
@@ -39,14 +38,14 @@ class AmiiboRouterDelegate extends RouterDelegate<Object>
         HomePage(
           type: amiiboType,
           onChangeType: (type) => amiiboType = type,
-          onGoToDetail: (model) => amiiboModel = model,
+          onGoToDetail: (id) => amiiboId = id,
         ),
-        if (amiiboModel != null) DetailPage(amiiboModel: amiiboModel!),
+        if (amiiboId != null) DetailPage(amiiboId: amiiboId!),
       ],
       onPopPage: (route, dynamic result) {
         if (!route.didPop(result)) return false;
 
-        if (amiiboModel != null) amiiboModel = null;
+        if (amiiboId != null) amiiboId = null;
         return true;
       },
     );
