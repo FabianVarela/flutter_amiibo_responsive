@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/view/detail_page_ui.dart';
 import 'package:flutter_amiibo_responsive/view/home_ui.dart';
 
@@ -12,7 +11,7 @@ class HomePage extends Page<dynamic> {
 
   final String? type;
   final ValueSetter<String?> onChangeType;
-  final ValueSetter<AmiiboModel> onGoToDetail;
+  final ValueSetter<String> onGoToDetail;
 
   @override
   Route createRoute(BuildContext context) {
@@ -28,10 +27,10 @@ class HomePage extends Page<dynamic> {
 }
 
 class DetailPage extends Page<dynamic> {
-  const DetailPage({required this.amiiboModel})
+  const DetailPage({required this.amiiboId})
       : super(key: const ValueKey('DetailPage'));
 
-  final AmiiboModel amiiboModel;
+  final String amiiboId;
 
   @override
   Route createRoute(BuildContext context) {
@@ -39,7 +38,7 @@ class DetailPage extends Page<dynamic> {
       settings: this,
       pageBuilder: (_, animation, __) => FadeTransition(
         opacity: animation,
-        child: DetailPageUI(amiibo: amiiboModel),
+        child: DetailPageUI(amiiboId: amiiboId),
       ),
     );
   }
