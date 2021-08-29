@@ -6,8 +6,10 @@ import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailPageUI extends StatefulWidget {
-  const DetailPageUI({Key? key, required this.amiiboId}) : super(key: key);
+  const DetailPageUI({Key? key, this.type, required this.amiiboId})
+      : super(key: key);
 
+  final String? type;
   final String amiiboId;
 
   @override
@@ -18,7 +20,9 @@ class _DetailPageUIState extends State<DetailPageUI> {
   @override
   void initState() {
     super.initState();
-    context.read<AmiiboItemCubit>().fetchAmiiboItem(widget.amiiboId);
+    context
+        .read<AmiiboItemCubit>()
+        .fetchAmiiboItem(widget.type, widget.amiiboId);
   }
 
   @override
