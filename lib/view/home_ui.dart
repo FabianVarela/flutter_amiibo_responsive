@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
@@ -31,49 +32,48 @@ class _HomePageUIState extends State<HomePageUI> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
-        backgroundColor: Colors.redAccent,
-      ),
-      drawer: size.width >= 840
-          ? null
-          : Drawer(
-              child: DrawerMenu(
-                onTapAll: () => widget.onChangeType(null),
-                onTapFigure: () => widget.onChangeType('figure'),
-                onTapCard: () => widget.onChangeType('card'),
-                onTapYarn: () => widget.onChangeType('yarn'),
-                onTapBand: () => widget.onChangeType('band'),
+    return OrientationBuilder(builder: (_, orientation) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
+          backgroundColor: Colors.redAccent,
+        ),
+        drawer: orientation == Orientation.landscape && width >= 800
+            ? null
+            : Drawer(
+                child: DrawerMenu(
+                  onTapAll: () => widget.onChangeType(null),
+                  onTapFigure: () => widget.onChangeType('figure'),
+                  onTapCard: () => widget.onChangeType('card'),
+                  onTapYarn: () => widget.onChangeType('yarn'),
+                  onTapBand: () => widget.onChangeType('band'),
+                ),
               ),
-            ),
-      body: OrientationBuilder(
-        builder: (_, orientation) {
-          return (orientation == Orientation.landscape || size.width >= 840)
-              ? Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: DrawerMenu(
-                        onTapAll: () => widget.onChangeType(null),
-                        onTapFigure: () => widget.onChangeType('figure'),
-                        onTapCard: () => widget.onChangeType('card'),
-                        onTapYarn: () => widget.onChangeType('yarn'),
-                        onTapBand: () => widget.onChangeType('band'),
-                      ),
+        body: orientation == Orientation.landscape && width >= 800
+            ? Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 2,
+                    child: DrawerMenu(
+                      makePop: false,
+                      onTapAll: () => widget.onChangeType(null),
+                      onTapFigure: () => widget.onChangeType('figure'),
+                      onTapCard: () => widget.onChangeType('card'),
+                      onTapYarn: () => widget.onChangeType('yarn'),
+                      onTapBand: () => widget.onChangeType('band'),
                     ),
-                    Expanded(
-                      flex: 5,
-                      child: _AmiiboList(onTapAmiibo: widget.onGoToDetail),
-                    ),
-                  ],
-                )
-              : _AmiiboList(onTapAmiibo: widget.onGoToDetail);
-        },
-      ),
-    );
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: _AmiiboList(onTapAmiibo: widget.onGoToDetail),
+                  ),
+                ],
+              )
+            : _AmiiboList(onTapAmiibo: widget.onGoToDetail),
+      );
+    });
   }
 }
 

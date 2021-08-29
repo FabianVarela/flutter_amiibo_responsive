@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({
     Key? key,
+    this.makePop = true,
     required this.onTapAll,
     required this.onTapFigure,
     required this.onTapCard,
@@ -10,6 +11,7 @@ class DrawerMenu extends StatelessWidget {
     required this.onTapBand,
   }) : super(key: key);
 
+  final bool makePop;
   final VoidCallback onTapAll;
   final VoidCallback onTapFigure;
   final VoidCallback onTapCard;
@@ -79,6 +81,6 @@ class DrawerMenu extends StatelessWidget {
   }
 
   void _onPopMenuDrawer(BuildContext context) {
-    if (MediaQuery.of(context).size.width < 840) Navigator.of(context).pop();
+    if (makePop) Navigator.of(context).pop();
   }
 }
