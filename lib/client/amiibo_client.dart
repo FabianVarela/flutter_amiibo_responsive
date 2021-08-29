@@ -11,8 +11,8 @@ class AmiiboClient {
 
   static const String _apiPath = '/api/amiibo/';
 
-  Future<List<AmiiboModel>> getAmiiboList(String? param) async {
-    final queryParams = param != null ? <String, dynamic>{'type': param} : null;
+  Future<List<AmiiboModel>> getAmiiboList(String? type) async {
+    final queryParams = type != null ? <String, dynamic>{'type': type} : null;
     final response = await _client.get(
       Uri.https(_baseUrl, _apiPath, queryParams),
     );
@@ -28,8 +28,11 @@ class AmiiboClient {
     }).toList();
   }
 
-  Future<AmiiboModel> getAmiiboItem(String id) async {
-    final queryParams = <String, dynamic>{'id': id};
+  Future<AmiiboModel> getAmiiboItem(String? type, String id) async {
+    final queryParams = type != null
+        ? <String, dynamic>{'type': type, 'id': id}
+        : <String, dynamic>{'id': id};
+
     final response = await _client.get(
       Uri.https(_baseUrl, _apiPath, queryParams),
     );

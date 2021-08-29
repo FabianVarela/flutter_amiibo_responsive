@@ -7,11 +7,11 @@ class AmiiboItemCubit extends Cubit<AmiiboItemState> {
 
   final AmiiboRepository _repository;
 
-  Future<void> fetchAmiiboItem(String id) async {
+  Future<void> fetchAmiiboItem(String? type, String id) async {
     emit(state.copyWith(status: AmiiboItemStatus.initial));
 
     try {
-      final result = await _repository.getAmiiboItem(id);
+      final result = await _repository.getAmiiboItem(type, id);
       emit(state.copyWith(
         status: AmiiboItemStatus.success,
         amiiboItem: result,
