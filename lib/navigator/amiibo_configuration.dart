@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 
 class AmiiboPath {
   static const home = 'amiibos';
-  static const List<String> types = ['figure', 'card', 'yarn', 'band'];
   static const detail = 'amiibo';
   static const notFound = '404';
 }
@@ -31,7 +30,9 @@ class AmiiboConfiguration extends Equatable {
 
   bool get isHomeTypePage => type != null && amiiboId == null && !isUnknown;
 
-  bool get isDetailPage => amiiboId != null && !isUnknown;
+  bool get isDetailNoTypePage => type == null && amiiboId != null && !isUnknown;
+
+  bool get isDetailPage => type != null && amiiboId != null && !isUnknown;
 
   bool get isUnknownPage => isUnknown;
 
