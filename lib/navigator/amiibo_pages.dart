@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/view/detail_page_ui.dart';
-import 'package:flutter_amiibo_responsive/view/home_ui.dart';
+import 'package:flutter_amiibo_responsive/view/home_page_ui.dart';
 import 'package:flutter_amiibo_responsive/view/unknown_page_ui.dart';
 
 class HomePage extends Page<dynamic> {
