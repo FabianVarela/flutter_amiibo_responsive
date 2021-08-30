@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 
 class Utilities {
+  static const List<String> types = ['figure', 'card', 'yarn', 'band'];
+
   static DateTime stringToDate(String date) =>
       DateFormat('yyyy-MM-dd').parse(date);
 
