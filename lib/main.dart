@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
+import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_router_delegate.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _routerDelegate = AmiiboRouterDelegate();
+  final _informationParser = AmiiboInfoParser();
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +39,16 @@ class _MyAppState extends State<MyApp> {
           ),
         )
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Amiibo Responsive App',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
         ),
-        home: Router<dynamic>(
-          routerDelegate: _routerDelegate,
-          backButtonDispatcher: RootBackButtonDispatcher(),
-        ),
+        routerDelegate: _routerDelegate,
+        routeInformationParser: _informationParser,
+        backButtonDispatcher: RootBackButtonDispatcher(),
       ),
     );
   }
