@@ -28,8 +28,8 @@ class HomePage extends Page<dynamic> {
 }
 
 class DetailPage extends Page<dynamic> {
-  const DetailPage({this.type, required this.amiiboId})
-      : super(key: const ValueKey('DetailPage'));
+  DetailPage({this.type, required this.amiiboId})
+      : super(key: ValueKey('DetailPage_$amiiboId'));
 
   final String? type;
   final String amiiboId;
