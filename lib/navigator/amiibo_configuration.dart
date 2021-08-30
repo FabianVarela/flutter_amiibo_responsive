@@ -4,6 +4,7 @@ class AmiiboPath {
   static const amiiboHome = 'amiibos';
   static const amiiboDetail = 'amiibo';
   static const List<String> types = ['figure', 'card', 'yarn', 'band'];
+  static const amiiboNotFound = '404';
 }
 
 class AmiiboConfiguration extends Equatable {
