@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
+import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
@@ -45,10 +46,10 @@ class _HomePageUIState extends State<HomePageUI> {
             : Drawer(
                 child: DrawerMenu(
                   onTapAll: () => widget.onChangeType(null),
-                  onTapFigure: () => widget.onChangeType('figure'),
-                  onTapCard: () => widget.onChangeType('card'),
-                  onTapYarn: () => widget.onChangeType('yarn'),
-                  onTapBand: () => widget.onChangeType('band'),
+                  onTapFigure: () => widget.onChangeType(Utilities.types[0]),
+                  onTapCard: () => widget.onChangeType(Utilities.types[1]),
+                  onTapYarn: () => widget.onChangeType(Utilities.types[2]),
+                  onTapBand: () => widget.onChangeType(Utilities.types[3]),
                 ),
               ),
         body: orientation == Orientation.landscape && width >= 800
@@ -59,10 +60,12 @@ class _HomePageUIState extends State<HomePageUI> {
                     child: DrawerMenu(
                       makePop: false,
                       onTapAll: () => widget.onChangeType(null),
-                      onTapFigure: () => widget.onChangeType('figure'),
-                      onTapCard: () => widget.onChangeType('card'),
-                      onTapYarn: () => widget.onChangeType('yarn'),
-                      onTapBand: () => widget.onChangeType('band'),
+                      onTapFigure: () => widget.onChangeType(
+                        Utilities.types[0],
+                      ),
+                      onTapCard: () => widget.onChangeType(Utilities.types[1]),
+                      onTapYarn: () => widget.onChangeType(Utilities.types[2]),
+                      onTapBand: () => widget.onChangeType(Utilities.types[3]),
                     ),
                   ),
                   Expanded(
