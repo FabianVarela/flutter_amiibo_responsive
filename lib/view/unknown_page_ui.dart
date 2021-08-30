@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class UnknownPageUI extends StatelessWidget {
@@ -28,7 +29,7 @@ class UnknownPageUI extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             const Text(
-              'Oops!!! Page not found',
+              kIsWeb ? 'Oops!!! Page not found' : 'Oops!!! Screen not found',
               style: TextStyle(fontSize: 30),
             ),
           ],
