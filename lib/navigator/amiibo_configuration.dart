@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class AmiiboPath {
-  static const amiiboHome = 'amiibos';
-  static const amiiboDetail = 'amiibo';
+  static const home = 'amiibos';
   static const List<String> types = ['figure', 'card', 'yarn', 'band'];
-  static const amiiboNotFound = '404';
+  static const detail = 'amiibo';
+  static const notFound = '404';
 }
 
 class AmiiboConfiguration extends Equatable {
