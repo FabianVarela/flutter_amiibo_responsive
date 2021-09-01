@@ -1,16 +1,34 @@
-# flutter_amiibo_responsive
+# Flutter · Amiibo App
 
-App that connect with Amiibo API and set responsive design
+![Coverage](./coverage_badge.svg?sanitize=true)
 
-## Getting Started
+App in Flutter that connect with Amiibo API. Also set the responsive design principle.
 
-This project is a starting point for a Flutter application.
+### Getting Started
 
-A few resources to get you started if this is your first Flutter project:
+This project is available in Android, iOS, Web and Desktop
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Navigator 2.0
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Actually the project has been implemented with **Navigator 2.0** or **Route API**.
+
+#### Deep linking
+
+For using deep links with flutter without any packages, review this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking)
+
+### Used packages
+
+------
+#### Dependencies
+- Http (http)
+- Flutter BLoC (flutter_bloc)
+- Equatable (equatable)
+- Intl (intl)
+- Shimmer animation (shimmer_animation)
+
+#### Dev dependencies
+- Mocktail (mocktail) **Coming soon**
+- Mockito (mockito) **Coming soon**
+- BLoC test (bloc_test) **Coming soon**
+- Very Good Analysis (very_good_analysis)
+------
