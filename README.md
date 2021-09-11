@@ -16,6 +16,16 @@ Actually the project has been implemented with **Navigator 2.0** or **Route API*
 
 For using deep links with flutter without any packages, review this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking)
 
+Run deep links in **iOS**, use the command below:
+```bash
+xcrun simctl openurl booted amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+```
+
+Run deep links in **Android**, use the command below:
+```bash
+~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+```
+
 ### Used packages
 
 ------
