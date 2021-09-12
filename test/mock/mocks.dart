@@ -1,17 +1,22 @@
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
+import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
 
-/// Client
+/// Http Client
 
 class MockClient extends Mock implements Client {}
 
 class MyUriFake extends Fake implements Uri {}
 
-/// Repository
+/// Client
 
 class MockAmiiboClient extends Mock implements AmiiboClient {}
+
+/// Repository
+
+class MockAmiiboRepository extends Mock implements AmiiboRepository {}
 
 /// Models
 
