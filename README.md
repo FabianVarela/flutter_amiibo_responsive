@@ -37,8 +37,7 @@ Run deep links in **Android**, use the command below:
 - Shimmer animation (shimmer_animation)
 
 #### Dev dependencies
-- Mocktail (mocktail) **Coming soon**
-- Mockito (mockito) **Coming soon**
+- Mocktail (mocktail)
 - BLoC test (bloc_test) **Coming soon**
 - Very Good Analysis (very_good_analysis)
 ------
