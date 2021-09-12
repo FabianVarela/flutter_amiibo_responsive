@@ -1,8 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
+
+/// Routes
+
+class MockNavigator extends Mock implements NavigatorObserver {}
+
+class MyRouteFake extends Fake implements Route<dynamic> {}
 
 /// Http Client
 
