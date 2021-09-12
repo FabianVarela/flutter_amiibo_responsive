@@ -38,6 +38,6 @@ Run deep links in **Android**, use the command below:
 
 #### Dev dependencies
 - Mocktail (mocktail)
-- BLoC test (bloc_test) **Coming soon**
+- BLoC test (bloc_test)
 - Very Good Analysis (very_good_analysis)
 ------
