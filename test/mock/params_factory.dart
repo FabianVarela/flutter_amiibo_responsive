@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
+
 const String jsonListResponse =
     '{ "amiibo": [ { "amiiboSeries": "Legend Of Zelda", '
     '"character": "Zelda", "gameSeries": "The Legend of Zelda", '
@@ -17,3 +21,8 @@ const String jsonDetailResponse =
 const amiiboType = 'figure';
 
 const amiiboId = '01010000000e0002';
+
+AmiiboModel getAmiiboModel() {
+  final amiiboMap = jsonDecode(jsonDetailResponse) as Map<String, dynamic>;
+  return AmiiboModel.fromJson(amiiboMap['amiibo'] as Map<String, dynamic>);
+}
