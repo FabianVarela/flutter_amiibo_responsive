@@ -24,6 +24,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^0.1.4
+  network_image_mock: ^2.0.1
   remove_from_coverage: ^2.0.0
   very_good_analysis: ^2.3.0
 
