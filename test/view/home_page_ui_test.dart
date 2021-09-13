@@ -38,6 +38,15 @@ void main() {
       registerFallbackValue(MyRouteFake());
     });
 
+    Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
+      await mockNetworkImagesFor(() {
+        return tester.pumpWidget(MultiBlocProvider(
+          providers: [BlocProvider.value(value: amiiboListCubit)],
+          child: MaterialApp(navigatorObservers: [mockNavigator], home: child),
+        ));
+      });
+    }
+
     testWidgets('Show $HomePageUI screen with data', (tester) async {
       final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
@@ -47,15 +56,10 @@ void main() {
         ),
       );
 
-      await mockNetworkImagesFor(() {
-        return tester.pumpWidget(MultiBlocProvider(
-          providers: [BlocProvider.value(value: amiiboListCubit)],
-          child: MaterialApp(
-            navigatorObservers: [mockNavigator],
-            home: HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
-          ),
-        ));
-      });
+      await _pumpMainScreen(
+        tester,
+        HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
+      );
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
@@ -90,15 +94,10 @@ void main() {
         ),
       );
 
-      await mockNetworkImagesFor(() {
-        return tester.pumpWidget(MultiBlocProvider(
-          providers: [BlocProvider.value(value: amiiboListCubit)],
-          child: MaterialApp(
-            navigatorObservers: [mockNavigator],
-            home: HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
-          ),
-        ));
-      });
+      await _pumpMainScreen(
+        tester,
+        HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
+      );
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
@@ -124,15 +123,10 @@ void main() {
         ),
       );
 
-      await mockNetworkImagesFor(() {
-        return tester.pumpWidget(BlocProvider<AmiiboListCubit>(
-          create: (_) => amiiboListCubit,
-          child: MaterialApp(
-            navigatorObservers: [mockNavigator],
-            home: HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
-          ),
-        ));
-      });
+      await _pumpMainScreen(
+        tester,
+        HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
+      );
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
