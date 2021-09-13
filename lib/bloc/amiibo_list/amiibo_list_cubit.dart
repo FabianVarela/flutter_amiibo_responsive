@@ -8,7 +8,7 @@ class AmiiboListCubit extends Cubit<AmiiboListState> {
   final AmiiboRepository _repository;
 
   Future<void> fetchAmiiboData(String? param) async {
-    emit(state.copyWith(status: AmiiboListStatus.initial));
+    emit(state.copyWith(status: AmiiboListStatus.initial, amiiboList: []));
 
     try {
       final resultList = await _repository.getAmiiboList(param);
@@ -17,7 +17,7 @@ class AmiiboListCubit extends Cubit<AmiiboListState> {
         amiiboList: resultList,
       ));
     } on Exception {
-      emit(state.copyWith(status: AmiiboListStatus.failure));
+      emit(state.copyWith(status: AmiiboListStatus.failure, amiiboList: []));
     }
   }
 }
