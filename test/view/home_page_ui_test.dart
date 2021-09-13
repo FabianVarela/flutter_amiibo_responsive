@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/view/home_page_ui.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
@@ -31,7 +30,6 @@ void main() {
       amiiboRepository = AmiiboRepository(mockAmiiboClient);
       amiiboListCubit = AmiiboListCubit(amiiboRepository);
 
-      registerFallbackValue(const AmiiboListState());
       registerFallbackValue(MyAmiiboFake());
 
       mockNavigator = MockNavigator();
