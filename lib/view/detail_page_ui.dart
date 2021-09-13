@@ -31,96 +31,95 @@ class _DetailPageUIState extends State<DetailPageUI> {
 
     return BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
       builder: (_, state) {
-        String? title;
-        Widget? child;
-
-        switch (state.status) {
-          case AmiiboItemStatus.initial:
-            title = 'Loading';
-            child = const Center(
-              child: CircularProgressIndicator(color: Colors.redAccent),
+        return state.when(
+          initial: () {
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.redAccent,
+                title: const Text('Loading', style: TextStyle(fontSize: 24)),
+              ),
+              body: const Center(
+                child: CircularProgressIndicator(color: Colors.redAccent),
+              ),
             );
-            break;
-          case AmiiboItemStatus.success:
-            final item = state.amiiboItem!;
-
-            title = item.name;
-            child = OrientationBuilder(
-              builder: (_, orientation) {
-                return (width >= 600 || orientation == Orientation.landscape)
-                    ? SingleChildScrollView(
-                        padding: const EdgeInsets.all(24),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+          },
+          success: (item) {
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.redAccent,
+                title: Text(item.name, style: const TextStyle(fontSize: 24)),
+              ),
+              body: OrientationBuilder(
+                builder: (_, orientation) {
+                  return (width >= 600 || orientation == Orientation.landscape)
+                      ? SingleChildScrollView(
+                          padding: const EdgeInsets.all(24),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  children: <Widget>[
+                                    _AmiiboImage(
+                                      tagId: '${item.head}_${item.tail}',
+                                      imageUrl: item.imageUrl,
+                                    ),
+                                    _AmiiboDetail(
+                                      name: item.name,
+                                      series: item.amiiboSeries,
+                                      type: item.type,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: const <Widget>[
+                                    _AmiiboButtons(),
+                                    _AmiiboDescription(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : ListView(
                           children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                children: <Widget>[
-                                  _AmiiboImage(
-                                    tagId: '${item.head}_${item.tail}',
-                                    imageUrl: item.imageUrl,
-                                  ),
-                                  _AmiiboDetail(
-                                    name: item.name,
-                                    series: item.amiiboSeries,
-                                    type: item.type,
-                                  ),
-                                ],
-                              ),
+                            _AmiiboImage(
+                              tagId: '${item.head}_${item.tail}',
+                              imageUrl: item.imageUrl,
                             ),
-                            Expanded(
-                              child: Column(
-                                children: const <Widget>[
-                                  _AmiiboButtons(),
-                                  _AmiiboDescription(),
-                                ],
-                              ),
+                            _AmiiboDetail(
+                              name: item.name,
+                              series: item.amiiboSeries,
+                              type: item.type,
                             ),
+                            const _AmiiboButtons(),
+                            const _AmiiboDescription(),
                           ],
-                        ),
-                      )
-                    : ListView(
-                        children: <Widget>[
-                          _AmiiboImage(
-                            tagId: '${item.head}_${item.tail}',
-                            imageUrl: item.imageUrl,
-                          ),
-                          _AmiiboDetail(
-                            name: item.name,
-                            series: item.amiiboSeries,
-                            type: item.type,
-                          ),
-                          const _AmiiboButtons(),
-                          const _AmiiboDescription(),
-                        ],
-                      );
-              },
+                        );
+                },
+              ),
             );
-            break;
-          case AmiiboItemStatus.failure:
-            title = 'Error';
-            child = const Center(
-              child: Text(
-                'Error to get data',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+          },
+          error: () {
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.redAccent,
+                title: const Text('Error', style: TextStyle(fontSize: 24)),
+              ),
+              body: const Center(
+                child: Text(
+                  'Error to get data',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             );
-            break;
-        }
-
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.redAccent,
-            title: Text(
-              title,
-              style: const TextStyle(fontSize: 24),
-            ),
-          ),
-          body: child,
+          },
         );
       },
     );
