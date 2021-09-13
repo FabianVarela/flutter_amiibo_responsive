@@ -80,6 +80,32 @@ void main() {
       expect(find.byType(Image), findsOneWidget);
     });
 
+    testWidgets('Show $DetailPage screen portrait with data', (tester) async {
+      tester.binding.window.physicalSizeTestValue = const Size(400, 800);
+
+      final model = getAmiiboModel();
+      when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
+        (_) => Future.delayed(
+          const Duration(milliseconds: 100),
+          () => Future.value(model),
+        ),
+      );
+
+      await _pumpMainScreen(
+        tester,
+        DetailPageUI(amiiboId: '${model.head}${model.tail}'),
+      );
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+
+      expect(find.byType(ListView), findsOneWidget);
+      expect(find.byType(Image), findsOneWidget);
+
+      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    });
+
     testWidgets('Show $DetailPage screen with error', (tester) async {
       final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(

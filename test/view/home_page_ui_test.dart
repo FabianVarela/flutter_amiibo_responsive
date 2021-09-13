@@ -86,6 +86,41 @@ void main() {
       ]);
     });
 
+    testWidgets('Show $HomePageUI screen portrait with data', (tester) async {
+      tester.binding.window.physicalSizeTestValue = const Size(400, 800);
+
+      final model = getAmiiboModel();
+      when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
+        (_) => Future.delayed(
+          const Duration(milliseconds: 100),
+          () => Future.value([model]),
+        ),
+      );
+
+      await _pumpMainScreen(
+        tester,
+        HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
+      );
+
+      final finderIconMenu = find.byIcon(Icons.menu);
+
+      expect(finderIconMenu, findsOneWidget);
+      expect(find.byType(ShimmerGridLoading), findsOneWidget);
+
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ShimmerGridLoading), findsNothing);
+      expect(find.byType(GridView), findsOneWidget);
+
+      await tester.tap(finderIconMenu);
+      await tester.pump();
+
+      expect(find.byType(Drawer), findsOneWidget);
+      expect(find.byType(DrawerMenu), findsOneWidget);
+
+      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    });
+
     testWidgets('Show $HomePageUI screen with empty data', (tester) async {
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
