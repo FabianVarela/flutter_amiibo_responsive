@@ -3,21 +3,18 @@ import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AmiiboItemCubit extends Cubit<AmiiboItemState> {
-  AmiiboItemCubit(this._repository) : super(const AmiiboItemState());
+  AmiiboItemCubit(this._repository) : super(const AmiiboItemStateInitial());
 
   final AmiiboRepository _repository;
 
   Future<void> fetchAmiiboItem(String? type, String id) async {
-    emit(state.copyWith(status: AmiiboItemStatus.initial));
+    emit(const AmiiboItemStateInitial());
 
     try {
       final result = await _repository.getAmiiboItem(type, id);
-      emit(state.copyWith(
-        status: AmiiboItemStatus.success,
-        amiiboItem: result,
-      ));
+      emit(AmiiboItemStateSuccess(result));
     } on Exception {
-      emit(state.copyWith(status: AmiiboItemStatus.failure));
+      emit(const AmiiboItemStateError());
     }
   }
 }
