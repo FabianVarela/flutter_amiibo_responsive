@@ -39,5 +39,6 @@ Run deep links in **Android**, use the command below:
 #### Dev dependencies
 - Mocktail (mocktail)
 - BLoC test (bloc_test)
+- Network Image Mock (network_image_mock)
 - Very Good Analysis (very_good_analysis)
 ------
