@@ -9,16 +9,12 @@ import '../mock/mocks.dart';
 import '../mock/params_factory.dart';
 
 void main() {
-  const amiiboListState = AmiiboListState();
-
   late MockAmiiboRepository mockAmiiboRepository;
   late AmiiboListCubit amiiboListCubit;
 
   setUpAll(() {
     mockAmiiboRepository = MockAmiiboRepository();
     amiiboListCubit = AmiiboListCubit(mockAmiiboRepository);
-
-    registerFallbackValue(amiiboListState);
   });
 
   group('$AmiiboListCubit', () {
@@ -32,17 +28,10 @@ void main() {
         return amiiboListCubit;
       },
       act: (cubit) => cubit.fetchAmiiboData(null),
-      expect: () {
-        final amiiboInitial = amiiboListState.copyWith(
-          status: AmiiboListStatus.initial,
-        );
-        final amiiboSuccess = amiiboListState.copyWith(
-          status: AmiiboListStatus.success,
-          amiiboList: [getAmiiboModel()],
-        );
-
-        return <AmiiboListState>[amiiboInitial, amiiboSuccess];
-      },
+      expect: () => <AmiiboListState>[
+        const AmiiboListStateInitial(),
+        AmiiboListStateSuccess([getAmiiboModel()]),
+      ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboList(any()));
         verifyNoMoreInteractions(mockAmiiboRepository);
