@@ -1,27 +1,14 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum AmiiboItemStatus { initial, success, failure }
+part 'amiibo_item_state.freezed.dart';
 
-class AmiiboItemState extends Equatable {
-  const AmiiboItemState({
-    this.status = AmiiboItemStatus.initial,
-    this.amiiboItem,
-  });
+@freezed
+class AmiiboItemState with _$AmiiboItemState {
+  const factory AmiiboItemState.initial() = AmiiboItemStateInitial;
 
-  final AmiiboItemStatus status;
-  final AmiiboModel? amiiboItem;
+  const factory AmiiboItemState.success(AmiiboModel amiiboItem) =
+      AmiiboItemStateSuccess;
 
-  AmiiboItemState copyWith({
-    AmiiboItemStatus? status,
-    AmiiboModel? amiiboItem,
-  }) {
-    return AmiiboItemState(
-      status: status ?? this.status,
-      amiiboItem: amiiboItem ?? this.amiiboItem,
-    );
-  }
-
-  @override
-  List<Object?> get props => [status, amiiboItem];
+  const factory AmiiboItemState.error() = AmiiboItemStateError;
 }
