@@ -91,13 +91,10 @@ class _AmiiboList extends StatelessWidget {
 
     return BlocBuilder<AmiiboListCubit, AmiiboListState>(
       builder: (_, state) {
-        switch (state.status) {
-          case AmiiboListStatus.initial:
-            return const ShimmerGridLoading();
-          case AmiiboListStatus.success:
-            final list = state.amiiboList;
-
-            if (list.isEmpty) {
+        return state.when(
+          initial: () => const ShimmerGridLoading(),
+          success: (amiiboList) {
+            if (amiiboList.isEmpty) {
               return const Center(
                 child: Text(
                   'No data found',
@@ -117,26 +114,26 @@ class _AmiiboList extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               childAspectRatio: 1 / 1.2,
               children: <Widget>[
-                for (var i = 0; i < list.length; i++)
+                for (var i = 0; i < amiiboList.length; i++)
                   AmiiboItem(
-                    amiibo: list[i],
-                    onSelectAmiibo: () =>
-                        onTapAmiibo('${list[i].head}${list[i].tail}'),
+                    amiibo: amiiboList[i],
+                    onSelectAmiibo: () => onTapAmiibo(
+                        '${amiiboList[i].head}${amiiboList[i].tail}'),
                   )
               ],
             );
-          case AmiiboListStatus.failure:
-            return const Center(
-              child: Text(
-                'Error to get data',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+          },
+          error: () => const Center(
+            child: Text(
+              'Error to get data',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
-            );
-        }
+            ),
+          ),
+        );
       },
     );
   }
