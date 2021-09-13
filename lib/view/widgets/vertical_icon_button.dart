@@ -19,17 +19,16 @@ class VerticalIconButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(5),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(icon, color: color),
             Container(
-              margin: const EdgeInsets.only(top: 8),
+              margin: const EdgeInsets.only(top: 5),
               child: Text(
                 text.toUpperCase(),
-                style: TextStyle(fontSize: 12, color: color),
+                style: TextStyle(fontSize: 10, color: color),
               ),
             )
           ],
