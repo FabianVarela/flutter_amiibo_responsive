@@ -93,8 +93,8 @@ class _AmiiboList extends StatelessWidget {
       builder: (_, state) {
         return state.when(
           initial: () => const ShimmerGridLoading(),
-          success: (amiiboList) {
-            if (amiiboList.isEmpty) {
+          success: (list) {
+            if (list.isEmpty) {
               return const Center(
                 child: Text(
                   'No data found',
@@ -114,11 +114,11 @@ class _AmiiboList extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               childAspectRatio: 1 / 1.2,
               children: <Widget>[
-                for (var i = 0; i < amiiboList.length; i++)
+                for (var i = 0; i < list.length; i++)
                   AmiiboItem(
-                    amiibo: amiiboList[i],
-                    onSelectAmiibo: () => onTapAmiibo(
-                        '${amiiboList[i].head}${amiiboList[i].tail}'),
+                    amiibo: list[i],
+                    onSelectAmiibo: () =>
+                        onTapAmiibo('${list[i].head}${list[i].tail}'),
                   )
               ],
             );
