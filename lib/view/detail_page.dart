@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_state.dart';
+import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DetailPageUI extends StatefulWidget {
-  const DetailPageUI({super.key, this.type, required this.amiiboId});
+class DetailPage extends StatelessWidget {
+  const DetailPage({super.key, this.type, required this.amiiboId});
 
   final String? type;
   final String amiiboId;
 
   @override
-  DetailPageUIState createState() => DetailPageUIState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => AmiiboItemCubit(context.read<AmiiboRepository>()),
+      child: DetailView(type: type, amiiboId: amiiboId),
+    );
+  }
 }
 
-class DetailPageUIState extends State<DetailPageUI> {
+class DetailView extends StatefulWidget {
+  const DetailView({super.key, this.type, required this.amiiboId});
+
+  final String? type;
+  final String amiiboId;
+
+  @override
+  DetailViewState createState() => DetailViewState();
+}
+
+class DetailViewState extends State<DetailView> {
   @override
   void initState() {
     super.initState();
