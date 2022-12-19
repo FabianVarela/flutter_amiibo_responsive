@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
-import 'package:flutter_amiibo_responsive/utils/utilities.dart';
+import 'package:flutter_amiibo_responsive/utils/enum.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
@@ -12,12 +12,12 @@ class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
     this.type,
-    required this.onChangeType,
+    required this.onChange,
     required this.onGoToDetail,
   });
 
   final String? type;
-  final ValueSetter<String?> onChangeType;
+  final ValueSetter<AmiiboType?> onChange;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
       create: (_) => AmiiboListCubit(context.read<AmiiboRepository>()),
       child: HomePageView(
         type: type,
-        onChangeType: onChangeType,
+        onChange: onChange,
         onGoToDetail: onGoToDetail,
       ),
     );
@@ -37,12 +37,12 @@ class HomePageView extends StatefulWidget {
   const HomePageView({
     super.key,
     this.type,
-    required this.onChangeType,
+    required this.onChange,
     required this.onGoToDetail,
   });
 
   final String? type;
-  final ValueSetter<String?> onChangeType;
+  final ValueSetter<AmiiboType?> onChange;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -71,11 +71,11 @@ class HomePageViewState extends State<HomePageView> {
               ? null
               : Drawer(
                   child: DrawerMenu(
-                    onTapAll: () => widget.onChangeType(null),
-                    onTapFigure: () => widget.onChangeType(Utilities.types[0]),
-                    onTapCard: () => widget.onChangeType(Utilities.types[1]),
-                    onTapYarn: () => widget.onChangeType(Utilities.types[2]),
-                    onTapBand: () => widget.onChangeType(Utilities.types[3]),
+                    onTapAll: () => widget.onChange(null),
+                    onTapFigure: () => widget.onChange(AmiiboType.figure),
+                    onTapCard: () => widget.onChange(AmiiboType.card),
+                    onTapYarn: () => widget.onChange(AmiiboType.yarn),
+                    onTapBand: () => widget.onChange(AmiiboType.band),
                   ),
                 ),
           body: orientation == Orientation.landscape && width >= 800
@@ -85,16 +85,11 @@ class HomePageViewState extends State<HomePageView> {
                       flex: 2,
                       child: DrawerMenu(
                         makePop: false,
-                        onTapAll: () => widget.onChangeType(null),
-                        onTapFigure: () => widget.onChangeType(
-                          Utilities.types[0],
-                        ),
-                        onTapCard: () =>
-                            widget.onChangeType(Utilities.types[1]),
-                        onTapYarn: () =>
-                            widget.onChangeType(Utilities.types[2]),
-                        onTapBand: () =>
-                            widget.onChangeType(Utilities.types[3]),
+                        onTapAll: () => widget.onChange(null),
+                        onTapFigure: () => widget.onChange(AmiiboType.figure),
+                        onTapCard: () => widget.onChange(AmiiboType.card),
+                        onTapYarn: () => widget.onChange(AmiiboType.yarn),
+                        onTapBand: () => widget.onChange(AmiiboType.band),
                       ),
                     ),
                     Expanded(

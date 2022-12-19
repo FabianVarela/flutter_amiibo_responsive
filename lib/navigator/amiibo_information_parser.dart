@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_configuration.dart';
-import 'package:flutter_amiibo_responsive/utils/utilities.dart';
+import 'package:flutter_amiibo_responsive/utils/enum.dart';
 
 class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
   @override
@@ -18,7 +18,7 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
       }
     } else if (segments.length == 2) {
       if (segments[0] == AmiiboPath.home) {
-        if (Utilities.types.contains(segments[1])) {
+        if (_existAmiiboType(segments[1])) {
           return AmiiboConfiguration.home(valueType: segments[1]);
         }
       }
@@ -30,7 +30,7 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
       }
     } else if (segments.length == 4) {
       if (segments[0] == AmiiboPath.home) {
-        if (Utilities.types.contains(segments[1])) {
+        if (_existAmiiboType(segments[1])) {
           if (segments[2] == AmiiboPath.detail) {
             return AmiiboConfiguration.detail(
               valueType: segments[1],
@@ -70,5 +70,10 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
     }
 
     return null;
+  }
+
+  bool _existAmiiboType(String type) {
+    final existsType = AmiiboType.values.where((el) => el.name == type);
+    return existsType.isNotEmpty;
   }
 }
