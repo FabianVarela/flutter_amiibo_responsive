@@ -6,17 +6,16 @@ import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailPageUI extends StatefulWidget {
-  const DetailPageUI({Key? key, this.type, required this.amiiboId})
-      : super(key: key);
+  const DetailPageUI({super.key, this.type, required this.amiiboId});
 
   final String? type;
   final String amiiboId;
 
   @override
-  _DetailPageUIState createState() => _DetailPageUIState();
+  DetailPageUIState createState() => DetailPageUIState();
 }
 
-class _DetailPageUIState extends State<DetailPageUI> {
+class DetailPageUIState extends State<DetailPageUI> {
   @override
   void initState() {
     super.initState();
@@ -127,8 +126,7 @@ class _DetailPageUIState extends State<DetailPageUI> {
 }
 
 class _AmiiboImage extends StatelessWidget {
-  const _AmiiboImage({Key? key, required this.tagId, required this.imageUrl})
-      : super(key: key);
+  const _AmiiboImage({required this.tagId, required this.imageUrl});
 
   final String tagId;
   final String imageUrl;
@@ -144,11 +142,10 @@ class _AmiiboImage extends StatelessWidget {
 
 class _AmiiboDetail extends StatelessWidget {
   const _AmiiboDetail({
-    Key? key,
     required this.name,
     required this.series,
     required this.type,
-  }) : super(key: key);
+  });
 
   final String name;
   final String series;
@@ -190,7 +187,7 @@ class _AmiiboDetail extends StatelessWidget {
 }
 
 class _AmiiboButtons extends StatelessWidget {
-  const _AmiiboButtons({Key? key}) : super(key: key);
+  const _AmiiboButtons();
 
   @override
   Widget build(BuildContext context) {
@@ -218,7 +215,7 @@ class _AmiiboButtons extends StatelessWidget {
 }
 
 class _AmiiboDescription extends StatelessWidget {
-  const _AmiiboDescription({Key? key}) : super(key: key);
+  const _AmiiboDescription();
 
   @override
   Widget build(BuildContext context) {

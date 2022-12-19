@@ -15,7 +15,7 @@ class HomePage extends Page<dynamic> {
   final ValueSetter<String> onGoToDetail;
 
   @override
-  Route createRoute(BuildContext context) {
+  Route<dynamic> createRoute(BuildContext context) {
     return MaterialPageRoute<dynamic>(
       settings: this,
       builder: (_) => HomePageUI(
@@ -35,7 +35,7 @@ class DetailPage extends Page<dynamic> {
   final String amiiboId;
 
   @override
-  Route createRoute(BuildContext context) {
+  Route<dynamic> createRoute(BuildContext context) {
     return PageRouteBuilder<dynamic>(
       settings: this,
       pageBuilder: (_, animation, __) => FadeTransition(
@@ -48,7 +48,7 @@ class DetailPage extends Page<dynamic> {
 
 class UnknownPage extends Page<dynamic> {
   @override
-  Route createRoute(BuildContext context) {
+  Route<dynamic> createRoute(BuildContext context) {
     return PageRouteBuilder<dynamic>(
       settings: this,
       pageBuilder: (_, animation, __) => ScaleTransition(

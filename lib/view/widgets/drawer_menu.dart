@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({
-    Key? key,
+    super.key,
     this.makePop = true,
     required this.onTapAll,
     required this.onTapFigure,
     required this.onTapCard,
     required this.onTapYarn,
     required this.onTapBand,
-  }) : super(key: key);
+  });
 
   final bool makePop;
   final VoidCallback onTapAll;
@@ -21,7 +21,10 @@ class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
-        fontSize: 16, fontWeight: FontWeight.w300, color: Colors.green);
+      fontSize: 16,
+      fontWeight: FontWeight.w300,
+      color: Colors.green,
+    );
 
     return ListView(
       padding: EdgeInsets.zero,

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class UnknownPageUI extends StatelessWidget {
-  const UnknownPageUI({Key? key}) : super(key: key);
+  const UnknownPageUI({super.key});
 
   @override
   Widget build(BuildContext context) {

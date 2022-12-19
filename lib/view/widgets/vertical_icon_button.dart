@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class VerticalIconButton extends StatelessWidget {
   const VerticalIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.text,
     this.color = Colors.black,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final String text;

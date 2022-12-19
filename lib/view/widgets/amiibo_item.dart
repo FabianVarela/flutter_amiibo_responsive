@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AmiiboItem extends StatelessWidget {
   const AmiiboItem({
-    Key? key,
+    super.key,
     required this.amiibo,
     required this.onSelectAmiibo,
-  }) : super(key: key);
+  });
 
   final AmiiboModel amiibo;
   final VoidCallback onSelectAmiibo;
