@@ -1,5 +1,5 @@
 name: flutter_amiibo_responsive
-description: Create app connect with amiibo API and setresponsive
+description: Create app connect with amiibo API and set responsive
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -7,6 +7,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
+  flutter: 3.3.10
 
 dependencies:
   cupertino_icons: ^1.0.5
@@ -18,6 +19,7 @@ dependencies:
   google_fonts: ^3.0.1
   http: ^0.13.5
   intl: ^0.18.0
+  json_annotation: ^4.7.0
   shimmer_animation: ^2.1.0+1
   window_size:
     git:
@@ -34,6 +36,7 @@ dev_dependencies:
   freezed: ^2.2.0
   integration_test:
     sdk: flutter
+  json_serializable: ^6.5.4
   mocktail: ^0.3.0
   network_image_mock: ^2.1.1
   remove_from_coverage: ^2.0.0
