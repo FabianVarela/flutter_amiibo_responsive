@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'amiibo_list_state.dart';
 
@@ -10,29 +12,7 @@ part of 'amiibo_list_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$AmiiboListStateTearOff {
-  const _$AmiiboListStateTearOff();
-
-  AmiiboListStateInitial initial() {
-    return const AmiiboListStateInitial();
-  }
-
-  AmiiboListStateSuccess success(List<AmiiboModel> amiiboList) {
-    return AmiiboListStateSuccess(
-      amiiboList,
-    );
-  }
-
-  AmiiboListStateError error() {
-    return const AmiiboListStateError();
-  }
-}
-
-/// @nodoc
-const $AmiiboListState = _$AmiiboListStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$AmiiboListState {
@@ -41,6 +21,13 @@ mixin _$AmiiboListState {
     required TResult Function() initial,
     required TResult Function(List<AmiiboModel> amiiboList) success,
     required TResult Function() error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(List<AmiiboModel> amiiboList)? success,
+    TResult? Function()? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,6 +46,13 @@ mixin _$AmiiboListState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AmiiboListStateInitial value)? initial,
+    TResult? Function(AmiiboListStateSuccess value)? success,
+    TResult? Function(AmiiboListStateError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AmiiboListStateInitial value)? initial,
     TResult Function(AmiiboListStateSuccess value)? success,
@@ -72,36 +66,34 @@ mixin _$AmiiboListState {
 abstract class $AmiiboListStateCopyWith<$Res> {
   factory $AmiiboListStateCopyWith(
           AmiiboListState value, $Res Function(AmiiboListState) then) =
-      _$AmiiboListStateCopyWithImpl<$Res>;
+      _$AmiiboListStateCopyWithImpl<$Res, AmiiboListState>;
 }
 
 /// @nodoc
-class _$AmiiboListStateCopyWithImpl<$Res>
+class _$AmiiboListStateCopyWithImpl<$Res, $Val extends AmiiboListState>
     implements $AmiiboListStateCopyWith<$Res> {
   _$AmiiboListStateCopyWithImpl(this._value, this._then);
 
-  final AmiiboListState _value;
   // ignore: unused_field
-  final $Res Function(AmiiboListState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class $AmiiboListStateInitialCopyWith<$Res> {
-  factory $AmiiboListStateInitialCopyWith(AmiiboListStateInitial value,
-          $Res Function(AmiiboListStateInitial) then) =
-      _$AmiiboListStateInitialCopyWithImpl<$Res>;
+abstract class _$$AmiiboListStateInitialCopyWith<$Res> {
+  factory _$$AmiiboListStateInitialCopyWith(_$AmiiboListStateInitial value,
+          $Res Function(_$AmiiboListStateInitial) then) =
+      __$$AmiiboListStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AmiiboListStateInitialCopyWithImpl<$Res>
-    extends _$AmiiboListStateCopyWithImpl<$Res>
-    implements $AmiiboListStateInitialCopyWith<$Res> {
-  _$AmiiboListStateInitialCopyWithImpl(AmiiboListStateInitial _value,
-      $Res Function(AmiiboListStateInitial) _then)
-      : super(_value, (v) => _then(v as AmiiboListStateInitial));
-
-  @override
-  AmiiboListStateInitial get _value => super._value as AmiiboListStateInitial;
+class __$$AmiiboListStateInitialCopyWithImpl<$Res>
+    extends _$AmiiboListStateCopyWithImpl<$Res, _$AmiiboListStateInitial>
+    implements _$$AmiiboListStateInitialCopyWith<$Res> {
+  __$$AmiiboListStateInitialCopyWithImpl(_$AmiiboListStateInitial _value,
+      $Res Function(_$AmiiboListStateInitial) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -116,7 +108,8 @@ class _$AmiiboListStateInitial implements AmiiboListStateInitial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is AmiiboListStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$AmiiboListStateInitial);
   }
 
   @override
@@ -130,6 +123,16 @@ class _$AmiiboListStateInitial implements AmiiboListStateInitial {
     required TResult Function() error,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(List<AmiiboModel> amiiboList)? success,
+    TResult? Function()? error,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -158,6 +161,16 @@ class _$AmiiboListStateInitial implements AmiiboListStateInitial {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AmiiboListStateInitial value)? initial,
+    TResult? Function(AmiiboListStateSuccess value)? success,
+    TResult? Function(AmiiboListStateError value)? error,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AmiiboListStateInitial value)? initial,
     TResult Function(AmiiboListStateSuccess value)? success,
@@ -176,31 +189,30 @@ abstract class AmiiboListStateInitial implements AmiiboListState {
 }
 
 /// @nodoc
-abstract class $AmiiboListStateSuccessCopyWith<$Res> {
-  factory $AmiiboListStateSuccessCopyWith(AmiiboListStateSuccess value,
-          $Res Function(AmiiboListStateSuccess) then) =
-      _$AmiiboListStateSuccessCopyWithImpl<$Res>;
+abstract class _$$AmiiboListStateSuccessCopyWith<$Res> {
+  factory _$$AmiiboListStateSuccessCopyWith(_$AmiiboListStateSuccess value,
+          $Res Function(_$AmiiboListStateSuccess) then) =
+      __$$AmiiboListStateSuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<AmiiboModel> amiiboList});
 }
 
 /// @nodoc
-class _$AmiiboListStateSuccessCopyWithImpl<$Res>
-    extends _$AmiiboListStateCopyWithImpl<$Res>
-    implements $AmiiboListStateSuccessCopyWith<$Res> {
-  _$AmiiboListStateSuccessCopyWithImpl(AmiiboListStateSuccess _value,
-      $Res Function(AmiiboListStateSuccess) _then)
-      : super(_value, (v) => _then(v as AmiiboListStateSuccess));
+class __$$AmiiboListStateSuccessCopyWithImpl<$Res>
+    extends _$AmiiboListStateCopyWithImpl<$Res, _$AmiiboListStateSuccess>
+    implements _$$AmiiboListStateSuccessCopyWith<$Res> {
+  __$$AmiiboListStateSuccessCopyWithImpl(_$AmiiboListStateSuccess _value,
+      $Res Function(_$AmiiboListStateSuccess) _then)
+      : super(_value, _then);
 
-  @override
-  AmiiboListStateSuccess get _value => super._value as AmiiboListStateSuccess;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? amiiboList = freezed,
+    Object? amiiboList = null,
   }) {
-    return _then(AmiiboListStateSuccess(
-      amiiboList == freezed
-          ? _value.amiiboList
+    return _then(_$AmiiboListStateSuccess(
+      null == amiiboList
+          ? _value._amiiboList
           : amiiboList // ignore: cast_nullable_to_non_nullable
               as List<AmiiboModel>,
     ));
@@ -210,10 +222,15 @@ class _$AmiiboListStateSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AmiiboListStateSuccess implements AmiiboListStateSuccess {
-  const _$AmiiboListStateSuccess(this.amiiboList);
+  const _$AmiiboListStateSuccess(final List<AmiiboModel> amiiboList)
+      : _amiiboList = amiiboList;
 
+  final List<AmiiboModel> _amiiboList;
   @override
-  final List<AmiiboModel> amiiboList;
+  List<AmiiboModel> get amiiboList {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_amiiboList);
+  }
 
   @override
   String toString() {
@@ -223,20 +240,21 @@ class _$AmiiboListStateSuccess implements AmiiboListStateSuccess {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is AmiiboListStateSuccess &&
-            (identical(other.amiiboList, amiiboList) ||
-                const DeepCollectionEquality()
-                    .equals(other.amiiboList, amiiboList)));
+        (other.runtimeType == runtimeType &&
+            other is _$AmiiboListStateSuccess &&
+            const DeepCollectionEquality()
+                .equals(other._amiiboList, _amiiboList));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(amiiboList);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_amiiboList));
 
   @JsonKey(ignore: true)
   @override
-  $AmiiboListStateSuccessCopyWith<AmiiboListStateSuccess> get copyWith =>
-      _$AmiiboListStateSuccessCopyWithImpl<AmiiboListStateSuccess>(
+  @pragma('vm:prefer-inline')
+  _$$AmiiboListStateSuccessCopyWith<_$AmiiboListStateSuccess> get copyWith =>
+      __$$AmiiboListStateSuccessCopyWithImpl<_$AmiiboListStateSuccess>(
           this, _$identity);
 
   @override
@@ -247,6 +265,16 @@ class _$AmiiboListStateSuccess implements AmiiboListStateSuccess {
     required TResult Function() error,
   }) {
     return success(amiiboList);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(List<AmiiboModel> amiiboList)? success,
+    TResult? Function()? error,
+  }) {
+    return success?.call(amiiboList);
   }
 
   @override
@@ -275,6 +303,16 @@ class _$AmiiboListStateSuccess implements AmiiboListStateSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AmiiboListStateInitial value)? initial,
+    TResult? Function(AmiiboListStateSuccess value)? success,
+    TResult? Function(AmiiboListStateError value)? error,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AmiiboListStateInitial value)? initial,
     TResult Function(AmiiboListStateSuccess value)? success,
@@ -289,32 +327,29 @@ class _$AmiiboListStateSuccess implements AmiiboListStateSuccess {
 }
 
 abstract class AmiiboListStateSuccess implements AmiiboListState {
-  const factory AmiiboListStateSuccess(List<AmiiboModel> amiiboList) =
+  const factory AmiiboListStateSuccess(final List<AmiiboModel> amiiboList) =
       _$AmiiboListStateSuccess;
 
-  List<AmiiboModel> get amiiboList => throw _privateConstructorUsedError;
+  List<AmiiboModel> get amiiboList;
   @JsonKey(ignore: true)
-  $AmiiboListStateSuccessCopyWith<AmiiboListStateSuccess> get copyWith =>
+  _$$AmiiboListStateSuccessCopyWith<_$AmiiboListStateSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AmiiboListStateErrorCopyWith<$Res> {
-  factory $AmiiboListStateErrorCopyWith(AmiiboListStateError value,
-          $Res Function(AmiiboListStateError) then) =
-      _$AmiiboListStateErrorCopyWithImpl<$Res>;
+abstract class _$$AmiiboListStateErrorCopyWith<$Res> {
+  factory _$$AmiiboListStateErrorCopyWith(_$AmiiboListStateError value,
+          $Res Function(_$AmiiboListStateError) then) =
+      __$$AmiiboListStateErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AmiiboListStateErrorCopyWithImpl<$Res>
-    extends _$AmiiboListStateCopyWithImpl<$Res>
-    implements $AmiiboListStateErrorCopyWith<$Res> {
-  _$AmiiboListStateErrorCopyWithImpl(
-      AmiiboListStateError _value, $Res Function(AmiiboListStateError) _then)
-      : super(_value, (v) => _then(v as AmiiboListStateError));
-
-  @override
-  AmiiboListStateError get _value => super._value as AmiiboListStateError;
+class __$$AmiiboListStateErrorCopyWithImpl<$Res>
+    extends _$AmiiboListStateCopyWithImpl<$Res, _$AmiiboListStateError>
+    implements _$$AmiiboListStateErrorCopyWith<$Res> {
+  __$$AmiiboListStateErrorCopyWithImpl(_$AmiiboListStateError _value,
+      $Res Function(_$AmiiboListStateError) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -329,7 +364,8 @@ class _$AmiiboListStateError implements AmiiboListStateError {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is AmiiboListStateError);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$AmiiboListStateError);
   }
 
   @override
@@ -343,6 +379,16 @@ class _$AmiiboListStateError implements AmiiboListStateError {
     required TResult Function() error,
   }) {
     return error();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(List<AmiiboModel> amiiboList)? success,
+    TResult? Function()? error,
+  }) {
+    return error?.call();
   }
 
   @override
@@ -367,6 +413,16 @@ class _$AmiiboListStateError implements AmiiboListStateError {
     required TResult Function(AmiiboListStateError value) error,
   }) {
     return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AmiiboListStateInitial value)? initial,
+    TResult? Function(AmiiboListStateSuccess value)? success,
+    TResult? Function(AmiiboListStateError value)? error,
+  }) {
+    return error?.call(this);
   }
 
   @override
