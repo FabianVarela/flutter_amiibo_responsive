@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'amiibo_model.g.dart';
 
 @JsonSerializable(createToJson: false)
-class AmiiboModel {
+class AmiiboModel extends Equatable {
   const AmiiboModel({
     required this.amiiboSeries,
     required this.character,
@@ -35,10 +36,23 @@ class AmiiboModel {
 
   final String tail;
   final String type;
+
+  @override
+  List<Object?> get props => [
+        amiiboSeries,
+        character,
+        gameSeries,
+        head,
+        imageUrl,
+        name,
+        releaseDate,
+        tail,
+        type,
+      ];
 }
 
 @JsonSerializable(createToJson: false)
-class ReleaseDateModel {
+class ReleaseDateModel extends Equatable {
   const ReleaseDateModel({
     this.australia,
     this.europe,
@@ -65,4 +79,7 @@ class ReleaseDateModel {
     if (value == null) return null;
     return DateFormat('yyyy-MM-dd').parse(value);
   }
+
+  @override
+  List<Object?> get props => [australia, europe, japan, northAm];
 }
