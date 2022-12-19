@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_state.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
-import 'package:flutter_amiibo_responsive/utils/utilities.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -238,9 +237,22 @@ class _AmiiboDescription extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Text(
-        Utilities.setLoremText(),
+        _setLoremText(),
         style: const TextStyle(fontSize: 16),
       ),
     );
   }
+
+  String _setLoremText() =>
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae '
+      'arcu ac erat consectetur imperdiet rutrum sed ex. Morbi orci justo, '
+      'tincidunt ac vehicula a, sagittis sit amet sapien. '
+      'Cras consectetur nisi quis ligula molestie, vel ullamcorper massa '
+      'sollicitudin. In molestie a nulla ut malesuada. Quisque rhoncus '
+      'suscipit justo, in auctor metus interdum quis. Duis sodales cursus '
+      'tortor, eu mattis eros rhoncus ut. Donec sagittis ex non pulvinar '
+      'auctor. Pellentesque et sollicitudin mi. Quisque eget efficitur '
+      'libero, porta vestibulum leo. Phasellus justo risus, commodo '
+      'non viverra eget, mattis ac lacus. Etiam eget finibus erat. '
+      'Sed et placerat ipsum.';
 }
