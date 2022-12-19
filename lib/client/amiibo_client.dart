@@ -22,10 +22,10 @@ class AmiiboClient {
     final json = jsonDecode(response.body) as Map<String, dynamic>;
     final amiiboList = json['amiibo'] as List<dynamic>;
 
-    return amiiboList.map((dynamic item) {
-      final castItem = item as Map<String, dynamic>;
-      return AmiiboModel.fromJson(castItem);
-    }).toList();
+    return [
+      for (final item in amiiboList)
+        AmiiboModel.fromJson(item as Map<String, dynamic>),
+    ];
   }
 
   Future<AmiiboModel> getAmiiboItem(String? type, String id) async {
