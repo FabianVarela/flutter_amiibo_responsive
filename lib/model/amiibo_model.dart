@@ -1,7 +1,10 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_amiibo_responsive/utils/utilities.dart';
+import 'package:intl/intl.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class AmiiboModel extends Equatable {
+part 'amiibo_model.g.dart';
+
+@JsonSerializable(createToJson: false)
+class AmiiboModel {
   const AmiiboModel({
     required this.amiiboSeries,
     required this.character,
@@ -14,73 +17,52 @@ class AmiiboModel extends Equatable {
     required this.type,
   });
 
-  AmiiboModel.fromJson(Map<String, dynamic> json)
-      : amiiboSeries = json['amiiboSeries'] as String,
-        character = json['character'] as String,
-        gameSeries = json['gameSeries'] as String,
-        head = json['head'] as String,
-        imageUrl = json['image'] as String,
-        name = json['name'] as String,
-        releaseDate = json['release'] != null
-            ? ReleaseDate.fromJson(json['release'] as Map<String, dynamic>)
-            : null,
-        tail = json['tail'] as String,
-        type = json['type'] as String;
+  factory AmiiboModel.fromJson(Map<String, dynamic> json) =>
+      _$AmiiboModelFromJson(json);
 
   final String amiiboSeries;
   final String character;
   final String gameSeries;
   final String head;
+
+  @JsonKey(name: 'image')
   final String imageUrl;
+
   final String name;
-  final ReleaseDate? releaseDate;
+
+  @JsonKey(name: 'release')
+  final ReleaseDateModel? releaseDate;
+
   final String tail;
   final String type;
-
-  @override
-  List<Object?> get props => [
-        amiiboSeries,
-        character,
-        gameSeries,
-        head,
-        imageUrl,
-        name,
-        releaseDate,
-        tail,
-        type
-      ];
 }
 
-class ReleaseDate extends Equatable {
-  const ReleaseDate({
+@JsonSerializable(createToJson: false)
+class ReleaseDateModel {
+  const ReleaseDateModel({
     this.australia,
     this.europe,
     this.japan,
     this.northAm,
   });
 
-  factory ReleaseDate.fromJson(Map<String, dynamic> json) {
-    return ReleaseDate(
-      australia: json['au'] != null
-          ? Utilities.stringToDate(json['au'] as String)
-          : null,
-      europe: json['eu'] != null
-          ? Utilities.stringToDate(json['eu'] as String)
-          : null,
-      japan: json['jp'] != null
-          ? Utilities.stringToDate(json['jp'] as String)
-          : null,
-      northAm: json['na'] != null
-          ? Utilities.stringToDate(json['na'] as String)
-          : null,
-    );
-  }
+  factory ReleaseDateModel.fromJson(Map<String, dynamic> json) =>
+      _$ReleaseDateModelFromJson(json);
 
+  @JsonKey(name: 'au', fromJson: _getDateTime)
   final DateTime? australia;
+
+  @JsonKey(name: 'eu', fromJson: _getDateTime)
   final DateTime? europe;
+
+  @JsonKey(name: 'jp', fromJson: _getDateTime)
   final DateTime? japan;
+
+  @JsonKey(name: 'na', fromJson: _getDateTime)
   final DateTime? northAm;
 
-  @override
-  List<Object?> get props => [australia, europe, japan, northAm];
+  static DateTime? _getDateTime(String? value) {
+    if (value == null) return null;
+    return DateFormat('yyyy-MM-dd').parse(value);
+  }
 }
