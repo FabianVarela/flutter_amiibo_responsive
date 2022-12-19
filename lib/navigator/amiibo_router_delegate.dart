@@ -52,15 +52,15 @@ class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
       key: navigatorKey,
       pages: <Page<dynamic>>[
         if (is404)
-          UnknownPage()
+          UnknownPageRoute()
         else ...[
-          HomePage(
+          HomePageRoute(
             type: amiiboType,
             onChangeType: (type) => amiiboType = type,
             onGoToDetail: (id) => amiiboId = id,
           ),
           if (amiiboId != null)
-            DetailPage(type: amiiboType, amiiboId: amiiboId!),
+            DetailPageRoute(type: amiiboType, amiiboId: amiiboId!),
         ]
       ],
       onPopPage: (route, dynamic result) {
