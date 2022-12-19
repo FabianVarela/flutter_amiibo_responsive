@@ -1,10 +1,5 @@
-import 'package:intl/intl.dart';
-
 class Utilities {
   static const List<String> types = ['figure', 'card', 'yarn', 'band'];
-
-  static DateTime stringToDate(String date) =>
-      DateFormat('yyyy-MM-dd').parse(date);
 
   static String setLoremText() =>
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae '
