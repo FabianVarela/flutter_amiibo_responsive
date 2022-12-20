@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
@@ -138,15 +139,13 @@ class _AmiiboList extends StatelessWidget {
               crossAxisSpacing: 8,
               padding: const EdgeInsets.all(8),
               childAspectRatio: 1 / 1.2,
-              children: <Widget>[
-                for (var i = 0; i < list.length; i++)
-                  AmiiboItem(
-                    key: ValueKey('$i'),
-                    amiibo: list[i],
-                    onSelectAmiibo: () =>
-                        onTapAmiibo('${list[i].head}${list[i].tail}'),
-                  )
-              ],
+              children: list.mapIndexed((index, item) {
+                return AmiiboItem(
+                  key: ValueKey('$index'),
+                  amiibo: item,
+                  onSelectAmiibo: () => onTapAmiibo('${item.head}${item.tail}'),
+                );
+              }).toList(),
             );
           },
           error: () => const Center(
