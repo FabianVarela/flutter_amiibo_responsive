@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
-import 'package:flutter_amiibo_responsive/navigator/amiibo_pages.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
-import 'package:flutter_amiibo_responsive/view/detail_page_ui.dart';
+import 'package:flutter_amiibo_responsive/view/detail_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,7 +15,6 @@ void main() {
   group('$DetailPage UI screen', () {
     late MockAmiiboClient mockAmiiboClient;
     late AmiiboRepository amiiboRepository;
-    late AmiiboItemCubit amiiboItemCubit;
 
     late MockNavigator mockNavigator;
 
@@ -26,7 +23,6 @@ void main() {
 
       mockAmiiboClient = MockAmiiboClient();
       amiiboRepository = AmiiboRepository(mockAmiiboClient);
-      amiiboItemCubit = AmiiboItemCubit(amiiboRepository);
 
       registerFallbackValue(MyAmiiboFake());
 
@@ -34,12 +30,17 @@ void main() {
       registerFallbackValue(MyRouteFake());
     });
 
-    Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
+    Future<void> pumpMainScreen(WidgetTester tester, Widget child) async {
       await mockNetworkImagesFor(() {
-        return tester.pumpWidget(MultiBlocProvider(
-          providers: [BlocProvider.value(value: amiiboItemCubit)],
-          child: MaterialApp(navigatorObservers: [mockNavigator], home: child),
-        ));
+        return tester.pumpWidget(
+          MultiRepositoryProvider(
+            providers: [RepositoryProvider.value(value: amiiboRepository)],
+            child: MaterialApp(
+              navigatorObservers: [mockNavigator],
+              home: child,
+            ),
+          ),
+        );
       });
     }
 
@@ -52,9 +53,9 @@ void main() {
         ),
       );
 
-      await _pumpMainScreen(
+      await pumpMainScreen(
         tester,
-        DetailPageUI(amiiboId: '${model.head}${model.tail}'),
+        DetailPage(amiiboId: '${model.head}${model.tail}'),
       );
 
       final finderAppBar = find.byType(AppBar);
@@ -89,9 +90,9 @@ void main() {
         ),
       );
 
-      await _pumpMainScreen(
+      await pumpMainScreen(
         tester,
-        DetailPageUI(amiiboId: '${model.head}${model.tail}'),
+        DetailPage(amiiboId: '${model.head}${model.tail}'),
       );
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -113,9 +114,9 @@ void main() {
         ),
       );
 
-      await _pumpMainScreen(
+      await pumpMainScreen(
         tester,
-        DetailPageUI(amiiboId: '${model.head}${model.tail}'),
+        DetailPage(amiiboId: '${model.head}${model.tail}'),
       );
 
       final finderAppBar = find.byType(AppBar);

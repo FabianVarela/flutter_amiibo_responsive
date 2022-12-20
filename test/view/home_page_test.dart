@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
-import 'package:flutter_amiibo_responsive/view/home_page_ui.dart';
+import 'package:flutter_amiibo_responsive/view/home_page.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
@@ -16,10 +15,9 @@ import '../mock/mocks.dart';
 import '../mock/params_factory.dart';
 
 void main() {
-  group('$HomePageUI UI screen', () {
+  group('$HomePage UI screen', () {
     late MockAmiiboClient mockAmiiboClient;
     late AmiiboRepository amiiboRepository;
-    late AmiiboListCubit amiiboListCubit;
 
     late MockNavigator mockNavigator;
 
@@ -28,7 +26,6 @@ void main() {
 
       mockAmiiboClient = MockAmiiboClient();
       amiiboRepository = AmiiboRepository(mockAmiiboClient);
-      amiiboListCubit = AmiiboListCubit(amiiboRepository);
 
       registerFallbackValue(MyAmiiboFake());
 
@@ -36,16 +33,21 @@ void main() {
       registerFallbackValue(MyRouteFake());
     });
 
-    Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
+    Future<void> pumpMainScreen(WidgetTester tester, Widget child) async {
       await mockNetworkImagesFor(() {
-        return tester.pumpWidget(MultiBlocProvider(
-          providers: [BlocProvider.value(value: amiiboListCubit)],
-          child: MaterialApp(navigatorObservers: [mockNavigator], home: child),
-        ));
+        return tester.pumpWidget(
+          MultiRepositoryProvider(
+            providers: [RepositoryProvider.value(value: amiiboRepository)],
+            child: MaterialApp(
+              navigatorObservers: [mockNavigator],
+              home: child,
+            ),
+          ),
+        );
       });
     }
 
-    testWidgets('Show $HomePageUI screen with data', (tester) async {
+    testWidgets('Show $HomePage screen with data', (tester) async {
       final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
@@ -54,9 +56,9 @@ void main() {
         ),
       );
 
-      await _pumpMainScreen(
+      await pumpMainScreen(
         tester,
-        HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
+        HomePage(onChange: (_) {}, onGoToDetail: (_) {}),
       );
 
       final finderAppBar = find.byType(AppBar);
@@ -84,7 +86,7 @@ void main() {
       ]);
     });
 
-    testWidgets('Show $HomePageUI screen portrait with data', (tester) async {
+    testWidgets('Show $HomePage screen portrait with data', (tester) async {
       tester.binding.window.physicalSizeTestValue = const Size(400, 800);
 
       final model = getAmiiboModel();
@@ -95,9 +97,9 @@ void main() {
         ),
       );
 
-      await _pumpMainScreen(
+      await pumpMainScreen(
         tester,
-        HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
+        HomePage(onChange: (_) {}, onGoToDetail: (_) {}),
       );
 
       final finderIconMenu = find.byIcon(Icons.menu);
@@ -119,7 +121,7 @@ void main() {
       addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
     });
 
-    testWidgets('Show $HomePageUI screen with empty data', (tester) async {
+    testWidgets('Show $HomePage screen with empty data', (tester) async {
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
@@ -127,9 +129,9 @@ void main() {
         ),
       );
 
-      await _pumpMainScreen(
+      await pumpMainScreen(
         tester,
-        HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
+        HomePage(onChange: (_) {}, onGoToDetail: (_) {}),
       );
 
       final finderAppBar = find.byType(AppBar);
@@ -148,7 +150,7 @@ void main() {
       expect(find.text('No data found'), findsOneWidget);
     });
 
-    testWidgets('Show $HomePageUI screen with $Exception', (tester) async {
+    testWidgets('Show $HomePage screen with $Exception', (tester) async {
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
@@ -156,9 +158,9 @@ void main() {
         ),
       );
 
-      await _pumpMainScreen(
+      await pumpMainScreen(
         tester,
-        HomePageUI(onChangeType: (_) {}, onGoToDetail: (_) {}),
+        HomePage(onChange: (_) {}, onGoToDetail: (_) {}),
       );
 
       final finderAppBar = find.byType(AppBar);
