@@ -10,6 +10,7 @@ environment:
   flutter: 3.3.10
 
 dependencies:
+  collection: ^1.16.0
   cupertino_icons: ^1.0.5
   equatable: ^2.0.5
   flutter:
