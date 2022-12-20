@@ -10,11 +10,9 @@ import '../mock/params_factory.dart';
 
 void main() {
   late MockAmiiboRepository mockAmiiboRepository;
-  late AmiiboListCubit amiiboListCubit;
 
   setUpAll(() {
     mockAmiiboRepository = MockAmiiboRepository();
-    amiiboListCubit = AmiiboListCubit(mockAmiiboRepository);
   });
 
   group('$AmiiboListCubit', () {
@@ -25,7 +23,7 @@ void main() {
         when(() => mockAmiiboRepository.getAmiiboList(any()))
             .thenAnswer((_) => Future.value(valueList));
 
-        return amiiboListCubit;
+        return AmiiboListCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboData(null),
       expect: () => <AmiiboListState>[
@@ -44,18 +42,17 @@ void main() {
         when(() => mockAmiiboRepository.getAmiiboList(any()))
             .thenThrow(Exception());
 
-        return amiiboListCubit;
+        return AmiiboListCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboData(amiiboType),
-      expect: () => <AmiiboListState>[],
+      expect: () => <AmiiboListState>[
+        const AmiiboListStateInitial(),
+        const AmiiboListStateError(),
+      ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboList(any()));
         verifyNoMoreInteractions(mockAmiiboRepository);
       },
     );
-  });
-
-  tearDownAll(() {
-    amiiboListCubit.close();
   });
 }

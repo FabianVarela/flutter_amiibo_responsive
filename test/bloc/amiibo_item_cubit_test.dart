@@ -10,11 +10,9 @@ import '../mock/params_factory.dart';
 
 void main() {
   late MockAmiiboRepository mockAmiiboRepository;
-  late AmiiboItemCubit amiiboItemCubit;
 
   setUpAll(() {
     mockAmiiboRepository = MockAmiiboRepository();
-    amiiboItemCubit = AmiiboItemCubit(mockAmiiboRepository);
   });
 
   group('$AmiiboItemCubit', () {
@@ -25,7 +23,7 @@ void main() {
         when(() => mockAmiiboRepository.getAmiiboItem(any(), any()))
             .thenAnswer((_) => Future.value(valueItem));
 
-        return amiiboItemCubit;
+        return AmiiboItemCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboItem(null, amiiboId),
       expect: () => <AmiiboItemState>[
@@ -44,18 +42,17 @@ void main() {
         when(() => mockAmiiboRepository.getAmiiboItem(any(), any()))
             .thenThrow(Exception());
 
-        return amiiboItemCubit;
+        return AmiiboItemCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboItem(amiiboType, amiiboId),
-      expect: () => <AmiiboItemState>[],
+      expect: () => <AmiiboItemState>[
+        const AmiiboItemStateInitial(),
+        const AmiiboItemStateError(),
+      ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboItem(any(), any()));
         verifyNoMoreInteractions(mockAmiiboRepository);
       },
     );
-  });
-
-  tearDownAll(() {
-    amiiboItemCubit.close();
   });
 }
