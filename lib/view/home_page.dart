@@ -8,6 +8,7 @@ import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomePageView extends StatefulWidget {
+class HomePageView extends HookWidget {
   const HomePageView({
     super.key,
     this.type,
@@ -47,19 +48,16 @@ class HomePageView extends StatefulWidget {
   final ValueSetter<String> onGoToDetail;
 
   @override
-  HomePageViewState createState() => HomePageViewState();
-}
-
-class HomePageViewState extends State<HomePageView> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<AmiiboListCubit>().fetchAmiiboData(widget.type);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
+    useEffect(
+      () {
+        context.read<AmiiboListCubit>().fetchAmiiboData(type);
+        return null;
+      },
+      const [],
+    );
 
     return OrientationBuilder(
       builder: (_, orientation) {
@@ -72,11 +70,11 @@ class HomePageViewState extends State<HomePageView> {
               ? null
               : Drawer(
                   child: DrawerMenu(
-                    onTapAll: () => widget.onChange(null),
-                    onTapFigure: () => widget.onChange(AmiiboType.figure),
-                    onTapCard: () => widget.onChange(AmiiboType.card),
-                    onTapYarn: () => widget.onChange(AmiiboType.yarn),
-                    onTapBand: () => widget.onChange(AmiiboType.band),
+                    onTapAll: () => onChange(null),
+                    onTapFigure: () => onChange(AmiiboType.figure),
+                    onTapCard: () => onChange(AmiiboType.card),
+                    onTapYarn: () => onChange(AmiiboType.yarn),
+                    onTapBand: () => onChange(AmiiboType.band),
                   ),
                 ),
           body: orientation == Orientation.landscape && width >= 800
@@ -86,20 +84,20 @@ class HomePageViewState extends State<HomePageView> {
                       flex: 2,
                       child: DrawerMenu(
                         makePop: false,
-                        onTapAll: () => widget.onChange(null),
-                        onTapFigure: () => widget.onChange(AmiiboType.figure),
-                        onTapCard: () => widget.onChange(AmiiboType.card),
-                        onTapYarn: () => widget.onChange(AmiiboType.yarn),
-                        onTapBand: () => widget.onChange(AmiiboType.band),
+                        onTapAll: () => onChange(null),
+                        onTapFigure: () => onChange(AmiiboType.figure),
+                        onTapCard: () => onChange(AmiiboType.card),
+                        onTapYarn: () => onChange(AmiiboType.yarn),
+                        onTapBand: () => onChange(AmiiboType.band),
                       ),
                     ),
                     Expanded(
                       flex: 5,
-                      child: _AmiiboList(onTapAmiibo: widget.onGoToDetail),
+                      child: _AmiiboList(onTapAmiibo: onGoToDetail),
                     ),
                   ],
                 )
-              : _AmiiboList(onTapAmiibo: widget.onGoToDetail),
+              : _AmiiboList(onTapAmiibo: onGoToDetail),
         );
       },
     );
@@ -119,35 +117,32 @@ class _AmiiboList extends StatelessWidget {
       builder: (_, state) {
         return state.when(
           initial: () => const ShimmerGridLoading(),
-          success: (list) {
-            if (list.isEmpty) {
-              return const Center(
-                child: Text(
-                  'No data found',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+          success: (list) => list.isEmpty
+              ? const Center(
+                  child: Text(
+                    'No data found',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
+                )
+              : GridView.extent(
+                  maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  padding: const EdgeInsets.all(8),
+                  childAspectRatio: 1 / 1.2,
+                  children: list.mapIndexed((index, item) {
+                    final internalId = '${item.head}${item.tail}';
+                    return AmiiboItem(
+                      key: ValueKey('$index'),
+                      amiibo: item,
+                      onSelectAmiibo: () => onTapAmiibo(internalId),
+                    );
+                  }).toList(),
                 ),
-              );
-            }
-
-            return GridView.extent(
-              maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-              padding: const EdgeInsets.all(8),
-              childAspectRatio: 1 / 1.2,
-              children: list.mapIndexed((index, item) {
-                return AmiiboItem(
-                  key: ValueKey('$index'),
-                  amiibo: item,
-                  onSelectAmiibo: () => onTapAmiibo('${item.head}${item.tail}'),
-                );
-              }).toList(),
-            );
-          },
           error: () => const Center(
             child: Text(
               'Error to get data',

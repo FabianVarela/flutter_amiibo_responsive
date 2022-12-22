@@ -4,6 +4,7 @@ import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_state.dar
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key, this.type, required this.amiiboId});
@@ -20,50 +21,59 @@ class DetailPage extends StatelessWidget {
   }
 }
 
-class DetailView extends StatefulWidget {
+class DetailView extends HookWidget {
   const DetailView({super.key, this.type, required this.amiiboId});
 
   final String? type;
   final String amiiboId;
 
   @override
-  DetailViewState createState() => DetailViewState();
-}
-
-class DetailViewState extends State<DetailView> {
-  @override
-  void initState() {
-    super.initState();
-    context
-        .read<AmiiboItemCubit>()
-        .fetchAmiiboItem(widget.type, widget.amiiboId);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
-      builder: (_, state) {
-        return state.when(
-          initial: () {
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.redAccent,
-                title: const Text('Loading', style: TextStyle(fontSize: 24)),
-              ),
-              body: const Center(
-                child: CircularProgressIndicator(color: Colors.redAccent),
+    useEffect(
+      () {
+        context.read<AmiiboItemCubit>().fetchAmiiboItem(type, amiiboId);
+        return null;
+      },
+      const [],
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+        title: Builder(
+          builder: (ctx) {
+            final title = ctx.select(
+              (AmiiboItemCubit value) => value.state.maybeWhen(
+                success: (data) => data.name,
+                error: () => 'Error',
+                orElse: () => 'Loading',
               ),
             );
+            return Text(title, style: const TextStyle(fontSize: 24));
           },
-          success: (item) {
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.redAccent,
-                title: Text(item.name, style: const TextStyle(fontSize: 24)),
-              ),
-              body: OrientationBuilder(
+        ),
+      ),
+      body: BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
+        builder: (_, state) {
+          return state.when(
+            initial: () => const Center(
+              child: CircularProgressIndicator(color: Colors.redAccent),
+            ),
+            success: (item) {
+              final imageWidget = _AmiiboImage(
+                tagId: '${item.head}_${item.tail}',
+                imageUrl: item.imageUrl,
+              );
+
+              final detailWidget = _AmiiboDetail(
+                name: item.name,
+                series: item.amiiboSeries,
+                type: item.type,
+              );
+
+              return OrientationBuilder(
                 builder: (_, orientation) {
                   return (width >= 600 || orientation == Orientation.landscape)
                       ? SingleChildScrollView(
@@ -73,17 +83,7 @@ class DetailViewState extends State<DetailView> {
                             children: <Widget>[
                               Expanded(
                                 child: Column(
-                                  children: <Widget>[
-                                    _AmiiboImage(
-                                      tagId: '${item.head}_${item.tail}',
-                                      imageUrl: item.imageUrl,
-                                    ),
-                                    _AmiiboDetail(
-                                      name: item.name,
-                                      series: item.amiiboSeries,
-                                      type: item.type,
-                                    ),
-                                  ],
+                                  children: <Widget>[imageWidget, detailWidget],
                                 ),
                               ),
                               Expanded(
@@ -99,43 +99,24 @@ class DetailViewState extends State<DetailView> {
                         )
                       : ListView(
                           children: <Widget>[
-                            _AmiiboImage(
-                              tagId: '${item.head}_${item.tail}',
-                              imageUrl: item.imageUrl,
-                            ),
-                            _AmiiboDetail(
-                              name: item.name,
-                              series: item.amiiboSeries,
-                              type: item.type,
-                            ),
+                            imageWidget,
+                            detailWidget,
                             const _AmiiboButtons(),
                             const _AmiiboDescription(),
                           ],
                         );
                 },
+              );
+            },
+            error: () => const Center(
+              child: Text(
+                'Error to get data',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
-            );
-          },
-          error: () {
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.redAccent,
-                title: const Text('Error', style: TextStyle(fontSize: 24)),
-              ),
-              body: const Center(
-                child: Text(
-                  'Error to get data',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 }
