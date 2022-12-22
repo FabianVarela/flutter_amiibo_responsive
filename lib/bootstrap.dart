@@ -29,7 +29,12 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   if (desktopList.contains(defaultTargetPlatform)) {
     setWindowTitle('Flutter Amiibo');
-    setWindowMinSize(const Size(800, 500));
+
+    final minSize = defaultTargetPlatform == TargetPlatform.windows
+        ? const Size(1800, 1500)
+        : const Size(800, 500);
+
+    setWindowMinSize(minSize);
     setWindowMaxSize(Size.infinite);
   }
 
