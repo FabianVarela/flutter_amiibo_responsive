@@ -30,9 +30,55 @@ Run deep links in **Android**, use the command below:
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
 ```
 
+### Unit testing and coverage
+
+To execute the unit testing and show the coverage, you must run the `test_coverage` file by console.
+
+#### Mac and Linux
+
+Before to run the script, you must have installed the `lcov` package.
+
+For macOS, via `brew` (you must have the home brew already installed).
+```bash
+brew install lcov
+```
+
+For Linux use the command below.
+```bash
+sudo apt -y install lcov
+```
+
+After, you must run the `test_coverage.sh`.
+
+```bash
+bash test_coverage.sh
+```
+
+#### Windows
+
+Before to run the script, you must have installed the `lcov` package via `chocolatey` (you must have the chocolatey
+already installed).
+
+```powershell
+choco install lcov
+```
+
+After, you must run the `test_coverage.ps1`. If running the `ps1` file you have an error, you must run as administrator
+the `PowerShell` and type the command below.
+
+```powershell
+Set-ExecutionPolicy RemoteSigned
+```
+
+And finally, run the `ps1` script.
+
+```powershell
+.\test_coverage.ps1
+```
+
 ### Integration testing
 
-To execute integration testing in mobile and web, follow
+If you want to execute integration testing in mobile and web, follow
 this [link](https://docs.flutter.dev/cookbook/testing/integration/introduction#5-run-the-integration-test)
 
 ### Used packages
