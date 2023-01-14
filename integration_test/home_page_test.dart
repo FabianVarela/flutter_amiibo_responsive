@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:network_image_mock/network_image_mock.dart';
+import 'package:mocktail_image_network/mocktail_image_network.dart';
 
 class MockClient extends Mock implements Client {}
 
@@ -28,7 +28,7 @@ void main() {
   });
 
   testWidgets('Show data in home view', (tester) async {
-    await mockNetworkImagesFor(() {
+    await mockNetworkImages(() {
       return tester.pumpWidget(
         MultiRepositoryProvider(
           providers: [RepositoryProvider.value(value: repository)],

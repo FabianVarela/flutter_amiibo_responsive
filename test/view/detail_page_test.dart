@@ -6,7 +6,7 @@ import 'package:flutter_amiibo_responsive/view/detail_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:network_image_mock/network_image_mock.dart';
+import 'package:mocktail_image_network/mocktail_image_network.dart';
 
 import '../mock/mocks.dart';
 import '../mock/params_factory.dart';
@@ -31,7 +31,7 @@ void main() {
     });
 
     Future<void> pumpMainScreen(WidgetTester tester, Widget child) async {
-      await mockNetworkImagesFor(() {
+      await mockNetworkImages(() {
         return tester.pumpWidget(
           MultiRepositoryProvider(
             providers: [RepositoryProvider.value(value: amiiboRepository)],
