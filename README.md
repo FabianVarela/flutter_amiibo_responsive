@@ -104,7 +104,7 @@ this [link](https://docs.flutter.dev/cookbook/testing/integration/introduction#5
 - Build runner ([build_runner](https://pub.dev/packages/build_runner))
 - Freezed ([freezed](https://pub.dev/packages/freezed))
 - Mocktail ([mocktail](https://pub.dev/packages/mocktail))
-- Network image mock ([network_image_mock](https://pub.dev/packages/network_image_mock))
+- Mocktail image network ([mocktail_image_network](https://pub.dev/packages/mocktail_image_network))
 - Remove from coverage ([remove_from_coverage](https://pub.dev/packages/remove_from_coverage))
 - Very good analysis ([very_good_analysis](https://pub.dev/packages/very_good_analysis))
 
