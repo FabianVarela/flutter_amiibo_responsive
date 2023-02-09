@@ -9,7 +9,7 @@ part of 'amiibo_model.dart';
 AmiiboModel _$AmiiboModelFromJson(Map<String, dynamic> json) => AmiiboModel(
       amiiboSeries: json['amiiboSeries'] as String,
       character: json['character'] as String,
-      gameSeries: json['gameSeries'] as String,
+      gameSeries: json['gameSeries'] as String?,
       head: json['head'] as String,
       imageUrl: json['image'] as String,
       name: json['name'] as String,
