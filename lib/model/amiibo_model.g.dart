@@ -9,15 +9,15 @@ part of 'amiibo_model.dart';
 AmiiboModel _$AmiiboModelFromJson(Map<String, dynamic> json) => AmiiboModel(
       amiiboSeries: json['amiiboSeries'] as String,
       character: json['character'] as String,
-      gameSeries: json['gameSeries'] as String?,
       head: json['head'] as String,
       imageUrl: json['image'] as String,
       name: json['name'] as String,
+      tail: json['tail'] as String,
+      type: json['type'] as String,
+      gameSeries: json['gameSeries'] as String?,
       releaseDate: json['release'] == null
           ? null
           : ReleaseDateModel.fromJson(json['release'] as Map<String, dynamic>),
-      tail: json['tail'] as String,
-      type: json['type'] as String,
     );
 
 ReleaseDateModel _$ReleaseDateModelFromJson(Map<String, dynamic> json) =>

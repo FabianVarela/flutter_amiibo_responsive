@@ -9,13 +9,13 @@ class AmiiboModel extends Equatable {
   const AmiiboModel({
     required this.amiiboSeries,
     required this.character,
-    required this.gameSeries,
     required this.head,
     required this.imageUrl,
     required this.name,
-    this.releaseDate,
     required this.tail,
     required this.type,
+    this.gameSeries,
+    this.releaseDate,
   });
 
   factory AmiiboModel.fromJson(Map<String, dynamic> json) =>
@@ -23,7 +23,7 @@ class AmiiboModel extends Equatable {
 
   final String amiiboSeries;
   final String character;
-  final String gameSeries;
+  final String? gameSeries;
   final String head;
 
   @JsonKey(name: 'image')
