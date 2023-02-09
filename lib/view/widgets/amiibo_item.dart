@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AmiiboItem extends StatelessWidget {
   const AmiiboItem({
-    super.key,
     required this.amiibo,
     required this.onSelectAmiibo,
+    super.key,
   });
 
   final AmiiboModel amiibo;
@@ -27,7 +27,7 @@ class AmiiboItem extends StatelessWidget {
               style: GoogleFonts.nunito(fontSize: 16),
             ),
             subtitle: Text(
-              amiibo.gameSeries,
+              amiibo.gameSeries ?? 'Sin serie',
               style: GoogleFonts.nunito(fontSize: 14),
             ),
           ),
