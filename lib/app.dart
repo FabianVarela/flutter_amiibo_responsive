@@ -33,7 +33,10 @@ class MyAppState extends State<MyApp> {
       child: MaterialApp.router(
         title: 'Flutter Amiibo App',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
+        ),
+        darkTheme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
         ),
