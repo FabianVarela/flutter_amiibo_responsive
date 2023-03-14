@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class VerticalIconButton extends StatelessWidget {
   const VerticalIconButton({
-    super.key,
     required this.icon,
     required this.text,
+    super.key,
     this.color = Colors.black,
     this.onTap,
   });

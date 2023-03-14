@@ -5,9 +5,9 @@ import 'package:flutter_amiibo_responsive/view/unknown_page.dart';
 
 class HomePageRoute extends Page<dynamic> {
   HomePageRoute({
-    this.type,
     required this.onChangeType,
     required this.onGoToDetail,
+    this.type,
   }) : super(key: ValueKey('HomePageRoute_${type ?? 'none'}'));
 
   final String? type;
@@ -28,7 +28,7 @@ class HomePageRoute extends Page<dynamic> {
 }
 
 class DetailPageRoute extends Page<dynamic> {
-  DetailPageRoute({this.type, required this.amiiboId})
+  DetailPageRoute({required this.amiiboId, this.type})
       : super(key: ValueKey('DetailPageRoute_$amiiboId'));
 
   final String? type;

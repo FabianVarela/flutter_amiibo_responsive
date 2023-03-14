@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({
-    super.key,
-    this.makePop = true,
     required this.onTapAll,
     required this.onTapFigure,
     required this.onTapCard,
     required this.onTapYarn,
     required this.onTapBand,
+    super.key,
+    this.makePop = true,
   });
 
   final bool makePop;

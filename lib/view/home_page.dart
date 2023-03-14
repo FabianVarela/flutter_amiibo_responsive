@@ -12,10 +12,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
-    super.key,
-    this.type,
     required this.onChange,
     required this.onGoToDetail,
+    super.key,
+    this.type,
   });
 
   final String? type;
@@ -37,10 +37,10 @@ class HomePage extends StatelessWidget {
 
 class HomePageView extends HookWidget {
   const HomePageView({
-    super.key,
-    this.type,
     required this.onChange,
     required this.onGoToDetail,
+    super.key,
+    this.type,
   });
 
   final String? type;

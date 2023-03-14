@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key, this.type, required this.amiiboId});
+  const DetailPage({required this.amiiboId, super.key, this.type});
 
   final String? type;
   final String amiiboId;
@@ -22,7 +22,7 @@ class DetailPage extends StatelessWidget {
 }
 
 class DetailView extends HookWidget {
-  const DetailView({super.key, this.type, required this.amiiboId});
+  const DetailView({required this.amiiboId, super.key, this.type});
 
   final String? type;
   final String amiiboId;
