@@ -77,12 +77,9 @@ class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
     if (amiiboType == null && amiiboId == null && !is404) {
       return const AmiiboConfiguration.home();
     } else if (amiiboType != null && amiiboId == null && !is404) {
-      return AmiiboConfiguration.home(valueType: amiiboType);
+      return AmiiboConfiguration.home(type: amiiboType);
     } else if (amiiboId != null && !is404) {
-      return AmiiboConfiguration.detail(
-        valueType: amiiboType,
-        valueId: amiiboId,
-      );
+      return AmiiboConfiguration.detail(type: amiiboType, amiiboId: amiiboId);
     } else if (is404) {
       return const AmiiboConfiguration.unknown();
     }

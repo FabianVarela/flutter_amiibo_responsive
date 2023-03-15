@@ -19,13 +19,13 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
     } else if (segments.length == 2) {
       if (segments[0] == AmiiboPath.home) {
         if (_existAmiiboType(segments[1])) {
-          return AmiiboConfiguration.home(valueType: segments[1]);
+          return AmiiboConfiguration.home(type: segments[1]);
         }
       }
     } else if (segments.length == 3) {
       if (segments[0] == AmiiboPath.home) {
         if (segments[1] == AmiiboPath.detail) {
-          return AmiiboConfiguration.detail(valueId: segments[2]);
+          return AmiiboConfiguration.detail(amiiboId: segments[2]);
         }
       }
     } else if (segments.length == 4) {
@@ -33,8 +33,8 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
         if (_existAmiiboType(segments[1])) {
           if (segments[2] == AmiiboPath.detail) {
             return AmiiboConfiguration.detail(
-              valueType: segments[1],
-              valueId: segments[3],
+              type: segments[1],
+              amiiboId: segments[3],
             );
           }
         }

@@ -7,15 +7,12 @@ class AmiiboPath {
 }
 
 class AmiiboConfiguration extends Equatable {
-  const AmiiboConfiguration.home({String? valueType})
-      : type = valueType,
-        amiiboId = null,
+  const AmiiboConfiguration.home({this.type})
+      : amiiboId = null,
         isUnknown = false;
 
-  const AmiiboConfiguration.detail({String? valueType, String? valueId})
-      : type = valueType,
-        amiiboId = valueId,
-        isUnknown = false;
+  const AmiiboConfiguration.detail({this.type, this.amiiboId})
+      : isUnknown = false;
 
   const AmiiboConfiguration.unknown()
       : type = null,
