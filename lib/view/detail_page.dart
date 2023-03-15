@@ -43,16 +43,16 @@ class DetailView extends HookWidget {
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
         title: Builder(
-          builder: (ctx) {
-            final title = ctx.select(
+          builder: (ctx) => Text(
+            ctx.select(
               (AmiiboItemCubit value) => value.state.maybeWhen(
                 success: (data) => data.name,
                 error: () => 'Error',
                 orElse: () => 'Loading',
               ),
-            );
-            return Text(title, style: const TextStyle(fontSize: 24));
-          },
+            ),
+            style: const TextStyle(fontSize: 24),
+          ),
         ),
       ),
       body: BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
@@ -62,9 +62,10 @@ class DetailView extends HookWidget {
               child: CircularProgressIndicator(color: Colors.redAccent),
             ),
             success: (item) {
-              final imageWidget = _AmiiboImage(
-                tagId: '${item.head}_${item.tail}',
-                imageUrl: item.imageUrl,
+              final imageUrl = item.imageUrl;
+              final imageWidget = Hero(
+                tag: '${item.head}_${item.tail}',
+                child: Image.network(imageUrl, height: 350, fit: BoxFit.cover),
               );
 
               final detailWidget = _AmiiboDetail(
@@ -117,21 +118,6 @@ class DetailView extends HookWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class _AmiiboImage extends StatelessWidget {
-  const _AmiiboImage({required this.tagId, required this.imageUrl});
-
-  final String tagId;
-  final String imageUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: tagId,
-      child: Image.network(imageUrl, height: 350, fit: BoxFit.cover),
     );
   }
 }
