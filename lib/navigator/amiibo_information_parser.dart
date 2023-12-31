@@ -7,8 +7,7 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
   Future<AmiiboConfiguration> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    final uri = Uri.parse(routeInformation.location ?? '');
-    final segments = uri.pathSegments;
+    final segments = routeInformation.uri.pathSegments;
 
     if (segments.isEmpty) {
       return const AmiiboConfiguration.home();
@@ -47,25 +46,25 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
   @override
   RouteInformation? restoreRouteInformation(AmiiboConfiguration configuration) {
     if (configuration.isUnknown) {
-      return const RouteInformation(location: '/${AmiiboPath.notFound}');
+      return RouteInformation(uri: Uri.parse('/${AmiiboPath.notFound}'));
     } else if (configuration.isHomePage) {
-      return const RouteInformation(location: '/${AmiiboPath.home}');
+      return RouteInformation(uri: Uri.parse('/${AmiiboPath.home}'));
     } else if (configuration.isHomeTypePage) {
       return RouteInformation(
-        location: '/${AmiiboPath.home}/${configuration.type}',
+        uri: Uri.parse('/${AmiiboPath.home}/${configuration.type}'),
       );
     } else if (configuration.isDetailNoTypePage) {
       final id = configuration.amiiboId;
 
       return RouteInformation(
-        location: '/${AmiiboPath.home}/${AmiiboPath.detail}/$id',
+        uri: Uri.parse('/${AmiiboPath.home}/${AmiiboPath.detail}/$id'),
       );
     } else if (configuration.isDetailPage) {
       final type = configuration.type;
       final id = configuration.amiiboId;
 
       return RouteInformation(
-        location: '/${AmiiboPath.home}/$type/${AmiiboPath.detail}/$id',
+        uri: Uri.parse('/${AmiiboPath.home}/$type/${AmiiboPath.detail}/$id'),
       );
     }
 
