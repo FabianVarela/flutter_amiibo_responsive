@@ -30,7 +30,7 @@ class VerticalIconButton extends StatelessWidget {
                 text.toUpperCase(),
                 style: TextStyle(fontSize: 10, color: color),
               ),
-            )
+            ),
           ],
         ),
       ),

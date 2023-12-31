@@ -61,7 +61,7 @@ class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
           ),
           if (amiiboId != null)
             DetailPageRoute(type: amiiboType, amiiboId: amiiboId!),
-        ]
+        ],
       ],
       onPopPage: (route, dynamic result) {
         if (!route.didPop(result)) return false;

@@ -87,9 +87,9 @@ class DetailView extends HookWidget {
                                   children: <Widget>[imageWidget, detailWidget],
                                 ),
                               ),
-                              Expanded(
+                              const Expanded(
                                 child: Column(
-                                  children: const <Widget>[
+                                  children: <Widget>[
                                     _AmiiboButtons(),
                                     _AmiiboDescription(),
                                   ],
@@ -173,9 +173,9 @@ class _AmiiboButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const <Widget>[
+      children: <Widget>[
         VerticalIconButton(
           icon: Icons.shopping_bag,
           text: 'Buy article',
