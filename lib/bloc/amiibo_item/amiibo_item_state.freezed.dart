@@ -81,25 +81,27 @@ class _$AmiiboItemStateCopyWithImpl<$Res, $Val extends AmiiboItemState>
 }
 
 /// @nodoc
-abstract class _$$AmiiboItemStateInitialCopyWith<$Res> {
-  factory _$$AmiiboItemStateInitialCopyWith(_$AmiiboItemStateInitial value,
-          $Res Function(_$AmiiboItemStateInitial) then) =
-      __$$AmiiboItemStateInitialCopyWithImpl<$Res>;
+abstract class _$$AmiiboItemStateInitialImplCopyWith<$Res> {
+  factory _$$AmiiboItemStateInitialImplCopyWith(
+          _$AmiiboItemStateInitialImpl value,
+          $Res Function(_$AmiiboItemStateInitialImpl) then) =
+      __$$AmiiboItemStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$AmiiboItemStateInitialCopyWithImpl<$Res>
-    extends _$AmiiboItemStateCopyWithImpl<$Res, _$AmiiboItemStateInitial>
-    implements _$$AmiiboItemStateInitialCopyWith<$Res> {
-  __$$AmiiboItemStateInitialCopyWithImpl(_$AmiiboItemStateInitial _value,
-      $Res Function(_$AmiiboItemStateInitial) _then)
+class __$$AmiiboItemStateInitialImplCopyWithImpl<$Res>
+    extends _$AmiiboItemStateCopyWithImpl<$Res, _$AmiiboItemStateInitialImpl>
+    implements _$$AmiiboItemStateInitialImplCopyWith<$Res> {
+  __$$AmiiboItemStateInitialImplCopyWithImpl(
+      _$AmiiboItemStateInitialImpl _value,
+      $Res Function(_$AmiiboItemStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AmiiboItemStateInitial implements AmiiboItemStateInitial {
-  const _$AmiiboItemStateInitial();
+class _$AmiiboItemStateInitialImpl implements AmiiboItemStateInitial {
+  const _$AmiiboItemStateInitialImpl();
 
   @override
   String toString() {
@@ -107,9 +109,10 @@ class _$AmiiboItemStateInitial implements AmiiboItemStateInitial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AmiiboItemStateInitial);
+        (other.runtimeType == runtimeType &&
+            other is _$AmiiboItemStateInitialImpl);
   }
 
   @override
@@ -185,24 +188,26 @@ class _$AmiiboItemStateInitial implements AmiiboItemStateInitial {
 }
 
 abstract class AmiiboItemStateInitial implements AmiiboItemState {
-  const factory AmiiboItemStateInitial() = _$AmiiboItemStateInitial;
+  const factory AmiiboItemStateInitial() = _$AmiiboItemStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$AmiiboItemStateSuccessCopyWith<$Res> {
-  factory _$$AmiiboItemStateSuccessCopyWith(_$AmiiboItemStateSuccess value,
-          $Res Function(_$AmiiboItemStateSuccess) then) =
-      __$$AmiiboItemStateSuccessCopyWithImpl<$Res>;
+abstract class _$$AmiiboItemStateSuccessImplCopyWith<$Res> {
+  factory _$$AmiiboItemStateSuccessImplCopyWith(
+          _$AmiiboItemStateSuccessImpl value,
+          $Res Function(_$AmiiboItemStateSuccessImpl) then) =
+      __$$AmiiboItemStateSuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AmiiboModel amiiboItem});
 }
 
 /// @nodoc
-class __$$AmiiboItemStateSuccessCopyWithImpl<$Res>
-    extends _$AmiiboItemStateCopyWithImpl<$Res, _$AmiiboItemStateSuccess>
-    implements _$$AmiiboItemStateSuccessCopyWith<$Res> {
-  __$$AmiiboItemStateSuccessCopyWithImpl(_$AmiiboItemStateSuccess _value,
-      $Res Function(_$AmiiboItemStateSuccess) _then)
+class __$$AmiiboItemStateSuccessImplCopyWithImpl<$Res>
+    extends _$AmiiboItemStateCopyWithImpl<$Res, _$AmiiboItemStateSuccessImpl>
+    implements _$$AmiiboItemStateSuccessImplCopyWith<$Res> {
+  __$$AmiiboItemStateSuccessImplCopyWithImpl(
+      _$AmiiboItemStateSuccessImpl _value,
+      $Res Function(_$AmiiboItemStateSuccessImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -210,7 +215,7 @@ class __$$AmiiboItemStateSuccessCopyWithImpl<$Res>
   $Res call({
     Object? amiiboItem = null,
   }) {
-    return _then(_$AmiiboItemStateSuccess(
+    return _then(_$AmiiboItemStateSuccessImpl(
       null == amiiboItem
           ? _value.amiiboItem
           : amiiboItem // ignore: cast_nullable_to_non_nullable
@@ -221,8 +226,8 @@ class __$$AmiiboItemStateSuccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AmiiboItemStateSuccess implements AmiiboItemStateSuccess {
-  const _$AmiiboItemStateSuccess(this.amiiboItem);
+class _$AmiiboItemStateSuccessImpl implements AmiiboItemStateSuccess {
+  const _$AmiiboItemStateSuccessImpl(this.amiiboItem);
 
   @override
   final AmiiboModel amiiboItem;
@@ -233,10 +238,10 @@ class _$AmiiboItemStateSuccess implements AmiiboItemStateSuccess {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AmiiboItemStateSuccess &&
+            other is _$AmiiboItemStateSuccessImpl &&
             (identical(other.amiiboItem, amiiboItem) ||
                 other.amiiboItem == amiiboItem));
   }
@@ -247,9 +252,9 @@ class _$AmiiboItemStateSuccess implements AmiiboItemStateSuccess {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AmiiboItemStateSuccessCopyWith<_$AmiiboItemStateSuccess> get copyWith =>
-      __$$AmiiboItemStateSuccessCopyWithImpl<_$AmiiboItemStateSuccess>(
-          this, _$identity);
+  _$$AmiiboItemStateSuccessImplCopyWith<_$AmiiboItemStateSuccessImpl>
+      get copyWith => __$$AmiiboItemStateSuccessImplCopyWithImpl<
+          _$AmiiboItemStateSuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -322,34 +327,34 @@ class _$AmiiboItemStateSuccess implements AmiiboItemStateSuccess {
 
 abstract class AmiiboItemStateSuccess implements AmiiboItemState {
   const factory AmiiboItemStateSuccess(final AmiiboModel amiiboItem) =
-      _$AmiiboItemStateSuccess;
+      _$AmiiboItemStateSuccessImpl;
 
   AmiiboModel get amiiboItem;
   @JsonKey(ignore: true)
-  _$$AmiiboItemStateSuccessCopyWith<_$AmiiboItemStateSuccess> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AmiiboItemStateSuccessImplCopyWith<_$AmiiboItemStateSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AmiiboItemStateErrorCopyWith<$Res> {
-  factory _$$AmiiboItemStateErrorCopyWith(_$AmiiboItemStateError value,
-          $Res Function(_$AmiiboItemStateError) then) =
-      __$$AmiiboItemStateErrorCopyWithImpl<$Res>;
+abstract class _$$AmiiboItemStateErrorImplCopyWith<$Res> {
+  factory _$$AmiiboItemStateErrorImplCopyWith(_$AmiiboItemStateErrorImpl value,
+          $Res Function(_$AmiiboItemStateErrorImpl) then) =
+      __$$AmiiboItemStateErrorImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$AmiiboItemStateErrorCopyWithImpl<$Res>
-    extends _$AmiiboItemStateCopyWithImpl<$Res, _$AmiiboItemStateError>
-    implements _$$AmiiboItemStateErrorCopyWith<$Res> {
-  __$$AmiiboItemStateErrorCopyWithImpl(_$AmiiboItemStateError _value,
-      $Res Function(_$AmiiboItemStateError) _then)
+class __$$AmiiboItemStateErrorImplCopyWithImpl<$Res>
+    extends _$AmiiboItemStateCopyWithImpl<$Res, _$AmiiboItemStateErrorImpl>
+    implements _$$AmiiboItemStateErrorImplCopyWith<$Res> {
+  __$$AmiiboItemStateErrorImplCopyWithImpl(_$AmiiboItemStateErrorImpl _value,
+      $Res Function(_$AmiiboItemStateErrorImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$AmiiboItemStateError implements AmiiboItemStateError {
-  const _$AmiiboItemStateError();
+class _$AmiiboItemStateErrorImpl implements AmiiboItemStateError {
+  const _$AmiiboItemStateErrorImpl();
 
   @override
   String toString() {
@@ -357,9 +362,10 @@ class _$AmiiboItemStateError implements AmiiboItemStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AmiiboItemStateError);
+        (other.runtimeType == runtimeType &&
+            other is _$AmiiboItemStateErrorImpl);
   }
 
   @override
@@ -435,5 +441,5 @@ class _$AmiiboItemStateError implements AmiiboItemStateError {
 }
 
 abstract class AmiiboItemStateError implements AmiiboItemState {
-  const factory AmiiboItemStateError() = _$AmiiboItemStateError;
+  const factory AmiiboItemStateError() = _$AmiiboItemStateErrorImpl;
 }
