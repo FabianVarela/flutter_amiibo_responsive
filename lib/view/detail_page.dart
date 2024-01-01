@@ -78,7 +78,10 @@ class DetailView extends HookWidget {
                 builder: (_, orientation) {
                   return (width >= 600 || orientation == Orientation.landscape)
                       ? SingleChildScrollView(
-                          padding: const EdgeInsets.all(24),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 24,
+                            horizontal: 16,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
