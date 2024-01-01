@@ -87,7 +87,7 @@ void main() {
     });
 
     testWidgets('Show $HomePage screen portrait with data', (tester) async {
-      tester.binding.window.physicalSizeTestValue = const Size(400, 800);
+      tester.view.physicalSize = const Size(400, 800);
 
       final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
@@ -118,7 +118,7 @@ void main() {
       expect(find.byType(Drawer), findsOneWidget);
       expect(find.byType(DrawerMenu), findsOneWidget);
 
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+      addTearDown(tester.view.resetPhysicalSize);
     });
 
     testWidgets('Show $HomePage screen with empty data', (tester) async {
