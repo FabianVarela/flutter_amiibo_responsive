@@ -21,23 +21,6 @@ class AppBlocObserver extends BlocObserver {
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
-  final desktopList = [
-    TargetPlatform.linux,
-    TargetPlatform.macOS,
-    TargetPlatform.windows,
-  ];
-
-  if (desktopList.contains(defaultTargetPlatform)) {
-    setWindowTitle('Flutter Amiibo');
-
-    final minSize = defaultTargetPlatform == TargetPlatform.windows
-        ? const Size(1800, 1500)
-        : const Size(800, 500);
-
-    setWindowMinSize(minSize);
-    setWindowMaxSize(Size.infinite);
-  }
-
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
@@ -47,6 +30,24 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+
+      final desktopList = [
+        TargetPlatform.linux,
+        TargetPlatform.macOS,
+        TargetPlatform.windows,
+      ];
+
+      if (desktopList.contains(defaultTargetPlatform)) {
+        setWindowTitle('Flutter Amiibo');
+
+        final minSize = defaultTargetPlatform == TargetPlatform.windows
+            ? const Size(1800, 1500)
+            : const Size(800, 500);
+
+        setWindowMinSize(minSize);
+        setWindowMaxSize(Size.infinite);
+      }
+
       runApp(await builder());
     },
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
