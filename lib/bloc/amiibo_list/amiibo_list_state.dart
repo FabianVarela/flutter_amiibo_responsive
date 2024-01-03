@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'amiibo_list_state.freezed.dart';
 
 @freezed
-class AmiiboListState with _$AmiiboListState {
+sealed class AmiiboListState with _$AmiiboListState {
   const factory AmiiboListState.initial() = AmiiboListStateInitial;
 
   const factory AmiiboListState.success(List<AmiiboModel> amiiboList) =
