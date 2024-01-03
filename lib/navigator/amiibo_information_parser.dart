@@ -1,43 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/navigator/amiibo_configuration.dart';
+import 'package:flutter_amiibo_responsive/navigator/config/amiibo_configuration.dart';
 import 'package:flutter_amiibo_responsive/utils/enum.dart';
+
+enum AmiiboPath {
+  home('amiibos'),
+  detail('amiibo'),
+  notFound('404');
+
+  const AmiiboPath(this.name);
+
+  final String name;
+}
+
+extension _StringPathX on String {
+  Uri get toUri => Uri.parse(this);
+}
 
 class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
   @override
   Future<AmiiboConfiguration> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    final segments = routeInformation.uri.pathSegments;
+    final segments = routeInformation.uri.pathSegments
+        .map((seg) => seg.toLowerCase())
+        .toList();
 
-    if (segments.isEmpty) {
-      return const AmiiboConfiguration.home();
-    } else if (segments.length == 1) {
-      if (segments[0] == AmiiboPath.home) {
+    switch (segments.length) {
+      case 0:
         return const AmiiboConfiguration.home();
-      }
-    } else if (segments.length == 2) {
-      if (segments[0] == AmiiboPath.home) {
-        if (_existAmiiboType(segments[1])) {
+      case 1:
+        if (segments[0] == AmiiboPath.home.name) {
+          return const AmiiboConfiguration.home();
+        }
+      case 2:
+        if (segments[0] == AmiiboPath.home.name && _hasType(segments[1])) {
           return AmiiboConfiguration.home(type: segments[1]);
         }
-      }
-    } else if (segments.length == 3) {
-      if (segments[0] == AmiiboPath.home) {
-        if (segments[1] == AmiiboPath.detail) {
-          return AmiiboConfiguration.detail(amiiboId: segments[2]);
-        }
-      }
-    } else if (segments.length == 4) {
-      if (segments[0] == AmiiboPath.home) {
-        if (_existAmiiboType(segments[1])) {
-          if (segments[2] == AmiiboPath.detail) {
-            return AmiiboConfiguration.detail(
-              type: segments[1],
-              amiiboId: segments[3],
-            );
+      case 3:
+        if (segments[0] == AmiiboPath.home.name) {
+          if (segments[1] == AmiiboPath.detail.name) {
+            return AmiiboConfiguration.detail(segments[2]);
           }
         }
-      }
+      case 4:
+        if (segments[0] == AmiiboPath.home.name && _hasType(segments[1])) {
+          if (segments[2] == AmiiboPath.detail.name) {
+            return AmiiboConfiguration.detail(segments[3], type: segments[1]);
+          }
+        }
     }
 
     return const AmiiboConfiguration.unknown();
@@ -45,34 +55,22 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
 
   @override
   RouteInformation? restoreRouteInformation(AmiiboConfiguration configuration) {
-    if (configuration.isUnknown) {
-      return RouteInformation(uri: Uri.parse('/${AmiiboPath.notFound}'));
-    } else if (configuration.isHomePage) {
-      return RouteInformation(uri: Uri.parse('/${AmiiboPath.home}'));
-    } else if (configuration.isHomeTypePage) {
-      return RouteInformation(
-        uri: Uri.parse('/${AmiiboPath.home}/${configuration.type}'),
-      );
-    } else if (configuration.isDetailNoTypePage) {
-      final id = configuration.amiiboId;
+    final home = AmiiboPath.home.name;
+    final detail = AmiiboPath.detail.name;
+    final noFound = AmiiboPath.notFound.name;
 
-      return RouteInformation(
-        uri: Uri.parse('/${AmiiboPath.home}/${AmiiboPath.detail}/$id'),
-      );
-    } else if (configuration.isDetailPage) {
-      final type = configuration.type;
-      final id = configuration.amiiboId;
-
-      return RouteInformation(
-        uri: Uri.parse('/${AmiiboPath.home}/$type/${AmiiboPath.detail}/$id'),
-      );
-    }
-
-    return null;
+    return switch (configuration) {
+      AmiiboConfigurationUnknown() => RouteInformation(uri: '/$noFound'.toUri),
+      AmiiboConfigurationHome(:final type) => type != null
+          ? RouteInformation(uri: '/$home/$type'.toUri)
+          : RouteInformation(uri: '/$home'.toUri),
+      AmiiboConfigurationDetail(:final amiiboId, :final type) => type != null
+          ? RouteInformation(uri: '/$home/$type/$detail/$amiiboId'.toUri)
+          : RouteInformation(uri: '/$home/$detail/$amiiboId'.toUri),
+    };
   }
 
-  bool _existAmiiboType(String type) {
-    final existsType = AmiiboType.values.where((el) => el.name == type);
-    return existsType.isNotEmpty;
+  bool _hasType(String type) {
+    return AmiiboType.values.where((el) => el.name == type).isNotEmpty;
   }
 }

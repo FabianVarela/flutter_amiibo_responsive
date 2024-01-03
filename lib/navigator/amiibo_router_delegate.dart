@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/navigator/amiibo_configuration.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_pages.dart';
+import 'package:flutter_amiibo_responsive/navigator/config/amiibo_configuration.dart';
 
 class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AmiiboConfiguration> {
@@ -79,7 +79,7 @@ class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
     } else if (amiiboType != null && amiiboId == null && !is404) {
       return AmiiboConfiguration.home(type: amiiboType);
     } else if (amiiboId != null && !is404) {
-      return AmiiboConfiguration.detail(type: amiiboType, amiiboId: amiiboId);
+      return AmiiboConfiguration.detail(amiiboId!, type: amiiboType);
     } else if (is404) {
       return const AmiiboConfiguration.unknown();
     }
@@ -89,20 +89,15 @@ class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
 
   @override
   Future<void> setNewRoutePath(AmiiboConfiguration configuration) async {
-    if (configuration.isUnknownPage) {
-      _changeValues(isNotFound: true);
-    } else if (configuration.isHomePage) {
-      _changeValues();
-    } else if (configuration.isHomeTypePage) {
-      _changeValues(type: configuration.type);
-    } else if (configuration.isDetailNoTypePage) {
-      _changeValues(id: configuration.amiiboId);
-    } else if (configuration.isDetailPage) {
-      _changeValues(type: configuration.type, id: configuration.amiiboId);
-    }
+    return switch (configuration) {
+      AmiiboConfigurationUnknown() => _setValues(isNotFound: true),
+      AmiiboConfigurationHome(:final type) => _setValues(type: type),
+      AmiiboConfigurationDetail(:final amiiboId, :final type) =>
+        _setValues(type: type, id: amiiboId),
+    };
   }
 
-  void _changeValues({String? type, String? id, bool isNotFound = false}) {
+  void _setValues({String? type, String? id, bool isNotFound = false}) {
     amiiboType = type;
     amiiboId = id;
     is404 = isNotFound;
