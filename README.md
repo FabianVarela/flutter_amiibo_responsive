@@ -16,7 +16,8 @@ Actually the project has been implemented with **Navigator 2.0** or **Route API*
 #### Deep linking
 
 For using deep links with flutter without any packages, review
-this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking)
+this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking). This branch uses *uni_links* to manage the
+deep links
 
 Run deep links in **iOS**, use the command below:
 
@@ -27,8 +28,12 @@ xcrun simctl openurl booted amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/
 Run deep links in **Android**, use the command below:
 
 ```bash
-~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
 ```
+
+<font size="3">For **iOS** using *uni_links*, you must associate the domain in Xcode in the "Signing and Capabilities"
+section and add the "Associated Domains" capability. However, you must have and add an ***Apple Developer***
+account.</font>
 
 ### Unit testing and coverage
 
@@ -39,11 +44,13 @@ To execute the unit testing and show the coverage, you must run the `test_covera
 Before to run the script, you must have installed the `lcov` package.
 
 For macOS, via `brew` (you must have the home brew already installed).
+
 ```bash
 brew install lcov
 ```
 
 For Linux use the command below.
+
 ```bash
 sudo apt -y install lcov
 ```
@@ -96,6 +103,7 @@ this [link](https://docs.flutter.dev/cookbook/testing/integration/introduction#5
 - Intl ([intl](https://pub.dev/packages/intl))
 - Json annotation ([json_annotation](https://pub.dev/packages/json_annotation))
 - Shimmer animation ([shimmer_animation](https://pub.dev/packages/shimmer_animation))
+- Uni links ([uni_links](https://pub.dev/packages/uni_links))
 - Window size ([window_size](https://pub.dev/packages/window_size))
 
 #### Dev dependencies
