@@ -29,34 +29,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- Only set in "true" with Flutter without third packages -->
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+
             <!-- Deep Links -->
-            <meta-data
-                android:name="flutter_deeplinking_enabled"
-                android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
                 <data
-                    android:host="amiiboexample.com"
-                    android:scheme="amiiboapp" />
+                    android:scheme="amiiboapp"
+                    android:host="amiiboexample.com" />
             </intent-filter>
 
             <!-- App Links -->
-            <intent-filter
-                android:autoVerify="true"
-                tools:targetApi="m">
+            <intent-filter android:autoVerify="true" tools:targetApi="m">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with https://YOUR_HOST -->
                 <data
-                    android:host="amiiboexample.com"
-                    android:pathPrefix="/amiiboapp"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    android:host="amiiboexample.com" />
             </intent-filter>
         </activity>
 
