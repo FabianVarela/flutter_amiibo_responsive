@@ -30,7 +30,7 @@
             </intent-filter>
 
             <!-- Only set in "true" with Flutter without third packages -->
-            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="false" />
 
             <!-- Deep Links -->
             <intent-filter>
