@@ -17,18 +17,24 @@ Actually the project has been implemented with **Navigator 2.0** or **Route API*
 
 For using deep links with flutter without any packages, review
 this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking). This branch uses *uni_links* to manage the
-deep links
+deep links.
 
 Run deep links in **iOS**, use the command below:
 
 ```bash
 xcrun simctl openurl booted amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+
+# Using https
+xcrun simctl openurl booted "https://amiiboexample.com/amiibos/{type}/amiibo/{id}"
 ```
 
 Run deep links in **Android**, use the command below:
 
 ```bash
-adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+
+#Using https
+~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d "https://amiiboexample.com/amiibos/{type}/amiibo/{id}" \ <your_package_id>
 ```
 
 <font size="3">For **iOS** using *uni_links*, you must associate the domain in Xcode in the "Signing and Capabilities"
