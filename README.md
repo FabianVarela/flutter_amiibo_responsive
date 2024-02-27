@@ -22,16 +22,17 @@ Run deep links in **iOS**, use the command below:
 
 ```bash
 xcrun simctl openurl booted amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+
+# Using https
+xcrun simctl openurl booted "https://amiiboexample.com/amiibos/{type}/amiibo/{id}"
 ```
 
 Run deep links in **Android**, use the command below:
 
 ```bash
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
-```
 
-Run deep links in Android (using https) use the command below:
-```bash
+#Using https
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d "https://amiiboexample.com/amiibos/{type}/amiibo/{id}" \ <your_package_id>
 ```
 
