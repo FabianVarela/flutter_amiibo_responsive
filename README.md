@@ -30,6 +30,11 @@ Run deep links in **Android**, use the command below:
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
 ```
 
+Run deep links in Android (using https) use the command below:
+```bash
+~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d "https://amiiboexample.com/amiibos/{type}/amiibo/{id}" \ <your_package_id>
+```
+
 ### Unit testing and coverage
 
 To execute the unit testing and show the coverage, you must run the `test_coverage` file by console.
