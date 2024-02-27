@@ -18,9 +18,10 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-    <!-- Deep Links -->
+    <!-- Only set in "true" with Flutter without third packages -->
     <key>FlutterDeepLinkingEnabled</key>
     <true/>
+    <!-- Deep Links -->
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
@@ -31,6 +32,7 @@
             <key>CFBundleURLSchemes</key>
             <array>
                 <string>amiiboapp</string>
+                <string>https</string>
             </array>
         </dict>
     </array>
