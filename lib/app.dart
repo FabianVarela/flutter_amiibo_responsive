@@ -76,9 +76,7 @@ class MyAppState extends State<MyApp> {
       try {
         final initialUri = await getInitialUri();
         if (initialUri != null) {
-          await _informationParser.parseRouteInformation(
-            RouteInformation(uri: initialUri),
-          );
+          _routerDelegate.parseRoute(initialUri);
         }
       } on PlatformException {
         if (kDebugMode) print('Failed to receive Uri');
@@ -92,9 +90,7 @@ class MyAppState extends State<MyApp> {
     _linkSubscription = uriLinkStream.listen(
       (uri) {
         if (uri != null) {
-          _informationParser.parseRouteInformation(
-            RouteInformation(uri: uri),
-          );
+          _routerDelegate.parseRoute(uri);
         }
       },
       onError: (Object error) {
