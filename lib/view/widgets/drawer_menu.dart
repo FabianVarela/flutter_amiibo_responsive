@@ -15,12 +15,6 @@ class DrawerMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w300,
-      color: Colors.green,
-    );
-
     return ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
@@ -41,7 +35,14 @@ class DrawerMenu extends StatelessWidget {
               if (makePop) Navigator.of(context).pop();
             },
             leading: Icon(type.icon, color: Colors.green),
-            title: Text(type.text, style: textStyle),
+            title: Text(
+              type.text,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w300,
+                color: Colors.green,
+              ),
+            ),
           );
         }),
       ],
