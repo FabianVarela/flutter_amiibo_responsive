@@ -53,11 +53,10 @@ void main() {
     }
 
     testWidgets('Show $HomePage screen with data', (tester) async {
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
-          () => Future.value([model]),
+          () => Future.value([amiiboModel]),
         ),
       );
 
@@ -80,22 +79,29 @@ void main() {
 
       expect(tester.widgetList(find.byType(AmiiboItem)), [
         isA<AmiiboItem>()
-            .having((w) => w.amiibo.name, 'name', model.name)
-            .having((w) => w.amiibo.type, 'type', model.type)
-            .having((w) => w.amiibo.imageUrl, 'imageUrl', model.imageUrl)
-            .having((w) => w.amiibo.character, 'character', model.character)
-            .having((w) => w.amiibo.gameSeries, 'gameSeries', model.gameSeries),
+            .having((w) => w.amiibo.name, 'name', amiiboModel.name)
+            .having((w) => w.amiibo.type, 'type', amiiboModel.type)
+            .having((w) => w.amiibo.imageUrl, 'imageUrl', amiiboModel.imageUrl)
+            .having(
+              (w) => w.amiibo.character,
+              'character',
+              amiiboModel.character,
+            )
+            .having(
+              (w) => w.amiibo.gameSeries,
+              'gameSeries',
+              amiiboModel.gameSeries,
+            ),
       ]);
     });
 
-    testWidgets('Show $HomePage screen portrait with data', (tester) async {
-      tester.view.physicalSize = const Size(400, 800);
+    testWidgets('Show $HomePage screen landscape with data', (tester) async {
+      tester.view.physicalSize = const Size(800, 400);
 
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
-          () => Future.value([model]),
+          () => Future.value([amiiboModel]),
         ),
       );
 
@@ -114,9 +120,7 @@ void main() {
       await tester.tap(finderIconMenu);
       await tester.pump();
 
-      expect(find.byType(Drawer), findsOneWidget);
       expect(find.byType(DrawerMenu), findsOneWidget);
-
       addTearDown(tester.view.resetPhysicalSize);
     });
 
@@ -175,17 +179,16 @@ void main() {
     testWidgets(
       'Redirect when select an $AmiiboItem to $DetailView screen',
       (tester) async {
-        final model = getAmiiboModel();
         when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
           (_) => Future.delayed(
             const Duration(milliseconds: 100),
-            () => Future.value([model]),
+            () => Future.value([amiiboModel]),
           ),
         );
         when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
           (_) => Future.delayed(
             const Duration(milliseconds: 100),
-            () => Future.value(model),
+            () => Future.value(amiiboModel),
           ),
         );
 
@@ -210,34 +213,53 @@ void main() {
       },
     );
 
-    testWidgets('Show $DrawerMenu and select an option', (tester) async {
-      final model = getAmiiboModel();
-      when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
-        (_) => Future.delayed(
-          const Duration(milliseconds: 100),
-          () => Future.value([model]),
-        ),
-      );
+    testWidgets(
+      'Show $DrawerMenu, select an option and redirect to $DetailView',
+      (tester) async {
+        when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
+          (_) => Future.delayed(
+            const Duration(milliseconds: 100),
+            () => Future.value([amiiboModel]),
+          ),
+        );
+        when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
+          (_) => Future.delayed(
+            const Duration(milliseconds: 100),
+            () => Future.value(amiiboModel),
+          ),
+        );
 
-      await pumpMainScreen(tester);
-      await tester.pumpAndSettle();
+        await pumpMainScreen(tester);
+        await tester.pumpAndSettle();
 
-      expect(find.byType(ShimmerGridLoading), findsNothing);
-      expect(find.byType(GridView), findsOneWidget);
+        expect(find.byType(ShimmerGridLoading), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
 
-      final scaffoldKey = GlobalKey<ScaffoldState>();
-      scaffoldKey.currentState?.openDrawer();
+        final scaffoldKey = GlobalKey<ScaffoldState>();
+        scaffoldKey.currentState?.openDrawer();
 
-      await tester.pump();
-      expect(find.byType(DrawerHeader), findsOneWidget);
+        await tester.pump();
+        expect(find.byType(DrawerHeader), findsOneWidget);
 
-      final findIcon = find.byIcon(Icons.account_box);
-      expect(findIcon, findsOneWidget);
+        final findIcon = find.byIcon(Icons.account_box);
+        expect(findIcon, findsOneWidget);
 
-      await tester.tap(findIcon);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+        await tester.tap(findIcon);
+        await tester.pumpAndSettle(const Duration(seconds: 1));
 
-      expect(find.byType(GridView), findsOneWidget);
-    });
+        expect(find.byType(GridView), findsOneWidget);
+
+        final foundAmiiboItem = find.descendant(
+          of: find.byType(GridView),
+          matching: find.byType(AmiiboItem),
+        );
+        expect(foundAmiiboItem, findsOneWidget);
+
+        await tester.tap(foundAmiiboItem);
+        await tester.pumpAndSettle();
+
+        expect(find.byType(DetailView), findsOneWidget);
+      },
+    );
   });
 }
