@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
-import 'package:flutter_amiibo_responsive/utils/enum.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
@@ -19,7 +18,7 @@ class HomePage extends StatelessWidget {
   });
 
   final String? type;
-  final ValueSetter<AmiiboType?> onChange;
+  final ValueSetter<String?> onChange;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -44,7 +43,7 @@ class HomePageView extends HookWidget {
   });
 
   final String? type;
-  final ValueSetter<AmiiboType?> onChange;
+  final ValueSetter<String?> onChange;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -69,27 +68,14 @@ class HomePageView extends HookWidget {
           drawer: orientation == Orientation.landscape && width >= 800
               ? null
               : Drawer(
-                  child: DrawerMenu(
-                    onTapAll: () => onChange(null),
-                    onTapFigure: () => onChange(AmiiboType.figure),
-                    onTapCard: () => onChange(AmiiboType.card),
-                    onTapYarn: () => onChange(AmiiboType.yarn),
-                    onTapBand: () => onChange(AmiiboType.band),
-                  ),
+                  child: DrawerMenu(onSelect: onChange),
                 ),
           body: orientation == Orientation.landscape && width >= 800
               ? Row(
                   children: <Widget>[
                     Expanded(
                       flex: 2,
-                      child: DrawerMenu(
-                        makePop: false,
-                        onTapAll: () => onChange(null),
-                        onTapFigure: () => onChange(AmiiboType.figure),
-                        onTapCard: () => onChange(AmiiboType.card),
-                        onTapYarn: () => onChange(AmiiboType.yarn),
-                        onTapBand: () => onChange(AmiiboType.band),
-                      ),
+                      child: DrawerMenu(onSelect: onChange, makePop: false),
                     ),
                     Expanded(
                       flex: 5,
