@@ -20,7 +20,7 @@ class HomePageRoute extends Page<dynamic> {
       settings: this,
       builder: (_) => HomePage(
         type: type,
-        onChange: (type) => onChangeType(type?.name),
+        onChange: onChangeType,
         onGoToDetail: onGoToDetail,
       ),
     );
