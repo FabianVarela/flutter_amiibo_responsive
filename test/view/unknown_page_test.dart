@@ -45,6 +45,8 @@ void main() {
         ),
       );
     });
+
+    amiiboRouterDelegate.is404 = true;
   }
 
   group('$UnknownPageUI UI screen', () {
@@ -59,9 +61,6 @@ void main() {
       await pumpMainScreen(tester);
       await tester.pumpAndSettle();
 
-      amiiboRouterDelegate.is404 = true;
-
-      await tester.pumpAndSettle();
       expect(find.byType(UnknownPageUI), findsOneWidget);
 
       expect(find.text('Not found'), findsOneWidget);
