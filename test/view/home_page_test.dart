@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.dart';
+import 'package:flutter_amiibo_responsive/navigator/amiibo_router_delegate.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
+import 'package:flutter_amiibo_responsive/view/detail_page.dart';
 import 'package:flutter_amiibo_responsive/view/home_page.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
@@ -19,7 +22,8 @@ void main() {
     late MockAmiiboClient mockAmiiboClient;
     late AmiiboRepository amiiboRepository;
 
-    late MockNavigator mockNavigator;
+    late final AmiiboRouterDelegate amiiboRouterDelegate;
+    late final AmiiboInfoParser amiiboInfoParser;
 
     setUpAll(() {
       HttpOverrides.global = null;
@@ -29,18 +33,19 @@ void main() {
 
       registerFallbackValue(MyAmiiboFake());
 
-      mockNavigator = MockNavigator();
-      registerFallbackValue(MyRouteFake());
+      amiiboRouterDelegate = AmiiboRouterDelegate();
+      amiiboInfoParser = AmiiboInfoParser();
     });
 
-    Future<void> pumpMainScreen(WidgetTester tester, Widget child) async {
+    Future<void> pumpMainScreen(WidgetTester tester) async {
       await mockNetworkImages(() {
         return tester.pumpWidget(
           MultiRepositoryProvider(
             providers: [RepositoryProvider.value(value: amiiboRepository)],
-            child: MaterialApp(
-              navigatorObservers: [mockNavigator],
-              home: child,
+            child: MaterialApp.router(
+              routerDelegate: amiiboRouterDelegate,
+              routeInformationParser: amiiboInfoParser,
+              backButtonDispatcher: RootBackButtonDispatcher(),
             ),
           ),
         );
@@ -56,10 +61,7 @@ void main() {
         ),
       );
 
-      await pumpMainScreen(
-        tester,
-        HomePage(onChange: (_) {}, onGoToDetail: (_) {}),
-      );
+      await pumpMainScreen(tester);
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
@@ -97,10 +99,7 @@ void main() {
         ),
       );
 
-      await pumpMainScreen(
-        tester,
-        HomePage(onChange: (_) {}, onGoToDetail: (_) {}),
-      );
+      await pumpMainScreen(tester);
 
       final finderIconMenu = find.byIcon(Icons.menu);
 
@@ -129,10 +128,7 @@ void main() {
         ),
       );
 
-      await pumpMainScreen(
-        tester,
-        HomePage(onChange: (_) {}, onGoToDetail: (_) {}),
-      );
+      await pumpMainScreen(tester);
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
@@ -158,10 +154,7 @@ void main() {
         ),
       );
 
-      await pumpMainScreen(
-        tester,
-        HomePage(onChange: (_) {}, onGoToDetail: (_) {}),
-      );
+      await pumpMainScreen(tester);
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
@@ -177,6 +170,74 @@ void main() {
 
       expect(find.byType(ShimmerGridLoading), findsNothing);
       expect(find.text('Error to get data'), findsOneWidget);
+    });
+
+    testWidgets(
+      'Redirect when select an $AmiiboItem to $DetailView screen',
+      (tester) async {
+        final model = getAmiiboModel();
+        when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
+          (_) => Future.delayed(
+            const Duration(milliseconds: 100),
+            () => Future.value([model]),
+          ),
+        );
+        when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
+          (_) => Future.delayed(
+            const Duration(milliseconds: 100),
+            () => Future.value(model),
+          ),
+        );
+
+        await pumpMainScreen(tester);
+
+        expect(find.byType(ShimmerGridLoading), findsOneWidget);
+        await tester.pumpAndSettle();
+
+        expect(find.byType(ShimmerGridLoading), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
+
+        final foundAmiiboItem = find.descendant(
+          of: find.byType(GridView),
+          matching: find.byType(AmiiboItem),
+        );
+        expect(foundAmiiboItem, findsOneWidget);
+
+        await tester.tap(foundAmiiboItem);
+        await tester.pumpAndSettle();
+
+        expect(find.byType(DetailView), findsOneWidget);
+      },
+    );
+
+    testWidgets('Show $DrawerMenu and select an option', (tester) async {
+      final model = getAmiiboModel();
+      when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
+        (_) => Future.delayed(
+          const Duration(milliseconds: 100),
+          () => Future.value([model]),
+        ),
+      );
+
+      await pumpMainScreen(tester);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ShimmerGridLoading), findsNothing);
+      expect(find.byType(GridView), findsOneWidget);
+
+      final scaffoldKey = GlobalKey<ScaffoldState>();
+      scaffoldKey.currentState?.openDrawer();
+
+      await tester.pump();
+      expect(find.byType(DrawerHeader), findsOneWidget);
+
+      final findIcon = find.byIcon(Icons.account_box);
+      expect(findIcon, findsOneWidget);
+
+      await tester.tap(findIcon);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+
+      expect(find.byType(GridView), findsOneWidget);
     });
   });
 }
