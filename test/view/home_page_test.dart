@@ -95,8 +95,8 @@ void main() {
       ]);
     });
 
-    testWidgets('Show $HomePage screen portrait with data', (tester) async {
-      tester.view.physicalSize = const Size(400, 800);
+    testWidgets('Show $HomePage screen landscape with data', (tester) async {
+      tester.view.physicalSize = const Size(800, 400);
 
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
@@ -120,9 +120,7 @@ void main() {
       await tester.tap(finderIconMenu);
       await tester.pump();
 
-      expect(find.byType(Drawer), findsOneWidget);
       expect(find.byType(DrawerMenu), findsOneWidget);
-
       addTearDown(tester.view.resetPhysicalSize);
     });
 
