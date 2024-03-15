@@ -49,11 +49,10 @@ void main() {
 
   group('$UnknownPageUI UI screen', () {
     testWidgets('Force the redirect to a $UnknownPageUI', (tester) async {
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
-          () => Future.value([model]),
+          () => Future.value([amiiboModel]),
         ),
       );
 

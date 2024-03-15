@@ -45,17 +45,16 @@ void main() {
     }
 
     testWidgets('Show $DetailPage screen with data', (tester) async {
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
-          () => Future.value(model),
+          () => Future.value(amiiboModel),
         ),
       );
 
       await pumpMainScreen(
         tester,
-        DetailPage(amiiboId: '${model.head}${model.tail}'),
+        DetailPage(amiiboId: '${amiiboModel.head}${amiiboModel.tail}'),
       );
 
       final finderAppBar = find.byType(AppBar);
@@ -69,7 +68,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final finderTextName = find.text(model.name);
+      final finderTextName = find.text(amiiboModel.name);
       expect(
         find.descendant(of: finderAppBar, matching: finderTextName),
         findsOneWidget,
@@ -82,17 +81,16 @@ void main() {
     testWidgets('Show $DetailPage screen portrait with data', (tester) async {
       tester.view.physicalSize = const Size(400, 800);
 
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
-          () => Future.value(model),
+          () => Future.value(amiiboModel),
         ),
       );
 
       await pumpMainScreen(
         tester,
-        DetailPage(amiiboId: '${model.head}${model.tail}'),
+        DetailPage(amiiboId: '${amiiboModel.head}${amiiboModel.tail}'),
       );
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -106,7 +104,6 @@ void main() {
     });
 
     testWidgets('Show $DetailPage screen with error', (tester) async {
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
@@ -116,7 +113,7 @@ void main() {
 
       await pumpMainScreen(
         tester,
-        DetailPage(amiiboId: '${model.head}${model.tail}'),
+        DetailPage(amiiboId: '${amiiboModel.head}${amiiboModel.tail}'),
       );
 
       final finderAppBar = find.byType(AppBar);

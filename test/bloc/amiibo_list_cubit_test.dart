@@ -19,16 +19,15 @@ void main() {
     blocTest<AmiiboListCubit, AmiiboListState>(
       'Emit $AmiiboListState when get $AmiiboModel list',
       build: () {
-        final valueList = [getAmiiboModel()];
         when(() => mockAmiiboRepository.getAmiiboList(any()))
-            .thenAnswer((_) => Future.value(valueList));
+            .thenAnswer((_) => Future.value([amiiboModel]));
 
         return AmiiboListCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboData(null),
       expect: () => <AmiiboListState>[
         const AmiiboListStateInitial(),
-        AmiiboListStateSuccess([getAmiiboModel()]),
+        AmiiboListStateSuccess([amiiboModel]),
       ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboList(any()));

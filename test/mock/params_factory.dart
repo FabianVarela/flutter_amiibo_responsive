@@ -22,7 +22,7 @@ const amiiboType = 'figure';
 
 const amiiboId = '01010000000e0002';
 
-AmiiboModel getAmiiboModel() {
+AmiiboModel get amiiboModel {
   final amiiboMap = jsonDecode(jsonDetailResponse) as Map<String, dynamic>;
   return AmiiboModel.fromJson(amiiboMap['amiibo'] as Map<String, dynamic>);
 }

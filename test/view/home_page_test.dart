@@ -53,11 +53,10 @@ void main() {
     }
 
     testWidgets('Show $HomePage screen with data', (tester) async {
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
-          () => Future.value([model]),
+          () => Future.value([amiiboModel]),
         ),
       );
 
@@ -80,22 +79,29 @@ void main() {
 
       expect(tester.widgetList(find.byType(AmiiboItem)), [
         isA<AmiiboItem>()
-            .having((w) => w.amiibo.name, 'name', model.name)
-            .having((w) => w.amiibo.type, 'type', model.type)
-            .having((w) => w.amiibo.imageUrl, 'imageUrl', model.imageUrl)
-            .having((w) => w.amiibo.character, 'character', model.character)
-            .having((w) => w.amiibo.gameSeries, 'gameSeries', model.gameSeries),
+            .having((w) => w.amiibo.name, 'name', amiiboModel.name)
+            .having((w) => w.amiibo.type, 'type', amiiboModel.type)
+            .having((w) => w.amiibo.imageUrl, 'imageUrl', amiiboModel.imageUrl)
+            .having(
+              (w) => w.amiibo.character,
+              'character',
+              amiiboModel.character,
+            )
+            .having(
+              (w) => w.amiibo.gameSeries,
+              'gameSeries',
+              amiiboModel.gameSeries,
+            ),
       ]);
     });
 
     testWidgets('Show $HomePage screen portrait with data', (tester) async {
       tester.view.physicalSize = const Size(400, 800);
 
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
-          () => Future.value([model]),
+          () => Future.value([amiiboModel]),
         ),
       );
 
@@ -175,17 +181,16 @@ void main() {
     testWidgets(
       'Redirect when select an $AmiiboItem to $DetailView screen',
       (tester) async {
-        final model = getAmiiboModel();
         when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
           (_) => Future.delayed(
             const Duration(milliseconds: 100),
-            () => Future.value([model]),
+            () => Future.value([amiiboModel]),
           ),
         );
         when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
           (_) => Future.delayed(
             const Duration(milliseconds: 100),
-            () => Future.value(model),
+            () => Future.value(amiiboModel),
           ),
         );
 
@@ -211,11 +216,10 @@ void main() {
     );
 
     testWidgets('Show $DrawerMenu and select an option', (tester) async {
-      final model = getAmiiboModel();
       when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
-          () => Future.value([model]),
+          () => Future.value([amiiboModel]),
         ),
       );
 

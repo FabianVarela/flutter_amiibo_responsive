@@ -22,8 +22,7 @@ void main() {
         'should get a future with a $List of $AmiiboModel '
         'when getAmiiboList is called', () async {
       // arrange
-      final valueList = getAmiiboModel();
-      final futureValueList = Future.value([valueList]);
+      final futureValueList = Future.value([amiiboModel]);
 
       when(() => mockAmiiboClient.getAmiiboList(any()))
           .thenAnswer((_) => futureValueList);
@@ -37,7 +36,7 @@ void main() {
       expect(result, equals(futureValueList));
 
       expect(listResult, isA<List<AmiiboModel>>());
-      expect(listResult, equals([valueList]));
+      expect(listResult, equals([amiiboModel]));
 
       verify(() => mockAmiiboClient.getAmiiboList(any())).called(1);
       verifyNoMoreInteractions(mockAmiiboClient);
@@ -47,8 +46,7 @@ void main() {
         'should get a future with an $AmiiboModel detail '
         'when getAmiiboItem is called', () async {
       // arrange
-      final value = getAmiiboModel();
-      final futureValue = Future.value(value);
+      final futureValue = Future.value(amiiboModel);
 
       when(() => mockAmiiboClient.getAmiiboItem(any(), any()))
           .thenAnswer((_) => futureValue);
@@ -62,7 +60,7 @@ void main() {
       expect(result, equals(futureValue));
 
       expect(valueResult, isA<AmiiboModel>());
-      expect(valueResult, equals(value));
+      expect(valueResult, equals(amiiboModel));
 
       verify(() => mockAmiiboClient.getAmiiboItem(any(), any())).called(1);
       verifyNoMoreInteractions(mockAmiiboClient);
