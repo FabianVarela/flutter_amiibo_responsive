@@ -215,33 +215,53 @@ void main() {
       },
     );
 
-    testWidgets('Show $DrawerMenu and select an option', (tester) async {
-      when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
-        (_) => Future.delayed(
-          const Duration(milliseconds: 100),
-          () => Future.value([amiiboModel]),
-        ),
-      );
+    testWidgets(
+      'Show $DrawerMenu, select an option and redirect to $DetailView',
+      (tester) async {
+        when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
+          (_) => Future.delayed(
+            const Duration(milliseconds: 100),
+            () => Future.value([amiiboModel]),
+          ),
+        );
+        when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
+          (_) => Future.delayed(
+            const Duration(milliseconds: 100),
+            () => Future.value(amiiboModel),
+          ),
+        );
 
-      await pumpMainScreen(tester);
-      await tester.pumpAndSettle();
+        await pumpMainScreen(tester);
+        await tester.pumpAndSettle();
 
-      expect(find.byType(ShimmerGridLoading), findsNothing);
-      expect(find.byType(GridView), findsOneWidget);
+        expect(find.byType(ShimmerGridLoading), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
 
-      final scaffoldKey = GlobalKey<ScaffoldState>();
-      scaffoldKey.currentState?.openDrawer();
+        final scaffoldKey = GlobalKey<ScaffoldState>();
+        scaffoldKey.currentState?.openDrawer();
 
-      await tester.pump();
-      expect(find.byType(DrawerHeader), findsOneWidget);
+        await tester.pump();
+        expect(find.byType(DrawerHeader), findsOneWidget);
 
-      final findIcon = find.byIcon(Icons.account_box);
-      expect(findIcon, findsOneWidget);
+        final findIcon = find.byIcon(Icons.account_box);
+        expect(findIcon, findsOneWidget);
 
-      await tester.tap(findIcon);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+        await tester.tap(findIcon);
+        await tester.pumpAndSettle(const Duration(seconds: 1));
 
-      expect(find.byType(GridView), findsOneWidget);
-    });
+        expect(find.byType(GridView), findsOneWidget);
+
+        final foundAmiiboItem = find.descendant(
+          of: find.byType(GridView),
+          matching: find.byType(AmiiboItem),
+        );
+        expect(foundAmiiboItem, findsOneWidget);
+
+        await tester.tap(foundAmiiboItem);
+        await tester.pumpAndSettle();
+
+        expect(find.byType(DetailView), findsOneWidget);
+      },
+    );
   });
 }
