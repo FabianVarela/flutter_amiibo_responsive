@@ -102,4 +102,15 @@ class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
     amiiboId = id;
     is404 = isNotFound;
   }
+
+  void parseRoute(Uri uri) {
+    final segments = uri.pathSegments;
+    return switch (segments.length) {
+      0 || 1 => _setValues(),
+      2 => _setValues(type: segments[1]),
+      3 when segments[1] == 'amiibo' => _setValues(id: segments[2]),
+      4 => _setValues(type: segments[1], id: segments[3]),
+      _ => _setValues(isNotFound: true),
+    };
+  }
 }
