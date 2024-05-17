@@ -20,7 +20,7 @@ dependencies:
   google_fonts: ^6.2.1
   http: ^1.2.0
   intl: ^0.19.0
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
   shimmer_animation: ^2.1.0+1
   window_size:
     git:
@@ -29,13 +29,13 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.1.7
-  build_runner: ^2.4.9
+  build_runner: ^2.4.10
   flutter_test:
     sdk: flutter
   freezed: ^2.5.2
   integration_test:
     sdk: flutter
-  json_serializable: ^6.7.1
+  json_serializable: ^6.8.0
   mocktail: ^1.0.3
   mocktail_image_network: ^1.1.0
   remove_from_coverage: ^2.0.0
