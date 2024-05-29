@@ -103,7 +103,6 @@ this [link](https://docs.flutter.dev/cookbook/testing/integration/introduction#5
 - Collection ([collection](https://pub.dev/packages/collection))
 - Equatable ([equatable](https://pub.dev/packages/equatable))
 - Flutter bloc ([flutter_bloc](https://pub.dev/packages/flutter_bloc))
-- Freezed annotation ([freezed_annotation](https://pub.dev/packages/freezed_annotation))
 - Google fonts ([google_fonts](https://pub.dev/packages/google_fonts))
 - Http ([http](https://pub.dev/packages/http))
 - Intl ([intl](https://pub.dev/packages/intl))
@@ -116,7 +115,6 @@ this [link](https://docs.flutter.dev/cookbook/testing/integration/introduction#5
 
 - Bloc test ([bloc_test](https://pub.dev/packages/bloc_test))
 - Build runner ([build_runner](https://pub.dev/packages/build_runner))
-- Freezed ([freezed](https://pub.dev/packages/freezed))
 - Mocktail ([mocktail](https://pub.dev/packages/mocktail))
 - Mocktail image network ([mocktail_image_network](https://pub.dev/packages/mocktail_image_network))
 - Remove from coverage ([remove_from_coverage](https://pub.dev/packages/remove_from_coverage))
