@@ -1,14 +1,26 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'amiibo_list_state.freezed.dart';
+sealed class AmiiboListState extends Equatable {
+  const AmiiboListState();
 
-@freezed
-sealed class AmiiboListState with _$AmiiboListState {
-  const factory AmiiboListState.initial() = AmiiboListStateInitial;
+  @override
+  List<Object?> get props => [];
+}
 
-  const factory AmiiboListState.success(List<AmiiboModel> amiiboList) =
-      AmiiboListStateSuccess;
+class AmiiboListStateInitial extends AmiiboListState {
+  const AmiiboListStateInitial();
+}
 
-  const factory AmiiboListState.error() = AmiiboListStateError;
+class AmiiboListStateSuccess extends AmiiboListState {
+  const AmiiboListStateSuccess({required this.amiiboList});
+
+  final List<AmiiboModel> amiiboList;
+
+  @override
+  List<Object?> get props => [amiiboList];
+}
+
+class AmiiboListStateError extends AmiiboListState {
+  const AmiiboListStateError();
 }

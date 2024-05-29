@@ -75,13 +75,13 @@ class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
   @override
   AmiiboConfiguration? get currentConfiguration {
     if (amiiboType == null && amiiboId == null && !is404) {
-      return const AmiiboConfiguration.home();
+      return const AmiiboConfigurationHome();
     } else if (amiiboType != null && amiiboId == null && !is404) {
-      return AmiiboConfiguration.home(type: amiiboType);
+      return AmiiboConfigurationHome(type: amiiboType);
     } else if (amiiboId != null && !is404) {
-      return AmiiboConfiguration.detail(amiiboId!, type: amiiboType);
+      return AmiiboConfigurationDetail(amiiboId: amiiboId!, type: amiiboType);
     } else if (is404) {
-      return const AmiiboConfiguration.unknown();
+      return const AmiiboConfigurationUnknown();
     }
 
     return null;
