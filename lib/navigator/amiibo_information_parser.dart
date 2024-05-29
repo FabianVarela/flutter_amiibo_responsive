@@ -27,30 +27,33 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
 
     switch (segments.length) {
       case 0:
-        return const AmiiboConfiguration.home();
+        return const AmiiboConfigurationHome();
       case 1:
         if (segments[0] == AmiiboPath.home.name) {
-          return const AmiiboConfiguration.home();
+          return const AmiiboConfigurationHome();
         }
       case 2:
         if (segments[0] == AmiiboPath.home.name && _hasType(segments[1])) {
-          return AmiiboConfiguration.home(type: segments[1]);
+          return AmiiboConfigurationHome(type: segments[1]);
         }
       case 3:
         if (segments[0] == AmiiboPath.home.name) {
           if (segments[1] == AmiiboPath.detail.name) {
-            return AmiiboConfiguration.detail(segments[2]);
+            return AmiiboConfigurationDetail(amiiboId: segments[2]);
           }
         }
       case 4:
         if (segments[0] == AmiiboPath.home.name && _hasType(segments[1])) {
           if (segments[2] == AmiiboPath.detail.name) {
-            return AmiiboConfiguration.detail(segments[3], type: segments[1]);
+            return AmiiboConfigurationDetail(
+              amiiboId: segments[3],
+              type: segments[1],
+            );
           }
         }
     }
 
-    return const AmiiboConfiguration.unknown();
+    return const AmiiboConfigurationUnknown();
   }
 
   @override

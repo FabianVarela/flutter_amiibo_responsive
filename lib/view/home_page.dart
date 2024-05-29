@@ -48,7 +48,7 @@ class HomePageView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.sizeOf(context).width;
 
     useEffect(
       () {
@@ -97,49 +97,49 @@ class _AmiiboList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
 
     return BlocBuilder<AmiiboListCubit, AmiiboListState>(
       builder: (_, state) {
-        return state.when(
-          initial: () => const ShimmerGridLoading(),
-          success: (list) => list.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No data found',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                )
-              : GridView.extent(
-                  maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  padding: const EdgeInsets.all(8),
-                  childAspectRatio: 1 / 1.2,
-                  children: list.mapIndexed((index, item) {
-                    final internalId = '${item.head}${item.tail}';
-                    return AmiiboItem(
-                      key: ValueKey('$index'),
-                      amiibo: item,
-                      onSelectAmiibo: () => onTapAmiibo(internalId),
-                    );
-                  }).toList(),
+        return switch (state) {
+          AmiiboListStateInitial() => const ShimmerGridLoading(),
+          AmiiboListStateSuccess(:final amiiboList) when amiiboList.isEmpty =>
+            const Center(
+              child: Text(
+                'No data found',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
-          error: () => const Center(
-            child: Text(
-              'Error to get data',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
               ),
             ),
-          ),
-        );
+          AmiiboListStateSuccess(:final amiiboList) => GridView.extent(
+              maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              padding: const EdgeInsets.all(8),
+              childAspectRatio: 1 / 1.2,
+              children: amiiboList.mapIndexed((index, item) {
+                final internalId = '${item.head}${item.tail}';
+                return AmiiboItem(
+                  key: ValueKey('$index'),
+                  amiibo: item,
+                  onSelectAmiibo: () => onTapAmiibo(internalId),
+                );
+              }).toList(),
+            ),
+          AmiiboListStateError() => const Center(
+              child: Text(
+                'Error to get data',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+        };
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_state.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,7 @@ class DetailView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.sizeOf(context).width;
 
     useEffect(
       () {
@@ -43,13 +44,13 @@ class DetailView extends HookWidget {
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
         title: Builder(
-          builder: (ctx) => Text(
-            ctx.select(
-              (AmiiboItemCubit value) => value.state.maybeWhen(
-                success: (data) => data.name,
-                error: () => 'Error',
-                orElse: () => 'Loading',
-              ),
+          builder: (builderContext) => Text(
+            builderContext.select(
+              (AmiiboItemCubit value) => switch (value.state) {
+                AmiiboItemStateInitial() => 'Loading',
+                AmiiboItemStateSuccess(:final amiiboItem) => amiiboItem.name,
+                AmiiboItemStateError() => 'Error',
+              },
             ),
             style: const TextStyle(fontSize: 24),
           ),
@@ -57,67 +58,60 @@ class DetailView extends HookWidget {
       ),
       body: BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
         builder: (_, state) {
-          return state.when(
-            initial: () => const Center(
-              child: CircularProgressIndicator(color: Colors.redAccent),
-            ),
-            success: (item) {
-              final imageUrl = item.imageUrl;
-              final imageWidget = Hero(
-                tag: '${item.head}_${item.tail}',
-                child: Image.network(imageUrl, height: 350, fit: BoxFit.cover),
-              );
-
-              final detailWidget = _AmiiboDetail(
-                name: item.name,
-                series: item.amiiboSeries,
-                type: item.type,
-              );
-
-              return OrientationBuilder(
-                builder: (_, orientation) {
-                  return (width >= 600 || orientation == Orientation.landscape)
-                      ? SingleChildScrollView(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 24,
-                            horizontal: 16,
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[imageWidget, detailWidget],
-                                ),
-                              ),
-                              const Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    _AmiiboButtons(),
-                                    _AmiiboDescription(),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : ListView(
+          if (state is AmiiboItemStateSuccess) {
+            return OrientationBuilder(
+              builder: (_, orientation) {
+                return (width >= 600 || orientation == Orientation.landscape)
+                    ? SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 24,
+                          horizontal: 16,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            imageWidget,
-                            detailWidget,
-                            const _AmiiboButtons(),
-                            const _AmiiboDescription(),
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  _AmiiboImage(item: state.amiiboItem),
+                                  _AmiiboDetail(item: state.amiiboItem),
+                                ],
+                              ),
+                            ),
+                            const Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  _AmiiboButtons(),
+                                  _AmiiboDescription(),
+                                ],
+                              ),
+                            ),
                           ],
-                        );
-                },
-              );
-            },
-            error: () => const Center(
+                        ),
+                      )
+                    : ListView(
+                        children: <Widget>[
+                          _AmiiboImage(item: state.amiiboItem),
+                          _AmiiboDetail(item: state.amiiboItem),
+                          const _AmiiboButtons(),
+                          const _AmiiboDescription(),
+                        ],
+                      );
+              },
+            );
+          }
+
+          if (state is AmiiboItemStateError) {
+            return const Center(
               child: Text(
                 'Error to get data',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
-            ),
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.redAccent),
           );
         },
       ),
@@ -125,16 +119,28 @@ class DetailView extends HookWidget {
   }
 }
 
-class _AmiiboDetail extends StatelessWidget {
-  const _AmiiboDetail({
-    required this.name,
-    required this.series,
-    required this.type,
-  });
+class _AmiiboImage extends StatelessWidget {
+  const _AmiiboImage({required this.item});
 
-  final String name;
-  final String series;
-  final String type;
+  final AmiiboModel item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: '${item.head}_${item.tail}',
+      child: Image.network(
+        item.imageUrl,
+        height: 350,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+}
+
+class _AmiiboDetail extends StatelessWidget {
+  const _AmiiboDetail({required this.item});
+
+  final AmiiboModel item;
 
   @override
   Widget build(BuildContext context) {
@@ -149,11 +155,14 @@ class _AmiiboDetail extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    name,
+                    item.name,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(series, style: TextStyle(color: Colors.grey[500])),
+                Text(
+                  item.amiiboSeries,
+                  style: TextStyle(color: Colors.grey[500]),
+                ),
               ],
             ),
           ),
@@ -161,7 +170,7 @@ class _AmiiboDetail extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: Text(
-              type,
+              item.type,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
           ),

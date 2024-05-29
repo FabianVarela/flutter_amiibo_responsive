@@ -27,7 +27,7 @@ void main() {
       act: (cubit) => cubit.fetchAmiiboData(null),
       expect: () => <AmiiboListState>[
         const AmiiboListStateInitial(),
-        AmiiboListStateSuccess([amiiboModel]),
+        AmiiboListStateSuccess(amiiboList: [amiiboModel]),
       ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboList(any()));

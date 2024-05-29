@@ -12,7 +12,7 @@ class AmiiboListCubit extends Cubit<AmiiboListState> {
 
     try {
       final resultList = await _repository.getAmiiboList(param);
-      emit(AmiiboListStateSuccess(resultList));
+      emit(AmiiboListStateSuccess(amiiboList: resultList));
     } on Exception {
       emit(const AmiiboListStateError());
     }
