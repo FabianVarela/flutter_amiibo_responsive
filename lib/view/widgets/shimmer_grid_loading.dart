@@ -6,7 +6,7 @@ class ShimmerGridLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
     final fakeList = List.filled(20, 0);
 
     return GridView.extent(
@@ -25,7 +25,7 @@ class ShimmerGridLoading extends StatelessWidget {
               ),
               constraints: BoxConstraints(
                 minHeight: 200,
-                minWidth: MediaQuery.of(context).size.width * 0.9,
+                minWidth: size.width * 0.9,
               ),
             ),
           ),
