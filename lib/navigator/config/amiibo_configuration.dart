@@ -1,14 +1,20 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+sealed class AmiiboConfiguration {
+  const AmiiboConfiguration();
+}
 
-part 'amiibo_configuration.freezed.dart';
+class AmiiboConfigurationHome extends AmiiboConfiguration {
+  const AmiiboConfigurationHome({this.type});
 
-@freezed
-sealed class AmiiboConfiguration with _$AmiiboConfiguration {
-  const factory AmiiboConfiguration.home({String? type}) =
-      AmiiboConfigurationHome;
+  final String? type;
+}
 
-  const factory AmiiboConfiguration.detail(String amiiboId, {String? type}) =
-      AmiiboConfigurationDetail;
+class AmiiboConfigurationDetail extends AmiiboConfiguration {
+  const AmiiboConfigurationDetail({required this.amiiboId, this.type});
 
-  const factory AmiiboConfiguration.unknown() = AmiiboConfigurationUnknown;
+  final String amiiboId;
+  final String? type;
+}
+
+class AmiiboConfigurationUnknown extends AmiiboConfiguration {
+  const AmiiboConfigurationUnknown();
 }
