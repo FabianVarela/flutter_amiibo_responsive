@@ -16,7 +16,7 @@ Actually the project has been implemented with **Navigator 2.0** or **Route API*
 #### Deep linking
 
 For using deep links with flutter without any packages, review
-this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking). This branch uses *uni_links* to manage the
+this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking). This branch uses *app_links* to manage the
 deep links.
 
 Run deep links in **iOS**, use the command below:
@@ -100,6 +100,7 @@ this [link](https://docs.flutter.dev/cookbook/testing/integration/introduction#5
 
 #### Dependencies
 
+- App links ([app_links](https://pub.dev/packages/app_links))
 - Collection ([collection](https://pub.dev/packages/collection))
 - Equatable ([equatable](https://pub.dev/packages/equatable))
 - Flutter bloc ([flutter_bloc](https://pub.dev/packages/flutter_bloc))
@@ -108,7 +109,6 @@ this [link](https://docs.flutter.dev/cookbook/testing/integration/introduction#5
 - Intl ([intl](https://pub.dev/packages/intl))
 - Json annotation ([json_annotation](https://pub.dev/packages/json_annotation))
 - Shimmer animation ([shimmer_animation](https://pub.dev/packages/shimmer_animation))
-- Uni links ([uni_links](https://pub.dev/packages/uni_links))
 - Window size ([window_size](https://pub.dev/packages/window_size))
 
 #### Dev dependencies
