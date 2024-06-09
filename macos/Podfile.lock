@@ -1,4 +1,6 @@
 PODS:
+  - app_links (1.0.0):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - path_provider_foundation (0.0.1):
     - Flutter
@@ -7,11 +9,14 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - app_links (from `Flutter/ephemeral/.symlinks/plugins/app_links/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - window_size (from `Flutter/ephemeral/.symlinks/plugins/window_size/macos`)
 
 EXTERNAL SOURCES:
+  app_links:
+    :path: Flutter/ephemeral/.symlinks/plugins/app_links/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   path_provider_foundation:
@@ -20,8 +25,9 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/window_size/macos
 
 SPEC CHECKSUMS:
+  app_links: 10e0a0ab602ffaf34d142cd4862f29d34b303b2a
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   window_size: 339dafa0b27a95a62a843042038fa6c3c48de195
 
 PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
