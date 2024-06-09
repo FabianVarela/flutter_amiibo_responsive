@@ -11,7 +11,7 @@ This project is available in Android, iOS, Web and Desktop (Windows and MacOS).
 
 ### Navigator 2.0
 
-Actually the project has been implemented with **Navigator 2.0** or **Route API**.
+Currently, the project has been implemented with **Navigator 2.0** or **Route API**.
 
 #### Deep linking
 
@@ -37,7 +37,13 @@ Run deep links in **Android**, use the command below:
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d "https://amiiboexample.com/amiibos/{type}/amiibo/{id}" \ <your_package_id>
 ```
 
-<font size="3">For **iOS** using *uni_links*, you must associate the domain in Xcode in the "Signing and Capabilities"
+Run deep links in **macOS**, you must type the URL below in your browser address bar:
+
+```text
+amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+```
+
+<font size="3">For **iOS** (maybe **macOS**) using *app_links*, you must associate the domain in Xcode in the "Signing and Capabilities"
 section and add the "Associated Domains" capability. However, you must have and add an ***Apple Developer***
 account.</font>
 
