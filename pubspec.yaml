@@ -15,13 +15,13 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^8.1.6
   flutter_hooks: ^0.20.5
   google_fonts: ^6.2.1
   http: ^1.2.0
   intl: ^0.19.0
   json_annotation: ^4.9.0
-  shimmer_animation: ^2.1.0+1
+  shimmer_animation: ^2.2.1
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
@@ -35,10 +35,10 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   json_serializable: ^6.8.0
-  mocktail: ^1.0.3
-  mocktail_image_network: ^1.1.0
+  mocktail: ^1.0.4
+  mocktail_image_network: ^1.2.0
   remove_from_coverage: ^2.0.0
-  very_good_analysis: ^5.1.0
+  very_good_analysis: ^6.0.0
 
 flutter:
   uses-material-design: true
