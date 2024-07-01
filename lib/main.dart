@@ -13,22 +13,20 @@ Future<void> main() async {
 Future<void> _registerWinDeepLink(String scheme) async {
   if (defaultTargetPlatform != TargetPlatform.windows) return;
 
-  final protocolRegKey = 'Software\\Classes\\$scheme';
   const protocolRegValue = RegistryValue(
     'URL Protocol',
     RegistryValueType.string,
     '',
   );
 
-  const protocolCmdRegKey = r'shell\open\command';
   final protocolCmdRegValue = RegistryValue(
     '',
     RegistryValueType.string,
     '"${Platform.resolvedExecutable}" "%1"',
   );
 
-  final regKey = Registry.currentUser.createKey(protocolRegKey)
+  final regKey = Registry.currentUser.createKey('Software\\Classes\\$scheme')
     ..createValue(protocolRegValue);
 
-  regKey.createKey(protocolCmdRegKey).createValue(protocolCmdRegValue);
+  regKey.createKey(r'shell\open\command').createValue(protocolCmdRegValue);
 }
