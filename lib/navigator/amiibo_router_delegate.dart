@@ -47,27 +47,31 @@ class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
 
   @override
   Widget build(BuildContext context) {
+    var pages = <Page<dynamic>>[
+      if (is404)
+        UnknownPageRoute()
+      else ...[
+        HomePageRoute(
+          type: amiiboType,
+          onChangeType: (type) => amiiboType = type,
+          onGoToDetail: (id) => amiiboId = id,
+        ),
+        if (amiiboId != null)
+          DetailPageRoute(type: amiiboType, amiiboId: amiiboId!),
+      ],
+    ];
+
     return Navigator(
       observers: [_heroController],
       key: navigatorKey,
-      pages: <Page<dynamic>>[
-        if (is404)
-          UnknownPageRoute()
-        else ...[
-          HomePageRoute(
-            type: amiiboType,
-            onChangeType: (type) => amiiboType = type,
-            onGoToDetail: (id) => amiiboId = id,
-          ),
-          if (amiiboId != null)
-            DetailPageRoute(type: amiiboType, amiiboId: amiiboId!),
-        ],
-      ],
-      onPopPage: (route, dynamic result) {
-        if (!route.didPop(result)) return false;
-
-        if (amiiboId != null) amiiboId = null;
-        return true;
+      pages: pages,
+      onDidRemovePage: (page) {
+        if (amiiboId == null) {
+          pages.remove(page);
+          pages = pages.toList();
+        } else {
+          if (amiiboId != null) amiiboId = null;
+        }
       },
     );
   }
