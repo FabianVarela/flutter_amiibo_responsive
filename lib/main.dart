@@ -7,12 +7,12 @@ import 'package:win32_registry/win32_registry.dart';
 
 Future<void> main() async {
   await bootstrap(MyApp.new);
-  await _registerWinDeepLink('amiiboapp');
+  if (defaultTargetPlatform == TargetPlatform.windows) {
+    await _registerWinDeepLink('amiiboapp');
+  }
 }
 
 Future<void> _registerWinDeepLink(String scheme) async {
-  if (defaultTargetPlatform != TargetPlatform.windows) return;
-
   const protocolRegValue = RegistryValue(
     'URL Protocol',
     RegistryValueType.string,
