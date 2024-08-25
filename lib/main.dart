@@ -25,7 +25,7 @@ Future<void> _registerWinDeepLink(String scheme) async {
     '"${Platform.resolvedExecutable}" "%1"',
   );
 
-  final regKey = Registry.currentUser.createKey('Software\\Classes\\$scheme')
+  final regKey = Registry.currentUser.createKey(r'Software\Classes\$scheme')
     ..createValue(protocolRegValue);
 
   regKey.createKey(r'shell\open\command').createValue(protocolCmdRegValue);
