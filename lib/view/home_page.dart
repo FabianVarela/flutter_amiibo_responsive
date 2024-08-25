@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_state.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';

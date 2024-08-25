@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
-import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_state.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
