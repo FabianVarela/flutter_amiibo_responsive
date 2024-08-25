@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
+part of 'amiibo_list_cubit.dart';
 
 sealed class AmiiboListState extends Equatable {
   const AmiiboListState();

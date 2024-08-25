@@ -1,6 +1,9 @@
-import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_state.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+part 'amiibo_list_state.dart';
 
 class AmiiboListCubit extends Cubit<AmiiboListState> {
   AmiiboListCubit(this._repository) : super(const AmiiboListStateInitial());
