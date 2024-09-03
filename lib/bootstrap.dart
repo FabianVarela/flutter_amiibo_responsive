@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:window_size/window_size.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -29,6 +30,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   await runZonedGuarded(
     () async {
+      if (kIsWeb) setUrlStrategy(PathUrlStrategy());
       WidgetsFlutterBinding.ensureInitialized();
 
       final desktopList = [

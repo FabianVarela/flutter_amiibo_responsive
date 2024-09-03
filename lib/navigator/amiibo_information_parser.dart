@@ -21,36 +21,36 @@ class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
   Future<AmiiboConfiguration> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    final segments = routeInformation.uri.pathSegments
-        .map((seg) => seg.toLowerCase())
-        .toList();
+    final newPaths = routeInformation.uri.pathSegments.map((pathSegment) {
+      final path = AmiiboPath.values.where((val) => val.name == pathSegment);
+      return path.isEmpty ? pathSegment : pathSegment.toLowerCase();
+    }).toList();
 
-    switch (segments.length) {
-      case 0:
+    if (newPaths.isEmpty) return const AmiiboConfigurationHome();
+
+    if (newPaths.length == 1) {
+      if (newPaths.first == AmiiboPath.home.name) {
         return const AmiiboConfigurationHome();
-      case 1:
-        if (segments[0] == AmiiboPath.home.name) {
-          return const AmiiboConfigurationHome();
+      }
+    } else if (newPaths.length == 2) {
+      if (newPaths.first == AmiiboPath.home.name && _hasType(newPaths.last)) {
+        return AmiiboConfigurationHome(type: newPaths.last);
+      }
+    } else if (newPaths.length == 3) {
+      if (newPaths.first == AmiiboPath.home.name) {
+        if (newPaths[1] == AmiiboPath.detail.name) {
+          return AmiiboConfigurationDetail(amiiboId: newPaths.last);
         }
-      case 2:
-        if (segments[0] == AmiiboPath.home.name && _hasType(segments[1])) {
-          return AmiiboConfigurationHome(type: segments[1]);
+      }
+    } else if (newPaths.length == 4) {
+      if (newPaths.first == AmiiboPath.home.name && _hasType(newPaths[1])) {
+        if (newPaths[2] == AmiiboPath.detail.name) {
+          return AmiiboConfigurationDetail(
+            amiiboId: newPaths.last,
+            type: newPaths[1],
+          );
         }
-      case 3:
-        if (segments[0] == AmiiboPath.home.name) {
-          if (segments[1] == AmiiboPath.detail.name) {
-            return AmiiboConfigurationDetail(amiiboId: segments[2]);
-          }
-        }
-      case 4:
-        if (segments[0] == AmiiboPath.home.name && _hasType(segments[1])) {
-          if (segments[2] == AmiiboPath.detail.name) {
-            return AmiiboConfigurationDetail(
-              amiiboId: segments[3],
-              type: segments[1],
-            );
-          }
-        }
+      }
     }
 
     return const AmiiboConfigurationUnknown();
