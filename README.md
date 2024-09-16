@@ -11,12 +11,13 @@ This project is available in Android, iOS, Web and Desktop (Windows and MacOS).
 
 ### Navigator 2.0
 
-Actually the project has been implemented with **Navigator 2.0** or **Route API**.
+Currently, the project has been implemented with **Navigator 2.0** or **Route API**.
 
 #### Deep linking
 
 For using deep links with flutter without any packages, review
-this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking)
+this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking). This branch uses *app_links* to manage the
+deep links.
 
 Run deep links in **iOS**, use the command below:
 
@@ -36,6 +37,17 @@ Run deep links in **Android**, use the command below:
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d "https://amiiboexample.com/amiibos/{type}/amiibo/{id}" \ <your_package_id>
 ```
 
+Run deep links in **macOS** or **Windows**, you must type the URL below in your browser address bar:
+
+```text
+amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+```
+
+<font size="3">For **iOS** (maybe **macOS**) using *app_links*, you must associate the domain in Xcode in the "Signing
+and Capabilities"
+section and add the "Associated Domains" capability. However, you must have and add an ***Apple Developer***
+account.</font>
+
 ### Unit testing and coverage
 
 To execute the unit testing and show the coverage, you must run the `test_coverage` file by console.
@@ -45,11 +57,13 @@ To execute the unit testing and show the coverage, you must run the `test_covera
 Before to run the script, you must have installed the `lcov` package.
 
 For macOS, via `brew` (you must have the home brew already installed).
+
 ```bash
 brew install lcov
 ```
 
 For Linux use the command below.
+
 ```bash
 sudo apt -y install lcov
 ```
@@ -93,6 +107,7 @@ this [link](https://docs.flutter.dev/cookbook/testing/integration/introduction#5
 
 #### Dependencies
 
+- App links ([app_links](https://pub.dev/packages/app_links))
 - Collection ([collection](https://pub.dev/packages/collection))
 - Equatable ([equatable](https://pub.dev/packages/equatable))
 - Flutter bloc ([flutter_bloc](https://pub.dev/packages/flutter_bloc))
