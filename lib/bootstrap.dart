@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_strategy/url_strategy.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:window_size/window_size.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -30,7 +30,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   await runZonedGuarded(
     () async {
-      setPathUrlStrategy();
+      usePathUrlStrategy();
       WidgetsFlutterBinding.ensureInitialized();
 
       final desktopList = [
