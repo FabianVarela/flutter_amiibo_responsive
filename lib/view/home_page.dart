@@ -96,7 +96,7 @@ class _AmiiboList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
+    final width = MediaQuery.sizeOf(context).width;
 
     return BlocBuilder<AmiiboListCubit, AmiiboListState>(
       builder: (_, state) {
@@ -114,7 +114,7 @@ class _AmiiboList extends StatelessWidget {
               ),
             ),
           AmiiboListStateSuccess(:final amiiboList) => GridView.extent(
-              maxCrossAxisExtent: size.width >= 600 ? 300 : 200,
+              maxCrossAxisExtent: width >= 600 ? 300 : 200,
               mainAxisSpacing: 8,
               crossAxisSpacing: 8,
               padding: const EdgeInsets.all(8),
