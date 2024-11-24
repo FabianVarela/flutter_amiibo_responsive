@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class VerticalIconButton extends StatelessWidget {
   const VerticalIconButton({
@@ -24,12 +25,10 @@ class VerticalIconButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(icon, color: color),
-            Container(
-              margin: const EdgeInsets.only(top: 5),
-              child: Text(
-                text.toUpperCase(),
-                style: TextStyle(fontSize: 10, color: color),
-              ),
+            const Gap(5),
+            Text(
+              text.toUpperCase(),
+              style: TextStyle(fontSize: 10, color: color),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class UnknownPageUI extends StatelessWidget {
   const UnknownPageUI({super.key});
@@ -27,7 +28,7 @@ class UnknownPageUI extends StatelessWidget {
               height: size.height * 0.4,
               width: size.width * 0.4,
             ),
-            const SizedBox(height: 50),
+            const Gap(50),
             const Text(
               kIsWeb ? 'Oops!!! Page not found' : 'Oops!!! Screen not found',
               style: TextStyle(fontSize: 30),
