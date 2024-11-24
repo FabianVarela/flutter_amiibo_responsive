@@ -11,7 +11,7 @@ This project is available in Android, iOS, Web and Desktop (Windows and MacOS).
 
 ### Navigator 2.0
 
-Actually the project has been implemented with **Navigator 2.0** or **Route API**.
+Currently, the project has been implemented with **Navigator 2.0** or **Route API**.
 
 #### Deep linking
 
