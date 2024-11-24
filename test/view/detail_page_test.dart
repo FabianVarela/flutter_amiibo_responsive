@@ -101,10 +101,9 @@ void main() {
       tester.view.physicalSize = const Size(600, 800);
 
       await pumpMainScreen(tester);
+      await tester.pumpAndSettle();
 
-      amiiboRouterDelegate
-        ..amiiboType = amiiboType
-        ..amiiboId = amiiboId;
+      amiiboRouterDelegate.amiiboId = amiiboId;
 
       await tester.pumpAndSettle();
 
@@ -117,6 +116,7 @@ void main() {
 
     testWidgets('Show $DetailPage screen with error', (tester) async {
       await pumpMainScreen(tester, hasError: true);
+      await tester.pumpAndSettle();
 
       amiiboRouterDelegate.amiiboId = amiiboId;
 
