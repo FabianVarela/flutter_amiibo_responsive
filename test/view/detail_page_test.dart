@@ -103,6 +103,8 @@ void main() {
       await pumpMainScreen(tester);
       await tester.pumpAndSettle();
 
+      amiiboRouterDelegate.amiiboType = amiiboType;
+      await tester.pumpAndSettle();
       amiiboRouterDelegate.amiiboId = amiiboId;
 
       await tester.pumpAndSettle();

@@ -61,6 +61,7 @@ void main() {
       );
 
       await pumpMainScreen(tester);
+      await tester.pump();
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
@@ -106,6 +107,7 @@ void main() {
       );
 
       await pumpMainScreen(tester);
+      await tester.pump();
 
       final finderIconMenu = find.byIcon(Icons.menu);
 
@@ -133,6 +135,7 @@ void main() {
       );
 
       await pumpMainScreen(tester);
+      await tester.pump();
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
@@ -159,6 +162,7 @@ void main() {
       );
 
       await pumpMainScreen(tester);
+      await tester.pump();
 
       final finderAppBar = find.byType(AppBar);
       final finderText = find.text('Amiibo App');
@@ -193,6 +197,7 @@ void main() {
         );
 
         await pumpMainScreen(tester);
+        await tester.pump();
 
         expect(find.byType(ShimmerGridLoading), findsOneWidget);
         await tester.pumpAndSettle();
