@@ -166,9 +166,7 @@ void main() {
 
         expect(find.byType(HomePageView), findsOneWidget);
       },
-      variant: TargetPlatformVariant.all(
-        excluding: {TargetPlatform.fuchsia},
-      ),
+      variant: TargetPlatformVariant.all(),
     );
   });
 }
