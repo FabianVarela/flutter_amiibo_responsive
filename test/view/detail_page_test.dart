@@ -87,9 +87,11 @@ void main() {
       final finderAppBar = find.byType(AppBar);
       expect(finderAppBar, findsOneWidget);
 
-      final finderTextName = find.text(amiiboModel.name);
       expect(
-        find.descendant(of: finderAppBar, matching: finderTextName),
+        find.descendant(
+          of: finderAppBar,
+          matching: find.text(amiiboModel.name),
+        ),
         findsOneWidget,
       );
       expect(find.byType(CircularProgressIndicator), findsNothing);
@@ -126,12 +128,11 @@ void main() {
       expect(find.byType(DetailView), findsOneWidget);
 
       final finderAppBar = find.byType(AppBar);
-
-      final finderTextName = find.text('Error');
       expect(
-        find.descendant(of: finderAppBar, matching: finderTextName),
+        find.descendant(of: finderAppBar, matching: find.text('Error')),
         findsOneWidget,
       );
+
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('Error to get data'), findsOneWidget);
 
