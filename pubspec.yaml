@@ -10,6 +10,7 @@ environment:
   flutter: 3.24.0
 
 dependencies:
+  app_links: ^6.3.2
   collection: ^1.18.0
   equatable: ^2.0.7
   flutter:
@@ -24,6 +25,7 @@ dependencies:
   intl: ^0.20.1
   json_annotation: ^4.9.0
   shimmer_animation: ^2.2.1
+  win32_registry: ^1.1.5
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
