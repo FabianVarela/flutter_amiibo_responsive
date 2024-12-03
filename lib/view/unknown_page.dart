@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart';
 import 'package:gap/gap.dart';
 
 class UnknownPageUI extends StatelessWidget {
@@ -29,9 +29,11 @@ class UnknownPageUI extends StatelessWidget {
               width: size.width * 0.4,
             ),
             const Gap(50),
-            const Text(
-              kIsWeb ? 'Oops!!! Page not found' : 'Oops!!! Screen not found',
-              style: TextStyle(fontSize: 30),
+            Text(
+              webSegments.contains(currentDevice)
+                  ? 'Oops!!! Page not found'
+                  : 'Oops!!! Screen not found',
+              style: const TextStyle(fontSize: 30),
             ),
           ],
         ),

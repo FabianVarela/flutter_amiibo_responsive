@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
+import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
@@ -47,7 +48,9 @@ class HomePageView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
+    final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet].contains(
+      context.formFactor,
+    );
 
     useEffect(
       () {
@@ -57,33 +60,31 @@ class HomePageView extends HookWidget {
       const [],
     );
 
-    return OrientationBuilder(
-      builder: (_, orientation) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
-            backgroundColor: Colors.redAccent,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
+        backgroundColor: Colors.redAccent,
+      ),
+      drawer: switch (isDesktopOrTablet) {
+        false => Drawer(
+            child: DrawerMenu(onSelect: onChange),
           ),
-          drawer: orientation == Orientation.landscape && width >= 800
-              ? null
-              : Drawer(
-                  child: DrawerMenu(onSelect: onChange),
-                ),
-          body: orientation == Orientation.landscape && width >= 800
-              ? Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: DrawerMenu(onSelect: onChange, makePop: false),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: _AmiiboList(onTapAmiibo: onGoToDetail),
-                    ),
-                  ],
-                )
-              : _AmiiboList(onTapAmiibo: onGoToDetail),
-        );
+        _ => null,
+      },
+      body: switch (isDesktopOrTablet) {
+        true => Row(
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: DrawerMenu(onSelect: onChange, makePop: false),
+              ),
+              Expanded(
+                flex: 5,
+                child: _AmiiboList(onTapAmiibo: onGoToDetail),
+              ),
+            ],
+          ),
+        _ => _AmiiboList(onTapAmiibo: onGoToDetail),
       },
     );
   }
@@ -96,7 +97,9 @@ class _AmiiboList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
+    final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet].contains(
+      context.formFactor,
+    );
 
     return BlocBuilder<AmiiboListCubit, AmiiboListState>(
       builder: (_, state) {
@@ -114,7 +117,7 @@ class _AmiiboList extends StatelessWidget {
               ),
             ),
           AmiiboListStateSuccess(:final amiiboList) => GridView.extent(
-              maxCrossAxisExtent: width >= 600 ? 300 : 200,
+              maxCrossAxisExtent: isDesktopOrTablet ? 300 : 200,
               mainAxisSpacing: 8,
               crossAxisSpacing: 8,
               padding: const EdgeInsets.all(8),
