@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:window_size/window_size.dart';
@@ -33,21 +33,11 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       usePathUrlStrategy();
       WidgetsFlutterBinding.ensureInitialized();
 
-      final desktopList = [
-        TargetPlatform.linux,
-        TargetPlatform.macOS,
-        TargetPlatform.windows,
-      ];
-
-      if (desktopList.contains(defaultTargetPlatform)) {
+      if (currentDevice == DeviceSegment.desktop) {
         setWindowTitle('Flutter Amiibo');
 
-        final minSize = defaultTargetPlatform == TargetPlatform.windows
-            ? const Size(1800, 1500)
-            : const Size(800, 500);
-
-        setWindowMinSize(minSize);
-        setWindowMaxSize(Size.infinite);
+        setWindowMinSize(const Size(300, 500));
+        setWindowMaxSize(const Size(1500, 900));
       }
 
       runApp(await builder());
