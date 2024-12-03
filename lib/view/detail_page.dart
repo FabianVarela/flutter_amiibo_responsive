@@ -173,25 +173,21 @@ class _AmiiboButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    final iconButtonList = <({IconData icon, String text})>[
+      (icon: Icons.shopping_bag, text: 'Buy article'),
+      (icon: Icons.favorite, text: 'Add favorite'),
+      (icon: Icons.share, text: 'Share to...'),
+    ];
+
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        VerticalIconButton(
-          icon: Icons.shopping_bag,
-          text: 'Buy article',
+      children: iconButtonList.map((item) {
+        return VerticalIconButton(
+          icon: item.icon,
+          text: item.text,
           color: Colors.green,
-        ),
-        VerticalIconButton(
-          icon: Icons.favorite,
-          text: 'Add favorite',
-          color: Colors.green,
-        ),
-        VerticalIconButton(
-          icon: Icons.share,
-          text: 'Share to...',
-          color: Colors.green,
-        ),
-      ],
+        );
+      }).toList(),
     );
   }
 }
