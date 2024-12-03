@@ -5,7 +5,6 @@ import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.da
 import 'package:flutter_amiibo_responsive/navigator/amiibo_router_delegate.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart';
-import 'package:flutter_amiibo_responsive/view/detail_page.dart';
 import 'package:flutter_amiibo_responsive/view/home_page.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
@@ -65,11 +64,16 @@ void main() {
 
       await binding.setSurfaceSize(size);
       tester.view.physicalSize = size;
+      tester.view.devicePixelRatio = 1;
     }
 
     void resetSize(WidgetTester tester, TestWidgetsFlutterBinding binding) {
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(() => binding.setSurfaceSize(null));
+      addTearDown(() {
+        binding.setSurfaceSize(null);
+
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
     }
 
     testWidgets(
@@ -167,41 +171,7 @@ void main() {
     );
 
     testWidgets(
-      'Redirect when select an $AmiiboItem to $DetailView screen',
-      (tester) async {
-        await tester.runAsync(() async {
-          when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
-            (_) => Future.value([amiiboModel]),
-          );
-          when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
-            (_) => Future.value(amiiboModel),
-          );
-
-          await pumpMainScreen(tester);
-
-          expect(find.byType(ShimmerGridLoading), findsOneWidget);
-          await tester.pump(const Duration(seconds: 1));
-
-          expect(find.byType(ShimmerGridLoading), findsNothing);
-          expect(find.byType(GridView), findsOneWidget);
-
-          final foundAmiiboItem = find.descendant(
-            of: find.byType(GridView),
-            matching: find.byType(AmiiboItem),
-          );
-          expect(foundAmiiboItem, findsOneWidget);
-
-          // await tester.tap(foundAmiiboItem);
-          // await tester.pumpAndSettle();
-
-          // expect(find.byType(DetailView), findsOneWidget);
-        });
-      },
-      variant: TargetPlatformVariant.all(),
-    );
-
-    testWidgets(
-      'Show $DrawerMenu, select an option and redirect to $DetailView',
+      'Show $DrawerMenu, select an option',
       (tester) async {
         await tester.runAsync(() async {
           final binding = TestWidgetsFlutterBinding.ensureInitialized();
@@ -242,11 +212,6 @@ void main() {
             matching: find.byType(AmiiboItem),
           );
           expect(foundAmiiboItem, findsOneWidget);
-
-          // await tester.tap(foundAmiiboItem);
-          // await tester.pumpAndSettle();
-
-          // expect(find.byType(DetailView), findsOneWidget);
 
           resetSize(tester, binding);
         });
