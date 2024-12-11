@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class VerticalIconButton extends StatelessWidget {
+final class VerticalIconButton extends StatelessWidget {
   const VerticalIconButton({
     required this.icon,
     required this.text,

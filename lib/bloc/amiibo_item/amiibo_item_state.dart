@@ -7,11 +7,11 @@ sealed class AmiiboItemState extends Equatable {
   List<Object?> get props => [];
 }
 
-class AmiiboItemStateInitial extends AmiiboItemState {
+final class AmiiboItemStateInitial extends AmiiboItemState {
   const AmiiboItemStateInitial();
 }
 
-class AmiiboItemStateSuccess extends AmiiboItemState {
+final class AmiiboItemStateSuccess extends AmiiboItemState {
   const AmiiboItemStateSuccess({required this.amiiboItem});
 
   final AmiiboModel amiiboItem;
@@ -20,6 +20,6 @@ class AmiiboItemStateSuccess extends AmiiboItemState {
   List<Object?> get props => [amiiboItem];
 }
 
-class AmiiboItemStateError extends AmiiboItemState {
+final class AmiiboItemStateError extends AmiiboItemState {
   const AmiiboItemStateError();
 }

@@ -7,7 +7,7 @@ import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class DetailPage extends StatelessWidget {
+final class DetailPage extends StatelessWidget {
   const DetailPage({required this.amiiboId, super.key, this.type});
 
   final String? type;
@@ -22,7 +22,7 @@ class DetailPage extends StatelessWidget {
   }
 }
 
-class DetailView extends HookWidget {
+final class DetailView extends HookWidget {
   const DetailView({required this.amiiboId, super.key, this.type});
 
   final String? type;
@@ -110,7 +110,7 @@ class DetailView extends HookWidget {
   }
 }
 
-class _AmiiboDetail extends StatelessWidget {
+final class _AmiiboDetail extends StatelessWidget {
   const _AmiiboDetail({required this.item});
 
   final AmiiboModel item;
@@ -168,7 +168,7 @@ class _AmiiboDetail extends StatelessWidget {
   }
 }
 
-class _AmiiboButtons extends StatelessWidget {
+final class _AmiiboButtons extends StatelessWidget {
   const _AmiiboButtons();
 
   @override
@@ -192,7 +192,7 @@ class _AmiiboButtons extends StatelessWidget {
   }
 }
 
-class _AmiiboDescription extends StatelessWidget {
+final class _AmiiboDescription extends StatelessWidget {
   const _AmiiboDescription();
 
   @override

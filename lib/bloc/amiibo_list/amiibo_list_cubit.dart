@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'amiibo_list_state.dart';
 
-class AmiiboListCubit extends Cubit<AmiiboListState> {
+final class AmiiboListCubit extends Cubit<AmiiboListState> {
   AmiiboListCubit(this._repository) : super(const AmiiboListStateInitial());
 
   final AmiiboRepository _repository;

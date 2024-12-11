@@ -9,7 +9,7 @@ import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class HomePage extends StatelessWidget {
+final class HomePage extends StatelessWidget {
   const HomePage({
     required this.onChange,
     required this.onGoToDetail,
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomePageView extends HookWidget {
+final class HomePageView extends HookWidget {
   const HomePageView({
     required this.onChange,
     required this.onGoToDetail,
@@ -90,7 +90,7 @@ class HomePageView extends HookWidget {
   }
 }
 
-class _AmiiboList extends StatelessWidget {
+final class _AmiiboList extends StatelessWidget {
   const _AmiiboList({required this.onTapAmiibo});
 
   final ValueSetter<String> onTapAmiibo;

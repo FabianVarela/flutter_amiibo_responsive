@@ -16,7 +16,8 @@ extension _StringPathX on String {
   Uri get toUri => Uri.parse(this);
 }
 
-class AmiiboInfoParser extends RouteInformationParser<AmiiboConfiguration> {
+final class AmiiboInfoParser
+    extends RouteInformationParser<AmiiboConfiguration> {
   @override
   Future<AmiiboConfiguration> parseRouteInformation(
     RouteInformation routeInformation,
