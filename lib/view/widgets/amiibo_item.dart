@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AmiiboItem extends StatelessWidget {
+final class AmiiboItem extends StatelessWidget {
   const AmiiboItem({
     required this.amiibo,
     required this.onSelectAmiibo,

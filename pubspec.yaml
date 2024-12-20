@@ -10,8 +10,8 @@ environment:
   flutter: 3.24.0
 
 dependencies:
-  app_links: ^6.3.2
-  collection: ^1.18.0
+  app_links: ^6.3.3
+  collection: ^1.19.0
   equatable: ^2.0.7
   flutter:
     sdk: flutter
@@ -33,16 +33,16 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.1.7
-  build_runner: ^2.4.13
+  build_runner: ^2.4.14
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  json_serializable: ^6.9.0
+  json_serializable: ^6.9.2
   mocktail: ^1.0.4
   mocktail_image_network: ^1.2.0
   remove_from_coverage: ^2.0.0
-  very_good_analysis: ^6.0.0
+  very_good_analysis: ^7.0.0
 
 flutter:
   uses-material-design: true

@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
-class MyApp extends StatefulWidget {
+final class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override

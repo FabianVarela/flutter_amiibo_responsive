@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_pages.dart';
 import 'package:flutter_amiibo_responsive/navigator/config/amiibo_configuration.dart';
 
-class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
+final class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AmiiboConfiguration> {
   AmiiboRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
 

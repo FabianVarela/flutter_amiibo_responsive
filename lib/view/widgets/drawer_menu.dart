@@ -3,7 +3,7 @@ import 'package:flutter_amiibo_responsive/utils/enum.dart';
 
 typedef AmiiboDrawerItem = (AmiiboType?, String, IconData);
 
-class DrawerMenu extends StatelessWidget {
+final class DrawerMenu extends StatelessWidget {
   const DrawerMenu({
     required this.onSelect,
     this.makePop = true,

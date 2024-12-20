@@ -3,7 +3,7 @@ import 'package:flutter_amiibo_responsive/view/detail_page.dart';
 import 'package:flutter_amiibo_responsive/view/home_page.dart';
 import 'package:flutter_amiibo_responsive/view/unknown_page.dart';
 
-class HomePageRoute extends Page<dynamic> {
+final class HomePageRoute extends Page<dynamic> {
   HomePageRoute({
     required this.onChangeType,
     required this.onGoToDetail,
@@ -27,7 +27,7 @@ class HomePageRoute extends Page<dynamic> {
   }
 }
 
-class DetailPageRoute extends Page<dynamic> {
+final class DetailPageRoute extends Page<dynamic> {
   DetailPageRoute({required this.amiiboId, this.type})
       : super(key: ValueKey('DetailPageRoute_$amiiboId'));
 
@@ -46,7 +46,7 @@ class DetailPageRoute extends Page<dynamic> {
   }
 }
 
-class UnknownPageRoute extends Page<dynamic> {
+final class UnknownPageRoute extends Page<dynamic> {
   @override
   Route<dynamic> createRoute(BuildContext context) {
     return PageRouteBuilder<dynamic>(
