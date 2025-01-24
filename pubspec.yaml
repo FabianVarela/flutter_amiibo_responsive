@@ -21,7 +21,7 @@ dependencies:
   gap: ^3.0.1
   google_fonts: ^6.2.1
   http: ^1.2.2
-  intl: ^0.20.1
+  intl: ^0.20.2
   json_annotation: ^4.9.0
   shimmer_animation: ^2.2.2
   window_size:
