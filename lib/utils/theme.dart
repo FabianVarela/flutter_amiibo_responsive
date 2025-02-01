@@ -10,6 +10,7 @@ class AmiiboTheme {
       textTheme: GoogleFonts.nunitoTextTheme(
         textTheme.apply(
           bodyColor: colorScheme.onSurface,
+          displayColor: colorScheme.onSurface,
           decorationColor: colorScheme.onSurface,
         ),
       ),
