@@ -1,6 +1,6 @@
 part of 'amiibo_list_cubit.dart';
 
-sealed class AmiiboListState extends Equatable {
+sealed class AmiiboListState with EquatableMixin {
   const AmiiboListState();
 
   @override
