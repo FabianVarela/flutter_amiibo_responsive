@@ -116,8 +116,8 @@ final class _AmiiboList extends StatelessWidget {
               maxCrossAxisExtent: isDesktopOrTablet ? 300 : 200,
               mainAxisSpacing: 8,
               crossAxisSpacing: 8,
-              padding: const EdgeInsets.all(8),
               childAspectRatio: 1 / 1.2,
+              padding: const EdgeInsets.all(8),
               children: amiiboList.mapIndexed((index, item) {
                 final internalId = '${item.head}${item.tail}';
                 return AmiiboItem(
