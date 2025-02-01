@@ -5,9 +5,9 @@ final class VerticalIconButton extends StatelessWidget {
   const VerticalIconButton({
     required this.icon,
     required this.text,
-    super.key,
-    this.color = Colors.black,
+    required this.color,
     this.onTap,
+    super.key,
   });
 
   final IconData icon;
