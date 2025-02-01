@@ -8,10 +8,11 @@ final class UnknownPageUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: colorScheme.primaryContainer,
         title: const Text(
           'Not found',
           style: TextStyle(fontSize: 24),
@@ -25,10 +26,10 @@ final class UnknownPageUI extends StatelessWidget {
             Image.asset(
               'assets/images/mario 404.png',
               fit: BoxFit.contain,
-              height: size.height * 0.4,
-              width: size.width * 0.4,
+              height: size.height * 0.5,
+              width: size.width * 0.5,
             ),
-            const Gap(50),
+            const Gap(30),
             Text(
               webSegments.contains(currentDevice)
                   ? 'Oops!!! Page not found'

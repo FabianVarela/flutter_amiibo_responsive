@@ -63,7 +63,7 @@ final class HomePageView extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
       drawer: switch (isDesktopOrTablet) {
         false => Drawer(
@@ -109,11 +109,7 @@ final class _AmiiboList extends StatelessWidget {
             const Center(
               child: Text(
                 'No data found',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
           AmiiboListStateSuccess(:final amiiboList) => GridView.extent(
@@ -134,11 +130,7 @@ final class _AmiiboList extends StatelessWidget {
           AmiiboListStateError() => const Center(
               child: Text(
                 'Error to get data',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
         };

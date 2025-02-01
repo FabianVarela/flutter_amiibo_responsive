@@ -15,16 +15,17 @@ final class DrawerMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
         DrawerHeader(
-          decoration: const BoxDecoration(color: Colors.redAccent),
+          decoration: BoxDecoration(color: colorScheme.primaryContainer),
           child: Container(
             alignment: AlignmentDirectional.bottomStart,
             child: const Text(
               'Amiibo App',
-              style: TextStyle(fontSize: 24, color: Colors.white),
+              style: TextStyle(fontSize: 24),
             ),
           ),
         ),
@@ -34,13 +35,13 @@ final class DrawerMenu extends StatelessWidget {
               onSelect(type.value);
               if (makePop) Navigator.of(context).pop();
             },
-            leading: Icon(type.icon, color: Colors.green),
+            leading: Icon(type.icon, color: colorScheme.onTertiaryContainer),
             title: Text(
               type.text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w300,
-                color: Colors.green,
+                color: colorScheme.onTertiaryContainer,
               ),
             ),
           );

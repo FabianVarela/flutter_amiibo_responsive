@@ -14,6 +14,7 @@ final class AmiiboItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -21,7 +22,9 @@ final class AmiiboItem extends StatelessWidget {
         onTap: onSelectAmiibo,
         child: GridTile(
           footer: GridTileBar(
-            backgroundColor: Colors.black45,
+            backgroundColor: colorScheme.surfaceContainerHighest.withValues(
+              alpha: .6,
+            ),
             title: Text(
               amiibo.name,
               style: GoogleFonts.nunito(fontSize: 16),
