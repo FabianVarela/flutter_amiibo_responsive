@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'amiibo_model.g.dart';
 
 @JsonSerializable(createToJson: false)
-class AmiiboModel extends Equatable {
+class AmiiboModel with EquatableMixin {
   const AmiiboModel({
     required this.amiiboSeries,
     required this.character,
@@ -52,7 +52,7 @@ class AmiiboModel extends Equatable {
 }
 
 @JsonSerializable(createToJson: false)
-class ReleaseDateModel extends Equatable {
+class ReleaseDateModel with EquatableMixin {
   const ReleaseDateModel({
     this.australia,
     this.europe,

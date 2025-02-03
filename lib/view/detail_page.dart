@@ -30,6 +30,7 @@ final class DetailView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet].contains(
       context.formFactor,
     );
@@ -44,7 +45,7 @@ final class DetailView extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: colorScheme.primaryContainer,
         title: Builder(
           builder: (builderContext) => Text(
             builderContext.select(
@@ -101,8 +102,10 @@ final class DetailView extends HookWidget {
             );
           }
 
-          return const Center(
-            child: CircularProgressIndicator(color: Colors.redAccent),
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation(colorScheme.primaryContainer),
+            ),
           );
         },
       ),
@@ -142,14 +145,11 @@ final class _AmiiboDetail extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Text(
-                      item.amiiboSeries,
-                      style: TextStyle(color: Colors.grey[500]),
-                    ),
+                    Text(item.amiiboSeries),
                   ],
                 ),
               ),
-              Icon(Icons.art_track, color: Colors.blueGrey[500]),
+              const Icon(Icons.art_track),
               Padding(
                 padding: const EdgeInsets.only(left: 4),
                 child: Text(
@@ -173,6 +173,7 @@ final class _AmiiboButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final iconButtonList = <({IconData icon, String text})>[
       (icon: Icons.shopping_bag, text: 'Buy article'),
       (icon: Icons.favorite, text: 'Add favorite'),
@@ -185,7 +186,7 @@ final class _AmiiboButtons extends StatelessWidget {
         return VerticalIconButton(
           icon: item.icon,
           text: item.text,
-          color: Colors.green,
+          color: colorScheme.onTertiaryContainer,
         );
       }).toList(),
     );
@@ -200,13 +201,13 @@ final class _AmiiboDescription extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Text(
-        _setLoremText(),
+        _setLoremText,
         style: const TextStyle(fontSize: 16),
       ),
     );
   }
 
-  String _setLoremText() =>
+  String get _setLoremText =>
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae '
       'arcu ac erat consectetur imperdiet rutrum sed ex. Morbi orci justo, '
       'tincidunt ac vehicula a, sagittis sit amet sapien. '

@@ -20,7 +20,7 @@ final class ShimmerGridLoading extends StatelessWidget {
           Shimmer(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: Theme.of(context).colorScheme.outlineVariant,
                 borderRadius: BorderRadius.circular(8),
               ),
               constraints: BoxConstraints(

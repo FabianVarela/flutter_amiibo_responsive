@@ -7,8 +7,8 @@ import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_router_delegate.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
+import 'package:flutter_amiibo_responsive/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 final class MyApp extends StatefulWidget {
@@ -51,13 +51,12 @@ class MyAppState extends State<MyApp> {
       ],
       child: MaterialApp.router(
         title: 'Flutter Amiibo App',
-        theme: ThemeData(
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
-        ),
-        darkTheme: ThemeData(
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme),
+        theme: AmiiboTheme.setThemeData(
+          context,
+          ColorScheme.fromSeed(
+            seedColor: const Color(0xFFE6001E),
+            brightness: Brightness.dark,
+          ),
         ),
         routerDelegate: _routerDelegate,
         routeInformationParser: _informationParser,
