@@ -16,7 +16,8 @@ Currently, the project has been implemented with **Navigator 2.0** or **Route AP
 #### Deep linking
 
 For using deep links with flutter without any packages, review
-this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking)
+this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking). This branch uses *app_links* to manage the
+deep links.
 
 Run deep links in **iOS**, use the command below:
 
@@ -35,6 +36,17 @@ Run deep links in **Android**, use the command below:
 #Using https
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d "https://amiiboexample.com/amiibos/{type}/amiibo/{id}" \ <your_package_id>
 ```
+
+Run deep links in **macOS** or **Windows**, you must type the URL below in your browser address bar:
+
+```text
+amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+```
+
+<font size="3">For **iOS** (maybe **macOS**) using *app_links*, you must associate the domain in Xcode in the "Signing
+and Capabilities"
+section and add the "Associated Domains" capability. However, you must have and add an ***Apple Developer***
+account.</font>
 
 ### Unit testing and coverage
 
