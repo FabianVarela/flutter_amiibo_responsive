@@ -40,8 +40,9 @@ class AmiiboClient {
     if (response.statusCode != 200) throw Exception();
 
     final json = jsonDecode(response.body) as Map<String, dynamic>;
-    final amiiboItem = json['amiibo'] as Map<String, dynamic>;
+    final amiiboItem = json['amiibo'] as Map<String, dynamic>?;
 
+    if (amiiboItem == null) throw Exception();
     return AmiiboModel.fromJson(amiiboItem);
   }
 }
