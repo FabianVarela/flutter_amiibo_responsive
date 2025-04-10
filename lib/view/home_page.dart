@@ -48,17 +48,15 @@ final class HomePageView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet].contains(
-      context.formFactor,
-    );
+    final isDesktopOrTablet = [
+      ScreenType.desktop,
+      ScreenType.tablet,
+    ].contains(context.formFactor);
 
-    useEffect(
-      () {
-        context.read<AmiiboListCubit>().fetchAmiiboData(type);
-        return null;
-      },
-      const [],
-    );
+    useEffect(() {
+      context.read<AmiiboListCubit>().fetchAmiiboData(type);
+      return null;
+    }, const []);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,24 +64,19 @@ final class HomePageView extends HookWidget {
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
       drawer: switch (isDesktopOrTablet) {
-        false => Drawer(
-            child: DrawerMenu(onSelect: onChange),
-          ),
+        false => Drawer(child: DrawerMenu(onSelect: onChange)),
         _ => null,
       },
       body: switch (isDesktopOrTablet) {
         true => Row(
-            children: <Widget>[
-              Expanded(
-                flex: 2,
-                child: DrawerMenu(onSelect: onChange, makePop: false),
-              ),
-              Expanded(
-                flex: 5,
-                child: _AmiiboList(onTapAmiibo: onGoToDetail),
-              ),
-            ],
-          ),
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: DrawerMenu(onSelect: onChange, makePop: false),
+            ),
+            Expanded(flex: 5, child: _AmiiboList(onTapAmiibo: onGoToDetail)),
+          ],
+        ),
         _ => _AmiiboList(onTapAmiibo: onGoToDetail),
       },
     );
@@ -97,9 +90,10 @@ final class _AmiiboList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet].contains(
-      context.formFactor,
-    );
+    final isDesktopOrTablet = [
+      ScreenType.desktop,
+      ScreenType.tablet,
+    ].contains(context.formFactor);
 
     return BlocBuilder<AmiiboListCubit, AmiiboListState>(
       builder: (_, state) {
@@ -113,26 +107,27 @@ final class _AmiiboList extends StatelessWidget {
               ),
             ),
           AmiiboListStateSuccess(:final amiiboList) => GridView.extent(
-              maxCrossAxisExtent: isDesktopOrTablet ? 300 : 200,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-              childAspectRatio: 1 / 1.2,
-              padding: const EdgeInsets.all(8),
-              children: amiiboList.mapIndexed((index, item) {
-                final internalId = '${item.head}${item.tail}';
-                return AmiiboItem(
-                  key: ValueKey('$index'),
-                  amiibo: item,
-                  onSelectAmiibo: () => onTapAmiibo(internalId),
-                );
-              }).toList(),
-            ),
+            maxCrossAxisExtent: isDesktopOrTablet ? 300 : 200,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            childAspectRatio: 1 / 1.2,
+            padding: const EdgeInsets.all(8),
+            children:
+                amiiboList.mapIndexed((index, item) {
+                  final internalId = '${item.head}${item.tail}';
+                  return AmiiboItem(
+                    key: ValueKey('$index'),
+                    amiibo: item,
+                    onSelectAmiibo: () => onTapAmiibo(internalId),
+                  );
+                }).toList(),
+          ),
           AmiiboListStateError() => const Center(
-              child: Text(
-                'Error to get data',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
+            child: Text(
+              'Error to get data',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
+          ),
         };
       },
     );

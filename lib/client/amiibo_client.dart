@@ -29,9 +29,10 @@ class AmiiboClient {
   }
 
   Future<AmiiboModel> getAmiiboItem(String? type, String id) async {
-    final queryParams = type != null
-        ? <String, dynamic>{'type': type, 'id': id}
-        : <String, dynamic>{'id': id};
+    final queryParams =
+        type != null
+            ? <String, dynamic>{'type': type, 'id': id}
+            : <String, dynamic>{'id': id};
 
     final response = await _client.get(
       Uri.https(_baseUrl, _apiPath, queryParams),

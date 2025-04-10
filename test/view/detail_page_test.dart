@@ -80,18 +80,18 @@ void main() {
       WidgetTester tester, {
       bool hasError = false,
     }) async {
-      when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
-        (_) => Future.value([amiiboModel]),
-      );
+      when(
+        () => amiiboRepository.getAmiiboList(any()),
+      ).thenAnswer((_) => Future.value([amiiboModel]));
 
       if (hasError) {
-        when(() => amiiboRepository.getAmiiboItem(any(), any())).thenThrow(
-          Exception(),
-        );
+        when(
+          () => amiiboRepository.getAmiiboItem(any(), any()),
+        ).thenThrow(Exception());
       } else {
-        when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
-          (_) => Future.value(amiiboModel),
-        );
+        when(
+          () => amiiboRepository.getAmiiboItem(any(), any()),
+        ).thenAnswer((_) => Future.value(amiiboModel));
       }
 
       await pumpMainScreen(tester);
@@ -138,35 +138,26 @@ void main() {
           resetSize(tester, binding);
         });
       },
-      variant: TargetPlatformVariant.all(
-        excluding: {TargetPlatform.fuchsia},
-      ),
+      variant: TargetPlatformVariant.all(excluding: {TargetPlatform.fuchsia}),
     );
 
-    testWidgets(
-      'Show $DetailPage screen with error',
-      (tester) async {
-        await initMainScreenAndRedirect(tester, hasError: true);
+    testWidgets('Show $DetailPage screen with error', (tester) async {
+      await initMainScreenAndRedirect(tester, hasError: true);
 
-        expect(
-          find.descendant(
-            of: find.byType(AppBar),
-            matching: find.text('Error'),
-          ),
-          findsOneWidget,
-        );
+      expect(
+        find.descendant(of: find.byType(AppBar), matching: find.text('Error')),
+        findsOneWidget,
+      );
 
-        expect(find.byType(CircularProgressIndicator), findsNothing);
-        expect(find.text('Error to get data'), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.text('Error to get data'), findsOneWidget);
 
-        await tester.tap(
-          find.descendant(of: find.byType(AppBar), matching: find.byType(Icon)),
-        );
-        await tester.pumpAndSettle();
+      await tester.tap(
+        find.descendant(of: find.byType(AppBar), matching: find.byType(Icon)),
+      );
+      await tester.pumpAndSettle();
 
-        expect(find.byType(HomePageView), findsOneWidget);
-      },
-      variant: TargetPlatformVariant.all(),
-    );
+      expect(find.byType(HomePageView), findsOneWidget);
+    }, variant: TargetPlatformVariant.all());
   });
 }

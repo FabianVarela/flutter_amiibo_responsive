@@ -31,65 +31,67 @@ final class DetailView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet].contains(
-      context.formFactor,
-    );
+    final isDesktopOrTablet = [
+      ScreenType.desktop,
+      ScreenType.tablet,
+    ].contains(context.formFactor);
 
-    useEffect(
-      () {
-        context.read<AmiiboItemCubit>().fetchAmiiboItem(type, amiiboId);
-        return null;
-      },
-      const [],
-    );
+    useEffect(() {
+      context.read<AmiiboItemCubit>().fetchAmiiboItem(type, amiiboId);
+      return null;
+    }, const []);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorScheme.primaryContainer,
         title: Builder(
-          builder: (builderContext) => Text(
-            builderContext.select(
-              (AmiiboItemCubit value) => switch (value.state) {
-                AmiiboItemStateInitial() => 'Loading',
-                AmiiboItemStateSuccess(:final amiiboItem) => amiiboItem.name,
-                AmiiboItemStateError() => 'Error',
-              },
-            ),
-            style: const TextStyle(fontSize: 24),
-          ),
+          builder: (builderContext) {
+            return Text(
+              builderContext.select(
+                (AmiiboItemCubit value) => switch (value.state) {
+                  AmiiboItemStateInitial() => 'Loading',
+                  AmiiboItemStateSuccess(:final amiiboItem) => amiiboItem.name,
+                  AmiiboItemStateError() => 'Error',
+                },
+              ),
+              style: const TextStyle(fontSize: 24),
+            );
+          },
         ),
       ),
       body: BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
         builder: (_, state) {
           if (state is AmiiboItemStateSuccess) {
             return SingleChildScrollView(
-              padding: isDesktopOrTablet
-                  ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16)
-                  : null,
-              child: isDesktopOrTablet
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: _AmiiboDetail(item: state.amiiboItem),
-                        ),
-                        const Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              _AmiiboButtons(),
-                              _AmiiboDescription(),
-                            ],
+              padding:
+                  isDesktopOrTablet
+                      ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16)
+                      : null,
+              child:
+                  isDesktopOrTablet
+                      ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: _AmiiboDetail(item: state.amiiboItem),
                           ),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: <Widget>[
-                        _AmiiboDetail(item: state.amiiboItem),
-                        const _AmiiboButtons(),
-                        const _AmiiboDescription(),
-                      ],
-                    ),
+                          const Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                _AmiiboButtons(),
+                                _AmiiboDescription(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                      : Column(
+                        children: <Widget>[
+                          _AmiiboDetail(item: state.amiiboItem),
+                          const _AmiiboButtons(),
+                          const _AmiiboDescription(),
+                        ],
+                      ),
             );
           }
 
@@ -124,11 +126,7 @@ final class _AmiiboDetail extends StatelessWidget {
       children: <Widget>[
         Hero(
           tag: '${item.head}_${item.tail}',
-          child: Image.network(
-            item.imageUrl,
-            height: 350,
-            fit: BoxFit.cover,
-          ),
+          child: Image.network(item.imageUrl, height: 350, fit: BoxFit.cover),
         ),
         Padding(
           padding: const EdgeInsets.all(24),
@@ -182,13 +180,14 @@ final class _AmiiboButtons extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: iconButtonList.map((item) {
-        return VerticalIconButton(
-          icon: item.icon,
-          text: item.text,
-          color: colorScheme.onTertiaryContainer,
-        );
-      }).toList(),
+      children:
+          iconButtonList.map((item) {
+            return VerticalIconButton(
+              icon: item.icon,
+              text: item.text,
+              color: colorScheme.onTertiaryContainer,
+            );
+          }).toList(),
     );
   }
 }
@@ -200,10 +199,7 @@ final class _AmiiboDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24),
-      child: Text(
-        _setLoremText,
-        style: const TextStyle(fontSize: 16),
-      ),
+      child: Text(_setLoremText, style: const TextStyle(fontSize: 16)),
     );
   }
 

@@ -18,16 +18,18 @@ void main() {
     blocTest<AmiiboItemCubit, AmiiboItemState>(
       'Emit $AmiiboItemState when get $AmiiboModel item',
       build: () {
-        when(() => mockAmiiboRepository.getAmiiboItem(any(), any()))
-            .thenAnswer((_) => Future.value(amiiboModel));
+        when(
+          () => mockAmiiboRepository.getAmiiboItem(any(), any()),
+        ).thenAnswer((_) => Future.value(amiiboModel));
 
         return AmiiboItemCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboItem(null, amiiboId),
-      expect: () => <AmiiboItemState>[
-        const AmiiboItemStateInitial(),
-        AmiiboItemStateSuccess(amiiboItem: amiiboModel),
-      ],
+      expect:
+          () => <AmiiboItemState>[
+            const AmiiboItemStateInitial(),
+            AmiiboItemStateSuccess(amiiboItem: amiiboModel),
+          ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboItem(any(), any()));
         verifyNoMoreInteractions(mockAmiiboRepository);
@@ -37,16 +39,18 @@ void main() {
     blocTest<AmiiboItemCubit, AmiiboItemState>(
       'Emit $Exception when get $AmiiboModel item',
       build: () {
-        when(() => mockAmiiboRepository.getAmiiboItem(any(), any()))
-            .thenThrow(Exception());
+        when(
+          () => mockAmiiboRepository.getAmiiboItem(any(), any()),
+        ).thenThrow(Exception());
 
         return AmiiboItemCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboItem(amiiboType, amiiboId),
-      expect: () => <AmiiboItemState>[
-        const AmiiboItemStateInitial(),
-        const AmiiboItemStateError(),
-      ],
+      expect:
+          () => <AmiiboItemState>[
+            const AmiiboItemStateInitial(),
+            const AmiiboItemStateError(),
+          ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboItem(any(), any()));
         verifyNoMoreInteractions(mockAmiiboRepository);

@@ -4,11 +4,7 @@ import 'package:flutter_amiibo_responsive/utils/enum.dart';
 typedef AmiiboDrawerItem = (AmiiboType?, String, IconData);
 
 final class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({
-    required this.onSelect,
-    this.makePop = true,
-    super.key,
-  });
+  const DrawerMenu({required this.onSelect, this.makePop = true, super.key});
 
   final ValueSetter<String?> onSelect;
   final bool makePop;
@@ -23,10 +19,7 @@ final class DrawerMenu extends StatelessWidget {
           decoration: BoxDecoration(color: colorScheme.primaryContainer),
           child: Container(
             alignment: AlignmentDirectional.bottomStart,
-            child: const Text(
-              'Amiibo App',
-              style: TextStyle(fontSize: 24),
-            ),
+            child: const Text('Amiibo App', style: TextStyle(fontSize: 24)),
           ),
         ),
         ...AmiiboType.values.map((type) {

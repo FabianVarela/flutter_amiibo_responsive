@@ -39,10 +39,7 @@ final class AmiiboItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        amiibo.name,
-                        style: const TextStyle(fontSize: 16),
-                      ),
+                      Text(amiibo.name, style: const TextStyle(fontSize: 16)),
                       const Gap(2),
                       Text(
                         amiibo.gameSeries ?? 'Sin serie',

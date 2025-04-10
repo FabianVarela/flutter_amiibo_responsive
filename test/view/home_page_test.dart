@@ -76,64 +76,60 @@ void main() {
       });
     }
 
-    testWidgets(
-      'Show $HomePage screen with data',
-      (tester) async {
-        await tester.runAsync(() async {
-          final binding = TestWidgetsFlutterBinding.ensureInitialized();
-          await setDeviceSize(tester, binding);
+    testWidgets('Show $HomePage screen with data', (tester) async {
+      await tester.runAsync(() async {
+        final binding = TestWidgetsFlutterBinding.ensureInitialized();
+        await setDeviceSize(tester, binding);
 
-          when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
-            (_) => Future.value([amiiboModel]),
-          );
-          await pumpMainScreen(tester);
+        when(
+          () => amiiboRepository.getAmiiboList(any()),
+        ).thenAnswer((_) => Future.value([amiiboModel]));
+        await pumpMainScreen(tester);
 
-          expect(
-            find.descendant(
-              of: find.byType(AppBar),
-              matching: find.text('Amiibo App'),
-            ),
-            findsOneWidget,
-          );
+        expect(
+          find.descendant(
+            of: find.byType(AppBar),
+            matching: find.text('Amiibo App'),
+          ),
+          findsOneWidget,
+        );
 
-          if (currentDevice == DeviceSegment.mobile) {
-            expect(find.byIcon(Icons.menu), findsOneWidget);
-          }
+        if (currentDevice == DeviceSegment.mobile) {
+          expect(find.byIcon(Icons.menu), findsOneWidget);
+        }
 
-          expect(find.byType(ShimmerGridLoading), findsOneWidget);
-          await tester.pump(const Duration(seconds: 1));
+        expect(find.byType(ShimmerGridLoading), findsOneWidget);
+        await tester.pump(const Duration(seconds: 1));
 
-          expect(find.byType(ShimmerGridLoading), findsNothing);
-          expect(find.byType(GridView), findsOneWidget);
+        expect(find.byType(ShimmerGridLoading), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
 
-          final name = amiiboModel.name;
-          final type = amiiboModel.type;
-          final image = amiiboModel.imageUrl;
-          final character = amiiboModel.character;
-          final gameSeries = amiiboModel.gameSeries;
+        final name = amiiboModel.name;
+        final type = amiiboModel.type;
+        final image = amiiboModel.imageUrl;
+        final character = amiiboModel.character;
+        final gameSeries = amiiboModel.gameSeries;
 
-          expect(tester.widgetList(find.byType(AmiiboItem)), [
-            isA<AmiiboItem>()
-                .having((w) => w.amiibo.name, 'name', name)
-                .having((w) => w.amiibo.type, 'type', type)
-                .having((w) => w.amiibo.imageUrl, 'imageUrl', image)
-                .having((w) => w.amiibo.character, 'character', character)
-                .having((w) => w.amiibo.gameSeries, 'gameSeries', gameSeries),
-          ]);
+        expect(tester.widgetList(find.byType(AmiiboItem)), [
+          isA<AmiiboItem>()
+              .having((w) => w.amiibo.name, 'name', name)
+              .having((w) => w.amiibo.type, 'type', type)
+              .having((w) => w.amiibo.imageUrl, 'imageUrl', image)
+              .having((w) => w.amiibo.character, 'character', character)
+              .having((w) => w.amiibo.gameSeries, 'gameSeries', gameSeries),
+        ]);
 
-          resetSize(tester, binding);
-        });
-      },
-      variant: TargetPlatformVariant.all(),
-    );
+        resetSize(tester, binding);
+      });
+    }, variant: TargetPlatformVariant.all());
 
     testWidgets(
       'Show $HomePage screen with empty data',
       (tester) async {
         await tester.runAsync(() async {
-          when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
-            (_) => Future.value([]),
-          );
+          when(
+            () => amiiboRepository.getAmiiboList(any()),
+          ).thenAnswer((_) => Future.value([]));
           await pumpMainScreen(tester);
 
           expect(
@@ -157,9 +153,9 @@ void main() {
       'Show $HomePage screen with $Exception',
       (tester) async {
         await tester.runAsync(() async {
-          when(() => amiiboRepository.getAmiiboList(any())).thenThrow(
-            Exception('Error to get data'),
-          );
+          when(
+            () => amiiboRepository.getAmiiboList(any()),
+          ).thenThrow(Exception('Error to get data'));
           await pumpMainScreen(tester);
 
           expect(find.byType(CircularProgressIndicator), findsNothing);
@@ -170,53 +166,49 @@ void main() {
       variant: TargetPlatformVariant.all(),
     );
 
-    testWidgets(
-      'Show $DrawerMenu, select an option',
-      (tester) async {
-        await tester.runAsync(() async {
-          final binding = TestWidgetsFlutterBinding.ensureInitialized();
-          await setDeviceSize(tester, binding);
+    testWidgets('Show $DrawerMenu, select an option', (tester) async {
+      await tester.runAsync(() async {
+        final binding = TestWidgetsFlutterBinding.ensureInitialized();
+        await setDeviceSize(tester, binding);
 
-          when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
-            (_) => Future.value([amiiboModel]),
+        when(
+          () => amiiboRepository.getAmiiboList(any()),
+        ).thenAnswer((_) => Future.value([amiiboModel]));
+        when(
+          () => amiiboRepository.getAmiiboItem(any(), any()),
+        ).thenAnswer((_) => Future.value(amiiboModel));
+
+        await pumpMainScreen(tester);
+
+        expect(find.byType(ShimmerGridLoading), findsOneWidget);
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(find.byType(ShimmerGridLoading), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
+
+        if (currentDevice == DeviceSegment.mobile) {
+          await tester.dragFrom(
+            tester.getTopLeft(find.byType(MaterialApp)),
+            const Offset(300, 0),
           );
-          when(() => amiiboRepository.getAmiiboItem(any(), any())).thenAnswer(
-            (_) => Future.value(amiiboModel),
-          );
+          await tester.pumpAndSettle();
+          expect(find.byType(Drawer), findsOneWidget);
 
-          await pumpMainScreen(tester);
+          final findIcon = find.byIcon(Icons.account_box);
+          expect(findIcon, findsOneWidget);
 
-          expect(find.byType(ShimmerGridLoading), findsOneWidget);
-          await tester.pump(const Duration(seconds: 1));
+          await tester.tap(findIcon);
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+        }
 
-          expect(find.byType(ShimmerGridLoading), findsNothing);
-          expect(find.byType(GridView), findsOneWidget);
+        final foundAmiiboItem = find.descendant(
+          of: find.byType(GridView),
+          matching: find.byType(AmiiboItem),
+        );
+        expect(foundAmiiboItem, findsOneWidget);
 
-          if (currentDevice == DeviceSegment.mobile) {
-            await tester.dragFrom(
-              tester.getTopLeft(find.byType(MaterialApp)),
-              const Offset(300, 0),
-            );
-            await tester.pumpAndSettle();
-            expect(find.byType(Drawer), findsOneWidget);
-
-            final findIcon = find.byIcon(Icons.account_box);
-            expect(findIcon, findsOneWidget);
-
-            await tester.tap(findIcon);
-            await tester.pumpAndSettle(const Duration(seconds: 1));
-          }
-
-          final foundAmiiboItem = find.descendant(
-            of: find.byType(GridView),
-            matching: find.byType(AmiiboItem),
-          );
-          expect(foundAmiiboItem, findsOneWidget);
-
-          resetSize(tester, binding);
-        });
-      },
-      variant: TargetPlatformVariant.all(),
-    );
+        resetSize(tester, binding);
+      });
+    }, variant: TargetPlatformVariant.all());
   });
 }

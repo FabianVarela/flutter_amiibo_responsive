@@ -96,8 +96,10 @@ final class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
     return switch (configuration) {
       AmiiboConfigurationUnknown() => _setValues(isNotFound: true),
       AmiiboConfigurationHome(:final type) => _setValues(type: type),
-      AmiiboConfigurationDetail(:final amiiboId, :final type) =>
-        _setValues(type: type, id: amiiboId),
+      AmiiboConfigurationDetail(:final amiiboId, :final type) => _setValues(
+        type: type,
+        id: amiiboId,
+      ),
     };
   }
 
