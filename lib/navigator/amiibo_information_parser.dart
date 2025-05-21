@@ -65,12 +65,14 @@ final class AmiiboInfoParser
 
     return switch (configuration) {
       AmiiboConfigurationUnknown() => RouteInformation(uri: '/$noFound'.toUri),
-      AmiiboConfigurationHome(:final type) => type != null
-          ? RouteInformation(uri: '/$home/$type'.toUri)
-          : RouteInformation(uri: '/$home'.toUri),
-      AmiiboConfigurationDetail(:final amiiboId, :final type) => type != null
-          ? RouteInformation(uri: '/$home/$type/$detail/$amiiboId'.toUri)
-          : RouteInformation(uri: '/$home/$detail/$amiiboId'.toUri),
+      AmiiboConfigurationHome(:final type) =>
+        type != null
+            ? RouteInformation(uri: '/$home/$type'.toUri)
+            : RouteInformation(uri: '/$home'.toUri),
+      AmiiboConfigurationDetail(:final amiiboId, :final type) =>
+        type != null
+            ? RouteInformation(uri: '/$home/$type/$detail/$amiiboId'.toUri)
+            : RouteInformation(uri: '/$home/$detail/$amiiboId'.toUri),
     };
   }
 

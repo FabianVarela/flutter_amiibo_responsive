@@ -39,16 +39,16 @@ class AmiiboModel with EquatableMixin {
 
   @override
   List<Object?> get props => [
-        amiiboSeries,
-        character,
-        gameSeries,
-        head,
-        imageUrl,
-        name,
-        releaseDate,
-        tail,
-        type,
-      ];
+    amiiboSeries,
+    character,
+    gameSeries,
+    head,
+    imageUrl,
+    name,
+    releaseDate,
+    tail,
+    type,
+  ];
 }
 
 @JsonSerializable(createToJson: false)

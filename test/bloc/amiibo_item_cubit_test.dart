@@ -18,8 +18,9 @@ void main() {
     blocTest<AmiiboItemCubit, AmiiboItemState>(
       'Emit $AmiiboItemState when get $AmiiboModel item',
       build: () {
-        when(() => mockAmiiboRepository.getAmiiboItem(any(), any()))
-            .thenAnswer((_) => Future.value(amiiboModel));
+        when(
+          () => mockAmiiboRepository.getAmiiboItem(any(), any()),
+        ).thenAnswer((_) => Future.value(amiiboModel));
 
         return AmiiboItemCubit(mockAmiiboRepository);
       },
@@ -37,8 +38,9 @@ void main() {
     blocTest<AmiiboItemCubit, AmiiboItemState>(
       'Emit $Exception when get $AmiiboModel item',
       build: () {
-        when(() => mockAmiiboRepository.getAmiiboItem(any(), any()))
-            .thenThrow(Exception());
+        when(
+          () => mockAmiiboRepository.getAmiiboItem(any(), any()),
+        ).thenThrow(Exception());
 
         return AmiiboItemCubit(mockAmiiboRepository);
       },

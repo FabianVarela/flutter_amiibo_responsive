@@ -28,20 +28,17 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   Bloc.observer = AppBlocObserver();
 
-  await runZonedGuarded(
-    () async {
-      usePathUrlStrategy();
-      WidgetsFlutterBinding.ensureInitialized();
+  await runZonedGuarded(() async {
+    usePathUrlStrategy();
+    WidgetsFlutterBinding.ensureInitialized();
 
-      if (currentDevice == DeviceSegment.desktop) {
-        setWindowTitle('Flutter Amiibo');
+    if (currentDevice == DeviceSegment.desktop) {
+      setWindowTitle('Flutter Amiibo');
 
-        setWindowMinSize(const Size(300, 500));
-        setWindowMaxSize(const Size(1500, 900));
-      }
+      setWindowMinSize(const Size(300, 500));
+      setWindowMaxSize(const Size(1500, 900));
+    }
 
-      runApp(await builder());
-    },
-    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
-  );
+    runApp(await builder());
+  }, (error, stackTrace) => log(error.toString(), stackTrace: stackTrace));
 }

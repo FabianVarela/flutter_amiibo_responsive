@@ -4,9 +4,8 @@ analyzer:
   exclude:
     - lib/**.freezed.dart
     - lib/**.g.dart
-    - test/**.mocks.dart
 
 linter:
   rules:
-    avoid_dynamic_calls: false
     public_member_api_docs: false
+    require_trailing_commas: false

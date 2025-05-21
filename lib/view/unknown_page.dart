@@ -13,10 +13,7 @@ final class UnknownPageUI extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorScheme.primaryContainer,
-        title: const Text(
-          'Not found',
-          style: TextStyle(fontSize: 24),
-        ),
+        title: const Text('Not found', style: TextStyle(fontSize: 24)),
       ),
       body: SizedBox(
         width: size.width,

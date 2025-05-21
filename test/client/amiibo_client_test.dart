@@ -22,8 +22,9 @@ void main() {
   group('$AmiiboClient for $AmiiboModel list', () {
     test('Get $AmiiboModel list from client mock no type', () async {
       // arrange
-      when(() => mockClient.get(any()))
-          .thenAnswer((_) async => http.Response(jsonListResponse, 200));
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response(jsonListResponse, 200));
 
       // act
       final futureResult = amiiboClient.getAmiiboList(null);
@@ -38,8 +39,9 @@ void main() {
 
     test('Get $AmiiboModel list from client mock with type', () async {
       // arrange
-      when(() => mockClient.get(any()))
-          .thenAnswer((_) async => http.Response(jsonListResponse, 200));
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response(jsonListResponse, 200));
 
       // act
       final futureResult = amiiboClient.getAmiiboList(amiiboType);
@@ -54,8 +56,9 @@ void main() {
 
     test('Get $Exception when get amiibo list from mock', () async {
       // arrange
-      when(() => mockClient.get(any()))
-          .thenAnswer((_) async => http.Response('Error to get list', 500));
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response('Error to get list', 500));
 
       // act
       final futureResult = amiiboClient.getAmiiboList(null);
@@ -69,8 +72,9 @@ void main() {
   group('$AmiiboClient for $AmiiboModel detail', () {
     test('Get $AmiiboModel detail from client mock no type', () async {
       // arrange
-      when(() => mockClient.get(any()))
-          .thenAnswer((_) async => http.Response(jsonDetailResponse, 200));
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response(jsonDetailResponse, 200));
 
       // act
       final futureResult = amiiboClient.getAmiiboItem(null, amiiboId);
@@ -85,8 +89,9 @@ void main() {
 
     test('Get $AmiiboModel detail from client mock with type', () async {
       // arrange
-      when(() => mockClient.get(any()))
-          .thenAnswer((_) async => http.Response(jsonDetailResponse, 200));
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response(jsonDetailResponse, 200));
 
       // act
       final futureResult = amiiboClient.getAmiiboItem(amiiboType, amiiboId);
@@ -101,8 +106,9 @@ void main() {
 
     test('Get $Exception when get amiibo detail from mock', () async {
       // arrange
-      when(() => mockClient.get(any()))
-          .thenAnswer((_) async => http.Response('Error to get deatil', 500));
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response('Error to get deatil', 500));
 
       // act
       final futureResult = amiiboClient.getAmiiboItem(null, amiiboId);

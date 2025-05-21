@@ -18,14 +18,14 @@ void main() {
   });
 
   group('$AmiiboRepository', () {
-    test(
-        'should get a future with a $List of $AmiiboModel '
+    test('should get a future with a $List of $AmiiboModel '
         'when getAmiiboList is called', () async {
       // arrange
       final futureValueList = Future.value([amiiboModel]);
 
-      when(() => mockAmiiboClient.getAmiiboList(any()))
-          .thenAnswer((_) => futureValueList);
+      when(
+        () => mockAmiiboClient.getAmiiboList(any()),
+      ).thenAnswer((_) => futureValueList);
 
       // act
       final result = amiiboRepository.getAmiiboList(null);
@@ -42,14 +42,14 @@ void main() {
       verifyNoMoreInteractions(mockAmiiboClient);
     });
 
-    test(
-        'should get a future with an $AmiiboModel detail '
+    test('should get a future with an $AmiiboModel detail '
         'when getAmiiboItem is called', () async {
       // arrange
       final futureValue = Future.value(amiiboModel);
 
-      when(() => mockAmiiboClient.getAmiiboItem(any(), any()))
-          .thenAnswer((_) => futureValue);
+      when(
+        () => mockAmiiboClient.getAmiiboItem(any(), any()),
+      ).thenAnswer((_) => futureValue);
 
       // act
       final result = amiiboRepository.getAmiiboItem(amiiboType, amiiboId);
