@@ -15,10 +15,9 @@ AmiiboModel _$AmiiboModelFromJson(Map<String, dynamic> json) => AmiiboModel(
   tail: json['tail'] as String,
   type: json['type'] as String,
   gameSeries: json['gameSeries'] as String?,
-  releaseDate:
-      json['release'] == null
-          ? null
-          : ReleaseDateModel.fromJson(json['release'] as Map<String, dynamic>),
+  releaseDate: json['release'] == null
+      ? null
+      : ReleaseDateModel.fromJson(json['release'] as Map<String, dynamic>),
 );
 
 ReleaseDateModel _$ReleaseDateModelFromJson(Map<String, dynamic> json) =>
