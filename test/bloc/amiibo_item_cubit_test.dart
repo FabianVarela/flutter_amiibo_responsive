@@ -25,11 +25,10 @@ void main() {
         return AmiiboItemCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboItem(null, amiiboId),
-      expect:
-          () => <AmiiboItemState>[
-            const AmiiboItemStateInitial(),
-            AmiiboItemStateSuccess(amiiboItem: amiiboModel),
-          ],
+      expect: () => <AmiiboItemState>[
+        const AmiiboItemStateInitial(),
+        AmiiboItemStateSuccess(amiiboItem: amiiboModel),
+      ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboItem(any(), any()));
         verifyNoMoreInteractions(mockAmiiboRepository);
@@ -46,11 +45,10 @@ void main() {
         return AmiiboItemCubit(mockAmiiboRepository);
       },
       act: (cubit) => cubit.fetchAmiiboItem(amiiboType, amiiboId),
-      expect:
-          () => <AmiiboItemState>[
-            const AmiiboItemStateInitial(),
-            const AmiiboItemStateError(),
-          ],
+      expect: () => <AmiiboItemState>[
+        const AmiiboItemStateInitial(),
+        const AmiiboItemStateError(),
+      ],
       verify: (_) {
         verify(() => mockAmiiboRepository.getAmiiboItem(any(), any()));
         verifyNoMoreInteractions(mockAmiiboRepository);

@@ -112,15 +112,14 @@ final class _AmiiboList extends StatelessWidget {
             crossAxisSpacing: 8,
             childAspectRatio: 1 / 1.2,
             padding: const EdgeInsets.all(8),
-            children:
-                amiiboList.mapIndexed((index, item) {
-                  final internalId = '${item.head}${item.tail}';
-                  return AmiiboItem(
-                    key: ValueKey('$index'),
-                    amiibo: item,
-                    onSelectAmiibo: () => onTapAmiibo(internalId),
-                  );
-                }).toList(),
+            children: amiiboList.mapIndexed((index, item) {
+              final internalId = '${item.head}${item.tail}';
+              return AmiiboItem(
+                key: ValueKey('$index'),
+                amiibo: item,
+                onSelectAmiibo: () => onTapAmiibo(internalId),
+              );
+            }).toList(),
           ),
           AmiiboListStateError() => const Center(
             child: Text(

@@ -63,35 +63,31 @@ final class DetailView extends HookWidget {
         builder: (_, state) {
           if (state is AmiiboItemStateSuccess) {
             return SingleChildScrollView(
-              padding:
-                  isDesktopOrTablet
-                      ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16)
-                      : null,
-              child:
-                  isDesktopOrTablet
-                      ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: _AmiiboDetail(item: state.amiiboItem),
+              padding: isDesktopOrTablet
+                  ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16)
+                  : null,
+              child: isDesktopOrTablet
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(child: _AmiiboDetail(item: state.amiiboItem)),
+                        const Expanded(
+                          child: Column(
+                            children: <Widget>[
+                              _AmiiboButtons(),
+                              _AmiiboDescription(),
+                            ],
                           ),
-                          const Expanded(
-                            child: Column(
-                              children: <Widget>[
-                                _AmiiboButtons(),
-                                _AmiiboDescription(),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                      : Column(
-                        children: <Widget>[
-                          _AmiiboDetail(item: state.amiiboItem),
-                          const _AmiiboButtons(),
-                          const _AmiiboDescription(),
-                        ],
-                      ),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      children: <Widget>[
+                        _AmiiboDetail(item: state.amiiboItem),
+                        const _AmiiboButtons(),
+                        const _AmiiboDescription(),
+                      ],
+                    ),
             );
           }
 
@@ -180,14 +176,13 @@ final class _AmiiboButtons extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children:
-          iconButtonList.map((item) {
-            return VerticalIconButton(
-              icon: item.icon,
-              text: item.text,
-              color: colorScheme.onTertiaryContainer,
-            );
-          }).toList(),
+      children: iconButtonList.map((item) {
+        return VerticalIconButton(
+          icon: item.icon,
+          text: item.text,
+          color: colorScheme.onTertiaryContainer,
+        );
+      }).toList(),
     );
   }
 }

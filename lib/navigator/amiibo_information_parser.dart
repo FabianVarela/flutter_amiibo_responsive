@@ -22,13 +22,10 @@ final class AmiiboInfoParser
   Future<AmiiboConfiguration> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    final newPaths =
-        routeInformation.uri.pathSegments.map((pathSegment) {
-          final path = AmiiboPath.values.where(
-            (val) => val.name == pathSegment,
-          );
-          return path.isEmpty ? pathSegment : pathSegment.toLowerCase();
-        }).toList();
+    final newPaths = routeInformation.uri.pathSegments.map((pathSegment) {
+      final path = AmiiboPath.values.where((val) => val.name == pathSegment);
+      return path.isEmpty ? pathSegment : pathSegment.toLowerCase();
+    }).toList();
 
     if (newPaths.isEmpty) return const AmiiboConfigurationHome();
 
