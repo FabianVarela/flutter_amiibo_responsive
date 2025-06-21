@@ -40,7 +40,7 @@ final class DetailPageRoute extends Page<dynamic> {
   Route<dynamic> createRoute(BuildContext context) {
     return PageRouteBuilder<dynamic>(
       settings: this,
-      pageBuilder: (_, animation, __) {
+      pageBuilder: (_, animation, _) {
         return FadeTransition(
           opacity: animation,
           child: DetailPage(type: type, amiiboId: amiiboId),
@@ -55,7 +55,7 @@ final class UnknownPageRoute extends Page<dynamic> {
   Route<dynamic> createRoute(BuildContext context) {
     return PageRouteBuilder<dynamic>(
       settings: this,
-      pageBuilder: (_, animation, __) {
+      pageBuilder: (_, animation, _) {
         return ScaleTransition(scale: animation, child: const UnknownPageUI());
       },
     );
