@@ -25,7 +25,7 @@ dependencies:
   intl: ^0.20.2
   json_annotation: ^4.9.0
   shimmer_animation: ^2.2.2
-  win32_registry: ^1.1.5
+  win32_registry: ^2.1.0
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
