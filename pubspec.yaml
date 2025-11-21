@@ -38,7 +38,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  json_serializable: ^6.11.1
+  json_serializable: ^6.11.2
   mocktail: ^1.0.4
   mocktail_image_network: ^1.2.0
   remove_from_coverage: ^2.0.0
