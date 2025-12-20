@@ -20,9 +20,9 @@ final class VerticalIconButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(5),
+        padding: const .all(5),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: <Widget>[
             Icon(icon, color: color),
             const Gap(5),

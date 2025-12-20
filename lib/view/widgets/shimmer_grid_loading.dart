@@ -13,7 +13,7 @@ final class ShimmerGridLoading extends StatelessWidget {
       maxCrossAxisExtent: width >= 600 ? 300 : 200,
       mainAxisSpacing: 8,
       crossAxisSpacing: 8,
-      padding: const EdgeInsets.all(8),
+      padding: const .all(8),
       childAspectRatio: 1 / 1.2,
       children: <Widget>[
         for (var i = 0; i < fakeList.length; i++)
@@ -21,11 +21,11 @@ final class ShimmerGridLoading extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.outlineVariant,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: .circular(8),
               ),
               constraints: BoxConstraints(
                 minHeight: 200,
-                minWidth: width * 0.9,
+                minWidth: width * .9,
               ),
             ),
           ),

@@ -13,7 +13,7 @@ final class DrawerMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return ListView(
-      padding: EdgeInsets.zero,
+      padding: .zero,
       children: <Widget>[
         DrawerHeader(
           decoration: BoxDecoration(color: colorScheme.primaryContainer),
@@ -33,7 +33,7 @@ final class DrawerMenu extends StatelessWidget {
               type.text,
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w300,
+                fontWeight: .w300,
                 color: colorScheme.onTertiaryContainer,
               ),
             ),

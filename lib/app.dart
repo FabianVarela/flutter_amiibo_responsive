@@ -36,7 +36,7 @@ class MyAppState extends State<MyApp> {
           context,
           ColorScheme.fromSeed(
             seedColor: const Color(0xFFE6001E),
-            brightness: Brightness.dark,
+            brightness: .dark,
           ),
         ),
         routerDelegate: _routerDelegate,

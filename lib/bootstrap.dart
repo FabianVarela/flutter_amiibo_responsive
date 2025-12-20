@@ -32,7 +32,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     usePathUrlStrategy();
     WidgetsFlutterBinding.ensureInitialized();
 
-    if (currentDevice == DeviceSegment.desktop) {
+    if (currentDevice == .desktop) {
       setWindowTitle('Flutter Amiibo');
 
       setWindowMinSize(const Size(300, 500));

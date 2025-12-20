@@ -16,16 +16,16 @@ final class AmiiboItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      clipBehavior: .antiAlias,
+      shape: RoundedRectangleBorder(borderRadius: .circular(6)),
       child: InkWell(
         onTap: onSelectAmiibo,
         child: Stack(
-          fit: StackFit.expand,
+          fit: .expand,
           children: <Widget>[
             Hero(
               tag: '${amiibo.head}_${amiibo.tail}',
-              child: Image.network(amiibo.imageUrl, fit: BoxFit.cover),
+              child: Image.network(amiibo.imageUrl, fit: .cover),
             ),
             Positioned(
               bottom: 0,
@@ -35,9 +35,9 @@ final class AmiiboItem extends StatelessWidget {
                   alpha: .6,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const .all(8),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     children: <Widget>[
                       Text(amiibo.name, style: const TextStyle(fontSize: 16)),
                       const Gap(2),
