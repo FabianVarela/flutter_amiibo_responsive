@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ void main() {
 
     void resetSize(WidgetTester tester, TestWidgetsFlutterBinding binding) {
       addTearDown(() {
-        binding.setSurfaceSize(null);
+        unawaited(binding.setSurfaceSize(null));
 
         tester.view.resetPhysicalSize();
         tester.view.resetDevicePixelRatio();
@@ -99,7 +100,7 @@ void main() {
         }
 
         expect(find.byType(ShimmerGridLoading), findsOneWidget);
-        await tester.pump(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
 
         expect(find.byType(ShimmerGridLoading), findsNothing);
         expect(find.byType(GridView), findsOneWidget);
@@ -140,7 +141,7 @@ void main() {
             findsOneWidget,
           );
           expect(find.byType(ShimmerGridLoading), findsOneWidget);
-          await tester.pump(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
 
           expect(find.byType(ShimmerGridLoading), findsNothing);
           expect(find.text('No data found'), findsOneWidget);
@@ -181,7 +182,7 @@ void main() {
         await pumpMainScreen(tester);
 
         expect(find.byType(ShimmerGridLoading), findsOneWidget);
-        await tester.pump(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
 
         expect(find.byType(ShimmerGridLoading), findsNothing);
         expect(find.byType(GridView), findsOneWidget);
