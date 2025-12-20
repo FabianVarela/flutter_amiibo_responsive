@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
@@ -54,7 +56,7 @@ final class HomePageView extends HookWidget {
     ].contains(context.formFactor);
 
     useEffect(() {
-      context.read<AmiiboListCubit>().fetchAmiiboData(type);
+      unawaited(context.read<AmiiboListCubit>().fetchAmiiboData(type));
       return null;
     }, const []);
 
@@ -96,38 +98,36 @@ final class _AmiiboList extends StatelessWidget {
     ].contains(context.formFactor);
 
     return BlocBuilder<AmiiboListCubit, AmiiboListState>(
-      builder: (_, state) {
-        return switch (state) {
-          AmiiboListStateInitial() => const ShimmerGridLoading(),
-          AmiiboListStateSuccess(:final amiiboList) when amiiboList.isEmpty =>
-            const Center(
-              child: Text(
-                'No data found',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-            ),
-          AmiiboListStateSuccess(:final amiiboList) => GridView.extent(
-            maxCrossAxisExtent: isDesktopOrTablet ? 300 : 200,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            childAspectRatio: 1 / 1.2,
-            padding: const EdgeInsets.all(8),
-            children: amiiboList.mapIndexed((index, item) {
-              final internalId = '${item.head}${item.tail}';
-              return AmiiboItem(
-                key: ValueKey('$index'),
-                amiibo: item,
-                onSelectAmiibo: () => onTapAmiibo(internalId),
-              );
-            }).toList(),
-          ),
-          AmiiboListStateError() => const Center(
+      builder: (_, state) => switch (state) {
+        AmiiboListStateInitial() => const ShimmerGridLoading(),
+        AmiiboListStateSuccess(:final amiiboList) when amiiboList.isEmpty =>
+          const Center(
             child: Text(
-              'Error to get data',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              'No data found',
+              style: TextStyle(fontSize: 30, fontWeight: .bold),
             ),
           ),
-        };
+        AmiiboListStateSuccess(:final amiiboList) => GridView.extent(
+          maxCrossAxisExtent: isDesktopOrTablet ? 300 : 200,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          childAspectRatio: 1 / 1.2,
+          padding: const .all(8),
+          children: amiiboList.mapIndexed((index, item) {
+            final internalId = '${item.head}${item.tail}';
+            return AmiiboItem(
+              key: ValueKey('$index'),
+              amiibo: item,
+              onSelectAmiibo: () => onTapAmiibo(internalId),
+            );
+          }).toList(),
+        ),
+        AmiiboListStateError() => const Center(
+          child: Text(
+            'Error to get data',
+            style: TextStyle(fontSize: 30, fontWeight: .bold),
+          ),
+        ),
       },
     );
   }

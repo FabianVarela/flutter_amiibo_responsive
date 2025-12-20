@@ -18,13 +18,11 @@ final class HomePageRoute extends Page<dynamic> {
   Route<dynamic> createRoute(BuildContext context) {
     return MaterialPageRoute<dynamic>(
       settings: this,
-      builder: (_) {
-        return HomePage(
-          type: type,
-          onChange: onChangeType,
-          onGoToDetail: onGoToDetail,
-        );
-      },
+      builder: (_) => HomePage(
+        type: type,
+        onChange: onChangeType,
+        onGoToDetail: onGoToDetail,
+      ),
     );
   }
 }
@@ -40,12 +38,10 @@ final class DetailPageRoute extends Page<dynamic> {
   Route<dynamic> createRoute(BuildContext context) {
     return PageRouteBuilder<dynamic>(
       settings: this,
-      pageBuilder: (_, animation, _) {
-        return FadeTransition(
-          opacity: animation,
-          child: DetailPage(type: type, amiiboId: amiiboId),
-        );
-      },
+      pageBuilder: (_, animation, _) => FadeTransition(
+        opacity: animation,
+        child: DetailPage(type: type, amiiboId: amiiboId),
+      ),
     );
   }
 }
@@ -55,9 +51,10 @@ final class UnknownPageRoute extends Page<dynamic> {
   Route<dynamic> createRoute(BuildContext context) {
     return PageRouteBuilder<dynamic>(
       settings: this,
-      pageBuilder: (_, animation, _) {
-        return ScaleTransition(scale: animation, child: const UnknownPageUI());
-      },
+      pageBuilder: (_, animation, _) => ScaleTransition(
+        scale: animation,
+        child: const UnknownPageUI(),
+      ),
     );
   }
 }

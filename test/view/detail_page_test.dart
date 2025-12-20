@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ void main() {
 
     void resetSize(WidgetTester tester, TestWidgetsFlutterBinding binding) {
       addTearDown(() {
-        binding.setSurfaceSize(null);
+        unawaited(binding.setSurfaceSize(null));
 
         tester.view.resetPhysicalSize();
         tester.view.resetDevicePixelRatio();

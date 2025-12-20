@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/app.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
@@ -59,6 +57,7 @@ void main() {
   });
 }
 
+/*
 Future<void> pumpUntilFound(
   WidgetTester tester,
   Finder finder, {
@@ -70,10 +69,11 @@ Future<void> pumpUntilFound(
     () => throw TimeoutException('Pump until has timed out'),
   );
 
-  while (timerDone != true) {
+  while (!timerDone) {
     await tester.pump();
     final found = tester.any(finder);
     if (found) timerDone = true;
   }
   timer.cancel();
 }
+*/
