@@ -5,7 +5,8 @@ enum AmiiboType {
   figure('figure', 'Figure', Icons.account_box),
   card('card', 'Card', Icons.card_membership),
   yarn('yarn', 'Yarn', Icons.wallpaper),
-  band('band', 'Band', Icons.watch);
+  band('band', 'Band', Icons.watch)
+  ;
 
   const AmiiboType(this.value, this.text, this.icon);
 
