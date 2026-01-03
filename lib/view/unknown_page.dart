@@ -18,13 +18,11 @@ final class UnknownPageUI extends StatelessWidget {
       body: SizedBox(
         width: size.width,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: <Widget>[
-            Image.asset(
-              'assets/images/mario 404.png',
-              fit: BoxFit.contain,
-              height: size.height * 0.5,
-              width: size.width * 0.5,
+            SizedBox.fromSize(
+              size: Size(size.width * .5, size.height * .5),
+              child: Image.asset('assets/images/mario 404.png', fit: .contain),
             ),
             const Gap(30),
             Text(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
@@ -37,7 +39,9 @@ final class DetailView extends HookWidget {
     ].contains(context.formFactor);
 
     useEffect(() {
-      context.read<AmiiboItemCubit>().fetchAmiiboItem(type, amiiboId);
+      unawaited(
+        context.read<AmiiboItemCubit>().fetchAmiiboItem(type, amiiboId),
+      );
       return null;
     }, const []);
 
@@ -64,11 +68,11 @@ final class DetailView extends HookWidget {
           if (state is AmiiboItemStateSuccess) {
             return SingleChildScrollView(
               padding: isDesktopOrTablet
-                  ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16)
+                  ? const .symmetric(vertical: 24, horizontal: 16)
                   : null,
               child: isDesktopOrTablet
                   ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: <Widget>[
                         Expanded(child: _AmiiboDetail(item: state.amiiboItem)),
                         const Expanded(
@@ -95,7 +99,7 @@ final class DetailView extends HookWidget {
             return const Center(
               child: Text(
                 'Error to get data',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 30, fontWeight: .bold),
               ),
             );
           }
@@ -122,21 +126,21 @@ final class _AmiiboDetail extends StatelessWidget {
       children: <Widget>[
         Hero(
           tag: '${item.head}_${item.tail}',
-          child: Image.network(item.imageUrl, height: 350, fit: BoxFit.cover),
+          child: Image.network(item.imageUrl, height: 350, fit: .cover),
         ),
         Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const .all(24),
           child: Row(
             children: <Widget>[
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: <Widget>[
                     Container(
-                      padding: const EdgeInsets.only(bottom: 8),
+                      padding: const .only(bottom: 8),
                       child: Text(
                         item.name,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: .bold),
                       ),
                     ),
                     Text(item.amiiboSeries),
@@ -145,13 +149,10 @@ final class _AmiiboDetail extends StatelessWidget {
               ),
               const Icon(Icons.art_track),
               Padding(
-                padding: const EdgeInsets.only(left: 4),
+                padding: const .only(left: 4),
                 child: Text(
                   item.type,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontSize: 14, fontWeight: .bold),
                 ),
               ),
             ],
@@ -175,7 +176,7 @@ final class _AmiiboButtons extends StatelessWidget {
     ];
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: .spaceEvenly,
       children: iconButtonList.map((item) {
         return VerticalIconButton(
           icon: item.icon,
@@ -193,7 +194,7 @@ final class _AmiiboDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const .all(24),
       child: Text(_setLoremText, style: const TextStyle(fontSize: 16)),
     );
   }

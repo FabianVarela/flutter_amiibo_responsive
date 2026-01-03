@@ -5,7 +5,8 @@ import 'package:flutter_amiibo_responsive/utils/enum.dart';
 enum AmiiboPath {
   home('amiibos'),
   detail('amiibo'),
-  notFound('404');
+  notFound('404')
+  ;
 
   const AmiiboPath(this.name);
 
