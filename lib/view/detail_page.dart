@@ -51,8 +51,8 @@ final class DetailView extends HookWidget {
         title: Builder(
           builder: (builderContext) {
             return Text(
-              builderContext.select(
-                (AmiiboItemCubit value) => switch (value.state) {
+              builderContext.select<AmiiboItemState, String>(
+                (state) => switch (state) {
                   AmiiboItemStateInitial() => 'Loading',
                   AmiiboItemStateSuccess(:final amiiboItem) => amiiboItem.name,
                   AmiiboItemStateError() => 'Error',
