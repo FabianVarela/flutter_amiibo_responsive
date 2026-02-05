@@ -48,19 +48,15 @@ final class DetailView extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorScheme.primaryContainer,
-        title: Builder(
-          builder: (builderContext) {
-            return Text(
-              builderContext.select(
-                (AmiiboItemCubit value) => switch (value.state) {
-                  AmiiboItemStateInitial() => 'Loading',
-                  AmiiboItemStateSuccess(:final amiiboItem) => amiiboItem.name,
-                  AmiiboItemStateError() => 'Error',
-                },
-              ),
-              style: const TextStyle(fontSize: 24),
-            );
-          },
+        title: Text(
+          context.select<AmiiboItemCubit, String>(
+            (cubit) => switch (cubit.state) {
+              AmiiboItemStateInitial() => 'Loading',
+              AmiiboItemStateSuccess(:final amiiboItem) => amiiboItem.name,
+              AmiiboItemStateError() => 'Error',
+            },
+          ),
+          style: const TextStyle(fontSize: 24),
         ),
       ),
       body: BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
