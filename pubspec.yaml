@@ -6,7 +6,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.10.0 <4.0.0"
+  sdk: ^3.11.0
+  flutter: ^3.41.0
 
 dependencies:
   app_links: ^7.0.0
@@ -22,7 +23,7 @@ dependencies:
   google_fonts: ^8.0.1
   http: ^1.6.0
   intl: ^0.20.2
-  json_annotation: ^4.9.0
+  json_annotation: ^4.10.0
   shimmer_animation: ^2.2.2+1
   win32_registry: ^2.1.0
   window_size:
@@ -32,14 +33,14 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^10.0.0
-  build_runner: ^2.11.0
+  build_runner: ^2.11.1
   flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.4.7
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  json_serializable: ^6.11.2
+  json_serializable: ^6.12.0
   mocktail: ^1.0.4
   mocktail_image_network: ^1.2.0
   remove_from_coverage: ^2.0.0
