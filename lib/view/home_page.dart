@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
+import 'package:flutter_amiibo_responsive/bloc/game_series/game_series_cubit.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
@@ -13,23 +14,36 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 final class HomePage extends StatelessWidget {
   const HomePage({
-    required this.onChange,
+    required this.onChangeType,
+    required this.onChangeGameSeries,
     required this.onGoToDetail,
-    super.key,
     this.type,
+    this.gameSeries,
+    super.key,
   });
 
   final String? type;
-  final ValueSetter<String?> onChange;
+  final String? gameSeries;
+  final ValueSetter<String?> onChangeType;
+  final ValueSetter<String?> onChangeGameSeries;
   final ValueSetter<String> onGoToDetail;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AmiiboListCubit(context.read<AmiiboRepository>()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => AmiiboListCubit(context.read<AmiiboRepository>()),
+        ),
+        BlocProvider(
+          create: (_) => GameSeriesCubit(context.read<AmiiboRepository>()),
+        ),
+      ],
       child: HomePageView(
         type: type,
-        onChange: onChange,
+        gameSeries: gameSeries,
+        onChangeType: onChangeType,
+        onChangeGameSeries: onChangeGameSeries,
         onGoToDetail: onGoToDetail,
       ),
     );
@@ -38,14 +52,18 @@ final class HomePage extends StatelessWidget {
 
 final class HomePageView extends HookWidget {
   const HomePageView({
-    required this.onChange,
+    required this.onChangeType,
+    required this.onChangeGameSeries,
     required this.onGoToDetail,
-    super.key,
     this.type,
+    this.gameSeries,
+    super.key,
   });
 
   final String? type;
-  final ValueSetter<String?> onChange;
+  final String? gameSeries;
+  final ValueSetter<String?> onChangeType;
+  final ValueSetter<String?> onChangeGameSeries;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -55,10 +73,33 @@ final class HomePageView extends HookWidget {
       ScreenType.tablet,
     ].contains(context.formFactor);
 
+    final selectedType = useState<String?>(type);
+    final selectedSeries = useState<String?>(gameSeries);
+
     useEffect(() {
-      unawaited(context.read<AmiiboListCubit>().fetchAmiiboData(type));
+      unawaited(context.read<GameSeriesCubit>().fetchGameSeries());
+      unawaited(
+        context.read<AmiiboListCubit>().fetchAmiiboData(
+          type: selectedType.value,
+          gameSeries: selectedSeries.value,
+        ),
+      );
       return null;
     }, const []);
+
+    final drawerMenu = DrawerMenu(
+      onSelectType: (type) {
+        selectedType.value = type;
+        _typeChange(context, type, selectedSeries.value);
+      },
+      onSelectGameSeries: (series) {
+        selectedSeries.value = series;
+        _seriesChange(context, series, selectedType.value);
+      },
+      makePop: !isDesktopOrTablet,
+      selectedType: selectedType.value,
+      selectedGameSeries: selectedSeries.value,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -66,21 +107,38 @@ final class HomePageView extends HookWidget {
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
       drawer: switch (isDesktopOrTablet) {
-        false => Drawer(child: DrawerMenu(onSelect: onChange)),
+        false => Drawer(child: drawerMenu),
         _ => null,
       },
       body: switch (isDesktopOrTablet) {
         true => Row(
           children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: DrawerMenu(onSelect: onChange, makePop: false),
-            ),
+            Expanded(flex: 2, child: drawerMenu),
             Expanded(flex: 5, child: _AmiiboList(onTapAmiibo: onGoToDetail)),
           ],
         ),
         _ => _AmiiboList(onTapAmiibo: onGoToDetail),
       },
+    );
+  }
+
+  void _typeChange(BuildContext context, String? type, String? series) {
+    onChangeType(type);
+    unawaited(
+      context.read<AmiiboListCubit>().fetchAmiiboData(
+        type: type,
+        gameSeries: series,
+      ),
+    );
+  }
+
+  void _seriesChange(BuildContext context, String? series, String? type) {
+    onChangeGameSeries(series);
+    unawaited(
+      context.read<AmiiboListCubit>().fetchAmiiboData(
+        type: type,
+        gameSeries: series,
+      ),
     );
   }
 }
