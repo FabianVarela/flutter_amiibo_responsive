@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_series_model.dart';
 import 'package:http/http.dart';
 
 class AmiiboClient {
@@ -10,9 +11,24 @@ class AmiiboClient {
   final String _baseUrl;
 
   static const String _apiPath = '/api/amiibo/';
+  static const String _gameSeriesPath = '/api/gameseries/';
+  static const String _amiiboSeriesPath = '/api/amiiboseries/';
 
-  Future<List<AmiiboModel>> getAmiiboList(String? type) async {
-    final queryParams = type != null ? <String, dynamic>{'type': type} : null;
+  Future<List<AmiiboModel>> getAmiiboList({
+    String? type,
+    String? gameSeries,
+    String? amiiboSeries,
+    bool showGames = false,
+    bool showUsage = false,
+  }) async {
+    final queryParams = <String, dynamic>{
+      'type': ?type,
+      'gameseries': ?gameSeries,
+      'amiiboSeries': ?amiiboSeries,
+      if (showGames) 'showgames': '',
+      if (showUsage) 'showusage': '',
+    };
+
     final response = await _client.get(
       Uri.https(_baseUrl, _apiPath, queryParams),
     );
@@ -29,8 +45,7 @@ class AmiiboClient {
   }
 
   Future<AmiiboModel> getAmiiboItem(String? type, String id) async {
-    final queryParams = <String, dynamic>{'type': ?type, 'id': id};
-
+    final queryParams = <String, dynamic>{'id': id, 'type': ?type};
     final response = await _client.get(
       Uri.https(_baseUrl, _apiPath, queryParams),
     );
@@ -41,5 +56,45 @@ class AmiiboClient {
     final amiiboItem = json['amiibo'] as Map<String, dynamic>;
 
     return AmiiboModel.fromJson(amiiboItem);
+  }
+
+  Future<List<GameSeriesModel>> getGameSeriesList({
+    String? key,
+    String? name,
+  }) async {
+    final queryParams = <String, dynamic>{'key': ?key, 'name': ?name};
+    final response = await _client.get(
+      Uri.https(_baseUrl, _gameSeriesPath, queryParams),
+    );
+
+    if (response.statusCode != 200) throw Exception();
+
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    final gameSeriesList = json['amiibo'] as List<dynamic>;
+
+    return [
+      for (final item in gameSeriesList)
+        GameSeriesModel.fromJson(item as Map<String, dynamic>),
+    ];
+  }
+
+  Future<List<AmiiboSeriesModel>> getAmiiboSeriesList({
+    String? key,
+    String? name,
+  }) async {
+    final queryParams = <String, dynamic>{'key': ?key, 'name': ?name};
+    final response = await _client.get(
+      Uri.https(_baseUrl, _amiiboSeriesPath, queryParams),
+    );
+
+    if (response.statusCode != 200) throw Exception();
+
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    final amiiboSeriesList = json['amiibo'] as List<dynamic>;
+
+    return [
+      for (final item in amiiboSeriesList)
+        AmiiboSeriesModel.fromJson(item as Map<String, dynamic>),
+    ];
   }
 }
