@@ -30,7 +30,7 @@ void main() {
 
         return AmiiboListCubit(mockAmiiboRepository);
       },
-      act: (cubit) => cubit.fetchAmiiboData(null),
+      act: (cubit) => cubit.fetchAmiiboData(),
       expect: () => <AmiiboListState>[
         const AmiiboListStateInitial(),
         AmiiboListStateSuccess(amiiboList: [amiiboModel]),
@@ -64,7 +64,7 @@ void main() {
 
         return AmiiboListCubit(mockAmiiboRepository);
       },
-      act: (cubit) => cubit.fetchAmiiboData(amiiboType),
+      act: (cubit) => cubit.fetchAmiiboData(type: amiiboType),
       expect: () => <AmiiboListState>[
         const AmiiboListStateInitial(),
         const AmiiboListStateError(),

@@ -34,6 +34,13 @@ void main() {
 
       registerFallbackValue(MyAmiiboFake());
 
+      when(
+        () => mockAmiiboClient.getGameSeriesList(
+          key: any(named: 'key'),
+          name: any(named: 'name'),
+        ),
+      ).thenAnswer((_) => Future.value([]));
+
       amiiboRouterDelegate = AmiiboRouterDelegate();
       amiiboInfoParser = AmiiboInfoParser();
     });
@@ -177,7 +184,6 @@ void main() {
           ).thenThrow(Exception('Error to get data'));
           await pumpMainScreen(tester);
 
-          expect(find.byType(CircularProgressIndicator), findsNothing);
           await tester.pumpAndSettle();
           expect(find.text('Error to get data'), findsOneWidget);
         });

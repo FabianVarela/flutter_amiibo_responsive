@@ -34,6 +34,13 @@ void main() {
 
       registerFallbackValue(MyAmiiboFake());
 
+      when(
+        () => mockAmiiboClient.getGameSeriesList(
+          key: any(named: 'key'),
+          name: any(named: 'name'),
+        ),
+      ).thenAnswer((_) => Future.value([]));
+
       amiiboRouterDelegate = AmiiboRouterDelegate();
       amiiboInfoParser = AmiiboInfoParser();
     });
