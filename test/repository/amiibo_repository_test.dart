@@ -24,11 +24,17 @@ void main() {
       final futureValueList = Future.value([amiiboModel]);
 
       when(
-        () => mockAmiiboClient.getAmiiboList(any()),
+        () => mockAmiiboClient.getAmiiboList(
+          type: any(named: 'type'),
+          gameSeries: any(named: 'gameSeries'),
+          amiiboSeries: any(named: 'amiiboSeries'),
+          showGames: any(named: 'showGames'),
+          showUsage: any(named: 'showUsage'),
+        ),
       ).thenAnswer((_) => futureValueList);
 
       // act
-      final result = amiiboRepository.getAmiiboList(null);
+      final result = amiiboRepository.getAmiiboList();
       final listResult = await result;
 
       // assert
@@ -38,7 +44,15 @@ void main() {
       expect(listResult, isA<List<AmiiboModel>>());
       expect(listResult, equals([amiiboModel]));
 
-      verify(() => mockAmiiboClient.getAmiiboList(any())).called(1);
+      verify(
+        () => mockAmiiboClient.getAmiiboList(
+          type: any(named: 'type'),
+          gameSeries: any(named: 'gameSeries'),
+          amiiboSeries: any(named: 'amiiboSeries'),
+          showGames: any(named: 'showGames'),
+          showUsage: any(named: 'showUsage'),
+        ),
+      ).called(1);
       verifyNoMoreInteractions(mockAmiiboClient);
     });
 

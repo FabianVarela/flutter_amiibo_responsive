@@ -1,5 +1,6 @@
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_series_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -27,7 +28,7 @@ void main() {
       ).thenAnswer((_) async => http.Response(jsonListResponse, 200));
 
       // act
-      final futureResult = amiiboClient.getAmiiboList(null);
+      final futureResult = amiiboClient.getAmiiboList();
       final listResult = await futureResult;
 
       // assert
@@ -44,7 +45,7 @@ void main() {
       ).thenAnswer((_) async => http.Response(jsonListResponse, 200));
 
       // act
-      final futureResult = amiiboClient.getAmiiboList(amiiboType);
+      final futureResult = amiiboClient.getAmiiboList(type: amiiboType);
       final listResult = await futureResult;
 
       // assert
@@ -61,7 +62,7 @@ void main() {
       ).thenAnswer((_) async => http.Response('Error to get list', 500));
 
       // act
-      final futureResult = amiiboClient.getAmiiboList(null);
+      final futureResult = amiiboClient.getAmiiboList();
 
       // assert
       expect(futureResult, throwsA(isA<Exception>()));
@@ -108,10 +109,78 @@ void main() {
       // arrange
       when(
         () => mockClient.get(any()),
-      ).thenAnswer((_) async => http.Response('Error to get deatil', 500));
+      ).thenAnswer((_) async => http.Response('Error to get detail', 500));
 
       // act
       final futureResult = amiiboClient.getAmiiboItem(null, amiiboId);
+
+      // assert
+      expect(futureResult, throwsA(isA<Exception>()));
+      verify(() => mockClient.get(any())).called(1);
+    });
+  });
+
+  group('$AmiiboClient for GameSeriesModel list', () {
+    test('Get GameSeriesModel list from client mock', () async {
+      // arrange
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response(jsonGameSeriesResponse, 200));
+
+      // act
+      final futureResult = amiiboClient.getGameSeriesList();
+      final listResult = await futureResult;
+
+      // assert
+      expect(futureResult, isA<Future<List<GameSeriesModel>>>());
+      expect(listResult, isA<List<GameSeriesModel>>());
+      expect(listResult.length, 2);
+
+      verify(() => mockClient.get(any())).called(1);
+    });
+
+    test('Get $Exception when get game series list from mock', () async {
+      // arrange
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response('Error', 500));
+
+      // act
+      final futureResult = amiiboClient.getGameSeriesList();
+
+      // assert
+      expect(futureResult, throwsA(isA<Exception>()));
+      verify(() => mockClient.get(any())).called(1);
+    });
+  });
+
+  group('$AmiiboClient for AmiiboSeriesModel list', () {
+    test('Get AmiiboSeriesModel list from client mock', () async {
+      // arrange
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response(jsonAmiiboSeriesResponse, 200));
+
+      // act
+      final futureResult = amiiboClient.getAmiiboSeriesList();
+      final listResult = await futureResult;
+
+      // assert
+      expect(futureResult, isA<Future<List<AmiiboSeriesModel>>>());
+      expect(listResult, isA<List<AmiiboSeriesModel>>());
+      expect(listResult.length, 2);
+
+      verify(() => mockClient.get(any())).called(1);
+    });
+
+    test('Get $Exception when get amiibo series list from mock', () async {
+      // arrange
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response('Error', 500));
+
+      // act
+      final futureResult = amiiboClient.getAmiiboSeriesList();
 
       // assert
       expect(futureResult, throwsA(isA<Exception>()));
