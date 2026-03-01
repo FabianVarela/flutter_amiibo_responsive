@@ -72,8 +72,8 @@ void main() {
       TestWidgetsFlutterBinding binding,
     ) async {
       final size = switch (currentDevice) {
-        DeviceSegment.mobile => const Size(400, 800),
-        DeviceSegment.desktop => const Size(800, 600),
+        .mobile => const Size(400, 800),
+        .desktop => const Size(800, 600),
         _ => const Size(300, 300),
       };
 
