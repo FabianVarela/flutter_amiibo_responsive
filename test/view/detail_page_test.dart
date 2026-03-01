@@ -41,6 +41,13 @@ void main() {
         ),
       ).thenAnswer((_) => Future.value([]));
 
+      when(
+        () => mockAmiiboClient.getAmiiboSeriesList(
+          key: any(named: 'key'),
+          name: any(named: 'name'),
+        ),
+      ).thenAnswer((_) => Future.value([]));
+
       amiiboRouterDelegate = AmiiboRouterDelegate();
       amiiboInfoParser = AmiiboInfoParser();
     });

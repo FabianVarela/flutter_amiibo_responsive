@@ -41,6 +41,13 @@ void main() {
         ),
       ).thenAnswer((_) => Future.value([]));
 
+      when(
+        () => mockAmiiboClient.getAmiiboSeriesList(
+          key: any(named: 'key'),
+          name: any(named: 'name'),
+        ),
+      ).thenAnswer((_) => Future.value([]));
+
       amiiboRouterDelegate = AmiiboRouterDelegate();
       amiiboInfoParser = AmiiboInfoParser();
     });
@@ -225,7 +232,10 @@ void main() {
           await tester.pumpAndSettle();
           expect(find.byType(Drawer), findsOneWidget);
 
-          final findIcon = find.byIcon(Icons.account_box);
+          final findIcon = find.descendant(
+            of: find.byType(Drawer),
+            matching: find.byIcon(Icons.account_box),
+          );
           expect(findIcon, findsOneWidget);
 
           await tester.tap(findIcon);
