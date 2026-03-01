@@ -21,6 +21,15 @@ final class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
     notifyListeners();
   }
 
+  String? _gameSeries;
+
+  String? get gameSeries => _gameSeries;
+
+  set gameSeries(String? value) {
+    _gameSeries = value;
+    notifyListeners();
+  }
+
   String? _amiiboId;
 
   String? get amiiboId => _amiiboId;
@@ -53,7 +62,9 @@ final class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
       else ...[
         HomePageRoute(
           type: amiiboType,
+          gameSeries: gameSeries,
           onChangeType: (type) => amiiboType = type,
+          onChangeGameSeries: (series) => gameSeries = series,
           onGoToDetail: (id) => amiiboId = id,
         ),
         if (amiiboId != null)

@@ -6,12 +6,20 @@ import 'package:flutter_amiibo_responsive/view/unknown_page.dart';
 final class HomePageRoute extends Page<dynamic> {
   HomePageRoute({
     required this.onChangeType,
+    required this.onChangeGameSeries,
     required this.onGoToDetail,
     this.type,
-  }) : super(key: ValueKey('HomePageRoute_${type ?? 'none'}'));
+    this.gameSeries,
+  }) : super(
+         key: ValueKey(
+           'HomePageRoute_${type ?? 'none'}_${gameSeries ?? 'all'}',
+         ),
+       );
 
   final String? type;
+  final String? gameSeries;
   final ValueSetter<String?> onChangeType;
+  final ValueSetter<String?> onChangeGameSeries;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -20,7 +28,9 @@ final class HomePageRoute extends Page<dynamic> {
       settings: this,
       builder: (_) => HomePage(
         type: type,
-        onChange: onChangeType,
+        gameSeries: gameSeries,
+        onChangeType: onChangeType,
+        onChangeGameSeries: onChangeGameSeries,
         onGoToDetail: onGoToDetail,
       ),
     );
