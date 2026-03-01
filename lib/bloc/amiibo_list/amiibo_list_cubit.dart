@@ -10,13 +10,18 @@ final class AmiiboListCubit extends Cubit<AmiiboListState> {
 
   final AmiiboRepository _repository;
 
-  Future<void> fetchAmiiboData({String? type, String? gameSeries}) async {
+  Future<void> fetchAmiiboData({
+    String? type,
+    String? gameSeries,
+    String? amiiboSeries,
+  }) async {
     emit(const AmiiboListStateInitial());
 
     try {
       final resultList = await _repository.getAmiiboList(
         type: type,
         gameSeries: gameSeries,
+        amiiboSeries: amiiboSeries,
       );
       if (isClosed) return;
       emit(AmiiboListStateSuccess(amiiboList: resultList));
