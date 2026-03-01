@@ -19,7 +19,13 @@ void main() {
       'Emit $AmiiboListState when get $AmiiboModel list',
       build: () {
         when(
-          () => mockAmiiboRepository.getAmiiboList(any()),
+          () => mockAmiiboRepository.getAmiiboList(
+            type: any(named: 'type'),
+            gameSeries: any(named: 'gameSeries'),
+            amiiboSeries: any(named: 'amiiboSeries'),
+            showGames: any(named: 'showGames'),
+            showUsage: any(named: 'showUsage'),
+          ),
         ).thenAnswer((_) => Future.value([amiiboModel]));
 
         return AmiiboListCubit(mockAmiiboRepository);
@@ -30,7 +36,15 @@ void main() {
         AmiiboListStateSuccess(amiiboList: [amiiboModel]),
       ],
       verify: (_) {
-        verify(() => mockAmiiboRepository.getAmiiboList(any()));
+        verify(
+          () => mockAmiiboRepository.getAmiiboList(
+            type: any(named: 'type'),
+            gameSeries: any(named: 'gameSeries'),
+            amiiboSeries: any(named: 'amiiboSeries'),
+            showGames: any(named: 'showGames'),
+            showUsage: any(named: 'showUsage'),
+          ),
+        );
         verifyNoMoreInteractions(mockAmiiboRepository);
       },
     );
@@ -39,7 +53,13 @@ void main() {
       'Emit $Exception when get $AmiiboModel list',
       build: () {
         when(
-          () => mockAmiiboRepository.getAmiiboList(any()),
+          () => mockAmiiboRepository.getAmiiboList(
+            type: any(named: 'type'),
+            gameSeries: any(named: 'gameSeries'),
+            amiiboSeries: any(named: 'amiiboSeries'),
+            showGames: any(named: 'showGames'),
+            showUsage: any(named: 'showUsage'),
+          ),
         ).thenThrow(Exception());
 
         return AmiiboListCubit(mockAmiiboRepository);
@@ -50,7 +70,15 @@ void main() {
         const AmiiboListStateError(),
       ],
       verify: (_) {
-        verify(() => mockAmiiboRepository.getAmiiboList(any()));
+        verify(
+          () => mockAmiiboRepository.getAmiiboList(
+            type: any(named: 'type'),
+            gameSeries: any(named: 'gameSeries'),
+            amiiboSeries: any(named: 'amiiboSeries'),
+            showGames: any(named: 'showGames'),
+            showUsage: any(named: 'showUsage'),
+          ),
+        );
         verifyNoMoreInteractions(mockAmiiboRepository);
       },
     );

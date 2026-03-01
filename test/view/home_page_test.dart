@@ -83,7 +83,13 @@ void main() {
         await setDeviceSize(tester, binding);
 
         when(
-          () => amiiboRepository.getAmiiboList(any()),
+          () => amiiboRepository.getAmiiboList(
+            type: any(named: 'type'),
+            gameSeries: any(named: 'gameSeries'),
+            amiiboSeries: any(named: 'amiiboSeries'),
+            showGames: any(named: 'showGames'),
+            showUsage: any(named: 'showUsage'),
+          ),
         ).thenAnswer((_) => Future.value([amiiboModel]));
         await pumpMainScreen(tester);
 
@@ -129,7 +135,13 @@ void main() {
       (tester) async {
         await tester.runAsync(() async {
           when(
-            () => amiiboRepository.getAmiiboList(any()),
+            () => amiiboRepository.getAmiiboList(
+              type: any(named: 'type'),
+              gameSeries: any(named: 'gameSeries'),
+              amiiboSeries: any(named: 'amiiboSeries'),
+              showGames: any(named: 'showGames'),
+              showUsage: any(named: 'showUsage'),
+            ),
           ).thenAnswer((_) => Future.value([]));
           await pumpMainScreen(tester);
 
@@ -155,7 +167,13 @@ void main() {
       (tester) async {
         await tester.runAsync(() async {
           when(
-            () => amiiboRepository.getAmiiboList(any()),
+            () => amiiboRepository.getAmiiboList(
+              type: any(named: 'type'),
+              gameSeries: any(named: 'gameSeries'),
+              amiiboSeries: any(named: 'amiiboSeries'),
+              showGames: any(named: 'showGames'),
+              showUsage: any(named: 'showUsage'),
+            ),
           ).thenThrow(Exception('Error to get data'));
           await pumpMainScreen(tester);
 
@@ -173,7 +191,13 @@ void main() {
         await setDeviceSize(tester, binding);
 
         when(
-          () => amiiboRepository.getAmiiboList(any()),
+          () => amiiboRepository.getAmiiboList(
+            type: any(named: 'type'),
+            gameSeries: any(named: 'gameSeries'),
+            amiiboSeries: any(named: 'amiiboSeries'),
+            showGames: any(named: 'showGames'),
+            showUsage: any(named: 'showUsage'),
+          ),
         ).thenAnswer((_) => Future.value([amiiboModel]));
         when(
           () => amiiboRepository.getAmiiboItem(any(), any()),
