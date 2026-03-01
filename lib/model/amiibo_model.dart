@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_amiibo_responsive/model/amiibo_series_model.dart';
 import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -16,6 +17,9 @@ class AmiiboModel with EquatableMixin {
     required this.type,
     this.gameSeries,
     this.releaseDate,
+    this.games3DS,
+    this.gamesWiiU,
+    this.gamesSwitch,
   });
 
   factory AmiiboModel.fromJson(Map<String, dynamic> json) =>
@@ -36,6 +40,9 @@ class AmiiboModel with EquatableMixin {
 
   final String tail;
   final String type;
+  final List<GameInfoModel>? games3DS;
+  final List<GameInfoModel>? gamesWiiU;
+  final List<GameInfoModel>? gamesSwitch;
 
   @override
   List<Object?> get props => [
@@ -48,6 +55,9 @@ class AmiiboModel with EquatableMixin {
     releaseDate,
     tail,
     type,
+    games3DS,
+    gamesWiiU,
+    gamesSwitch,
   ];
 }
 
