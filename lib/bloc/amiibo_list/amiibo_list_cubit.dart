@@ -14,7 +14,7 @@ final class AmiiboListCubit extends Cubit<AmiiboListState> {
     emit(const AmiiboListStateInitial());
 
     try {
-      final resultList = await _repository.getAmiiboList(param);
+      final resultList = await _repository.getAmiiboList(type: param);
       emit(AmiiboListStateSuccess(amiiboList: resultList));
     } on Exception {
       emit(const AmiiboListStateError());
