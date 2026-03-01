@@ -18,20 +18,16 @@ final class HomePage extends StatelessWidget {
   const HomePage({
     required this.onChangeType,
     required this.onChangeGameSeries,
-    required this.onChangeAmiiboSeries,
     required this.onGoToDetail,
     this.type,
     this.gameSeries,
-    this.amiiboSeries,
     super.key,
   });
 
   final String? type;
   final String? gameSeries;
-  final String? amiiboSeries;
   final ValueSetter<String?> onChangeType;
   final ValueSetter<String?> onChangeGameSeries;
-  final ValueSetter<String?> onChangeAmiiboSeries;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -51,10 +47,8 @@ final class HomePage extends StatelessWidget {
       child: HomePageView(
         type: type,
         gameSeries: gameSeries,
-        amiiboSeries: amiiboSeries,
         onChangeType: onChangeType,
         onChangeGameSeries: onChangeGameSeries,
-        onChangeAmiiboSeries: onChangeAmiiboSeries,
         onGoToDetail: onGoToDetail,
       ),
     );
@@ -65,20 +59,16 @@ final class HomePageView extends HookWidget {
   const HomePageView({
     required this.onChangeType,
     required this.onChangeGameSeries,
-    required this.onChangeAmiiboSeries,
     required this.onGoToDetail,
     this.type,
     this.gameSeries,
-    this.amiiboSeries,
     super.key,
   });
 
   final String? type;
   final String? gameSeries;
-  final String? amiiboSeries;
   final ValueSetter<String?> onChangeType;
   final ValueSetter<String?> onChangeGameSeries;
-  final ValueSetter<String?> onChangeAmiiboSeries;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -90,7 +80,7 @@ final class HomePageView extends HookWidget {
 
     final selectedType = useState<String?>(type);
     final selectedGameSeries = useState<String?>(gameSeries);
-    final selectedAmiiboSeries = useState<String?>(amiiboSeries);
+    final selectedAmiiboSeries = useState<String?>(null);
 
     useEffect(() {
       unawaited(context.read<GameSeriesCubit>().fetchGameSeries());
@@ -135,12 +125,12 @@ final class HomePageView extends HookWidget {
           selectedAmiiboSeries: selectedAmiiboSeries.value,
           onSelectAmiiboSeries: (series) {
             selectedAmiiboSeries.value = series;
-            onChangeAmiiboSeries(series);
-            _fetchAmiiboData(
-              context,
-              type: selectedType.value,
-              gameSeries: selectedGameSeries.value,
-              amiiboSeries: series,
+            unawaited(
+              context.read<AmiiboListCubit>().fetchAmiiboData(
+                type: selectedType.value,
+                gameSeries: selectedGameSeries.value,
+                amiiboSeries: series,
+              ),
             );
           },
         ),

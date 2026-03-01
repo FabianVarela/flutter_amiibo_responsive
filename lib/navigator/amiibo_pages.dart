@@ -7,24 +7,19 @@ final class HomePageRoute extends Page<dynamic> {
   HomePageRoute({
     required this.onChangeType,
     required this.onChangeGameSeries,
-    required this.onChangeAmiiboSeries,
     required this.onGoToDetail,
     this.type,
     this.gameSeries,
-    this.amiiboSeries,
   }) : super(
          key: ValueKey(
-           'HomePageRoute_${type ?? 'none'}'
-           '_${gameSeries ?? 'all'}_${amiiboSeries ?? 'all'}',
+           'HomePageRoute_${type ?? 'none'}_${gameSeries ?? 'all'}',
          ),
        );
 
   final String? type;
   final String? gameSeries;
-  final String? amiiboSeries;
   final ValueSetter<String?> onChangeType;
   final ValueSetter<String?> onChangeGameSeries;
-  final ValueSetter<String?> onChangeAmiiboSeries;
   final ValueSetter<String> onGoToDetail;
 
   @override
@@ -34,10 +29,8 @@ final class HomePageRoute extends Page<dynamic> {
       builder: (_) => HomePage(
         type: type,
         gameSeries: gameSeries,
-        amiiboSeries: amiiboSeries,
         onChangeType: onChangeType,
         onChangeGameSeries: onChangeGameSeries,
-        onChangeAmiiboSeries: onChangeAmiiboSeries,
         onGoToDetail: onGoToDetail,
       ),
     );
