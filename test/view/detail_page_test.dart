@@ -9,7 +9,6 @@ import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart'
 import 'package:flutter_amiibo_responsive/view/detail_page.dart';
 import 'package:flutter_amiibo_responsive/view/home_page.dart';
 import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
-import 'package:flutter_amiibo_responsive/view/widgets/vertical_icon_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -100,8 +99,6 @@ void main() {
           type: any(named: 'type'),
           gameSeries: any(named: 'gameSeries'),
           amiiboSeries: any(named: 'amiiboSeries'),
-          showGames: any(named: 'showGames'),
-          showUsage: any(named: 'showUsage'),
         ),
       ).thenAnswer((_) => Future.value([amiiboModel]));
 
@@ -141,44 +138,83 @@ void main() {
 
           await initMainScreenAndRedirect(tester);
 
-          expect(find.byType(AppBar), findsOneWidget);
+          expect(find.byIcon(Icons.arrow_back), findsOneWidget);
+          expect(find.byType(CircularProgressIndicator), findsNothing);
+          expect(find.byType(Image), findsOneWidget);
+          expect(find.text(amiiboModel.name), findsOneWidget);
+          expect(find.textContaining(amiiboModel.amiiboSeries), findsWidgets);
+
           expect(
-            find.descendant(
-              of: find.byType(AppBar),
-              matching: find.text(amiiboModel.name),
-            ),
-            findsOneWidget,
+            find.textContaining(amiiboModel.character.toUpperCase()),
+            findsWidgets,
           );
 
-          expect(find.byType(CircularProgressIndicator), findsNothing);
-
-          expect(find.byType(Image), findsOneWidget);
-          expect(find.text(amiiboModel.amiiboSeries), findsOneWidget);
-          expect(find.byType(VerticalIconButton), findsExactly(3));
+          expect(find.text('GAME SERIES'), findsOneWidget);
+          expect(find.text('AMIIBO SERIES'), findsOneWidget);
+          expect(find.text('TYPE'), findsOneWidget);
+          expect(find.text('CHARACTER'), findsOneWidget);
 
           resetSize(tester, binding);
         });
       },
-      variant: TargetPlatformVariant.all(excluding: {TargetPlatform.fuchsia}),
+      variant: TargetPlatformVariant.all(excluding: {.fuchsia}),
     );
 
     testWidgets('Show $DetailPage screen with error', (tester) async {
       await initMainScreenAndRedirect(tester, hasError: true);
 
-      expect(
-        find.descendant(of: find.byType(AppBar), matching: find.text('Error')),
-        findsOneWidget,
-      );
-
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('Error to get data'), findsOneWidget);
 
-      await tester.tap(
-        find.descendant(of: find.byType(AppBar), matching: find.byType(Icon)),
-      );
+      final backButton = find.byIcon(Icons.arrow_back);
+      expect(backButton, findsOneWidget);
+
+      await tester.tap(backButton);
       await tester.pumpAndSettle();
 
       expect(find.byType(HomePageView), findsOneWidget);
     }, variant: TargetPlatformVariant.all());
+
+    testWidgets(
+      'Show $DetailPage with regional releases when release date exists',
+      (tester) async {
+        await tester.runAsync(() async {
+          final binding = TestWidgetsFlutterBinding.ensureInitialized();
+          await setDeviceSize(tester, binding);
+
+          await initMainScreenAndRedirect(tester);
+
+          expect(find.text('REGIONAL RELEASES'), findsOneWidget);
+          expect(find.text('NORTH AMERICA'), findsOneWidget);
+          expect(find.text('JAPAN'), findsOneWidget);
+          expect(find.text('EUROPE'), findsOneWidget);
+          expect(find.text('AUSTRALIA'), findsOneWidget);
+
+          resetSize(tester, binding);
+        });
+      },
+      variant: TargetPlatformVariant.all(excluding: {.fuchsia}),
+    );
+
+    testWidgets(
+      'Navigate back using back button',
+      (tester) async {
+        await tester.runAsync(() async {
+          final binding = TestWidgetsFlutterBinding.ensureInitialized();
+          await setDeviceSize(tester, binding);
+
+          await initMainScreenAndRedirect(tester);
+
+          await tester.tap(find.byIcon(Icons.arrow_back));
+          await tester.pumpAndSettle();
+
+          expect(find.byType(HomePageView), findsOneWidget);
+          expect(find.byType(DetailPage), findsNothing);
+
+          resetSize(tester, binding);
+        });
+      },
+      variant: TargetPlatformVariant.all(excluding: {.fuchsia}),
+    );
   });
 }
