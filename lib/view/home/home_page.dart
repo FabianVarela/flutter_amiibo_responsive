@@ -7,10 +7,10 @@ import 'package:flutter_amiibo_responsive/bloc/amiibo_series/amiibo_series_cubit
 import 'package:flutter_amiibo_responsive/bloc/game_series/game_series_cubit.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart';
-import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
-import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
-import 'package:flutter_amiibo_responsive/view/widgets/filter_chips.dart';
-import 'package:flutter_amiibo_responsive/view/widgets/shimmer_grid_loading.dart';
+import 'package:flutter_amiibo_responsive/view/home/widgets/amiibo_item.dart';
+import 'package:flutter_amiibo_responsive/view/home/widgets/drawer_menu.dart';
+import 'package:flutter_amiibo_responsive/view/home/widgets/filter_chips.dart';
+import 'package:flutter_amiibo_responsive/view/home/widgets/shimmer_grid_loading.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
