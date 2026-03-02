@@ -34,9 +34,10 @@ final class DetailView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
-    final screenTypes = <ScreenType>[.desktop, .tablet];
-    final isDesktopOrTablet = screenTypes.contains(context.formFactor);
+    final isDesktopOrTablet = [
+      ScreenType.desktop,
+      ScreenType.tablet,
+    ].contains(context.formFactor);
 
     useEffect(() {
       unawaited(
@@ -47,76 +48,80 @@ final class DetailView extends HookWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: isDesktopOrTablet
+          ? AppBar(
+              backgroundColor: colorScheme.primaryContainer,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).maybePop(),
+              ),
+              title: const Text('Amiibo App'),
+            )
+          : null,
       body: BlocBuilder<AmiiboItemCubit, AmiiboItemState>(
         builder: (_, state) => switch (state) {
           AmiiboItemStateInitial() => Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(
-                colorScheme.primaryContainer,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(
+                  colorScheme.primaryContainer,
+                ),
               ),
             ),
-          ),
-          AmiiboItemStateSuccess(:final amiiboItem) => CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: _AmiiboImageSection(item: amiiboItem),
-              ),
-              SliverToBoxAdapter(
-                child: _AmiiboInfoSection(
-                  item: amiiboItem,
-                  isDesktopOrTablet: isDesktopOrTablet,
-                ),
-              ),
-            ],
-          ),
+          AmiiboItemStateSuccess(:final amiiboItem) => isDesktopOrTablet
+              ? _DesktopLayout(item: amiiboItem)
+              : _MobileLayout(item: amiiboItem),
           AmiiboItemStateError() => Stack(
-            children: <Widget>[
-              const Center(
-                child: Text(
-                  'Error to get data',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: .bold,
-                    color: Colors.white,
+              children: <Widget>[
+                const Center(
+                  child: Text(
+                    'Error to get data',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                top: MediaQuery.paddingOf(context).top + 8,
-                left: 8,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: () => Navigator.of(context).maybePop(),
-                ),
-              ),
-            ],
-          ),
+                if (!isDesktopOrTablet)
+                  Positioned(
+                    top: MediaQuery.paddingOf(context).top + 8,
+                    left: 8,
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      onPressed: () => Navigator.of(context).maybePop(),
+                    ),
+                  ),
+              ],
+            ),
         },
       ),
     );
   }
 }
 
-final class _AmiiboImageSection extends StatelessWidget {
-  const _AmiiboImageSection({required this.item});
+// Desktop/Tablet: Image left, content right
+final class _DesktopLayout extends StatelessWidget {
+  const _DesktopLayout({required this.item});
 
   final AmiiboModel item;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        SizedBox.fromSize(
-          size: const .fromHeight(420),
-          child: ColoredBox(
-            color: Colors.black,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Left: Image
+        Expanded(
+          flex: 2,
+          child: Container(
+            color: Colors.grey[900],
             child: Center(
               child: Hero(
                 tag: '${item.head}_${item.tail}',
                 child: Container(
-                  margin: const .all(24),
+                  margin: const EdgeInsets.all(32),
                   decoration: BoxDecoration(
-                    borderRadius: .circular(24),
+                    borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: .3),
@@ -126,11 +131,121 @@ final class _AmiiboImageSection extends StatelessWidget {
                     ],
                   ),
                   child: ClipRRect(
-                    borderRadius: .circular(24),
+                    borderRadius: BorderRadius.circular(24),
+                    child: Image.network(
+                      item.imageUrl,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        // Right: Content
+        Expanded(
+          flex: 3,
+          child: Container(
+            color: Colors.grey[900],
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _SeriesBadge(series: item.amiiboSeries),
+                  const Gap(16),
+                  Text(
+                    item.name,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Gap(8),
+                  Text(
+                    '${item.amiiboSeries}  •  ${item.character.toUpperCase()}',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[500],
+                      letterSpacing: 1,
+                    ),
+                  ),
+                  const Gap(24),
+                  const _ActionButtons(isDesktopOrTablet: true),
+                  const Gap(32),
+                  if (item.releaseDate != null) ...[
+                    _RegionalReleasesSection(releaseDate: item.releaseDate!),
+                    const Gap(32),
+                  ],
+                  _SpecificationsSection(item: item),
+                  const Gap(32),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// Mobile: Vertical layout
+final class _MobileLayout extends StatelessWidget {
+  const _MobileLayout({required this.item});
+
+  final AmiiboModel item;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: _MobileImageSection(item: item),
+        ),
+        SliverToBoxAdapter(
+          child: _MobileInfoSection(item: item),
+        ),
+      ],
+    );
+  }
+}
+
+final class _MobileImageSection extends StatelessWidget {
+  const _MobileImageSection({required this.item});
+
+  final AmiiboModel item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SizedBox(
+          height: 420,
+          width: double.infinity,
+          child: ColoredBox(
+            color: Colors.black,
+            child: Center(
+              child: Hero(
+                tag: '${item.head}_${item.tail}',
+                child: Container(
+                  margin: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: .3),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
                     child: Image.network(
                       item.imageUrl,
                       height: 350,
-                      fit: .cover,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -151,41 +266,37 @@ final class _AmiiboImageSection extends StatelessWidget {
   }
 }
 
-final class _AmiiboInfoSection extends StatelessWidget {
-  const _AmiiboInfoSection({
-    required this.item,
-    required this.isDesktopOrTablet,
-  });
+final class _MobileInfoSection extends StatelessWidget {
+  const _MobileInfoSection({required this.item});
 
   final AmiiboModel item;
-  final bool isDesktopOrTablet;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.grey[900],
-        borderRadius: const .vertical(top: .circular(24)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Padding(
-        padding: const .symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
-          children: <Widget>[
+          children: [
             _SeriesBadge(series: item.amiiboSeries),
             const Gap(16),
             Text(
               item.name,
-              textAlign: .center,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 32,
-                fontWeight: .bold,
+                fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
             const Gap(8),
             Text(
               '${item.amiiboSeries}  •  ${item.character.toUpperCase()}',
-              textAlign: .center,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[500],
@@ -193,19 +304,22 @@ final class _AmiiboInfoSection extends StatelessWidget {
               ),
             ),
             const Gap(24),
-            _ActionButtons(isDesktopOrTablet: isDesktopOrTablet),
+            const _ActionButtons(isDesktopOrTablet: false),
             const Gap(32),
             if (item.releaseDate != null) ...[
               _RegionalReleasesSection(releaseDate: item.releaseDate!),
               const Gap(32),
             ],
             _SpecificationsSection(item: item),
+            const Gap(32),
           ],
         ),
       ),
     );
   }
 }
+
+// Shared widgets
 
 final class _SeriesBadge extends StatelessWidget {
   const _SeriesBadge({required this.series});
@@ -215,22 +329,22 @@ final class _SeriesBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const .symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        borderRadius: .circular(20),
+        borderRadius: BorderRadius.circular(20),
         color: Colors.pink.withValues(alpha: .15),
-        border: .all(color: Colors.pink.withValues(alpha: .3)),
+        border: Border.all(color: Colors.pink.withValues(alpha: .3)),
       ),
       child: Row(
-        spacing: 8,
-        mainAxisSize: .min,
-        children: <Widget>[
+        mainAxisSize: MainAxisSize.min,
+        children: [
           Icon(Icons.games, size: 16, color: Colors.pink[300]),
+          const Gap(8),
           Text(
             '${series.toUpperCase()} SERIES',
             style: TextStyle(
               fontSize: 12,
-              fontWeight: .bold,
+              fontWeight: FontWeight.bold,
               color: Colors.pink[300],
               letterSpacing: 1.2,
             ),
@@ -248,33 +362,33 @@ final class _ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final optionList = <({IconData icon, String label})>[
-      (icon: Icons.shopping_cart_outlined, label: 'MARKET'),
-      (icon: Icons.share_outlined, label: 'SHARE'),
-      (icon: Icons.info_outline, label: 'GUIDE'),
+    final options = [
+      (Icons.shopping_cart_outlined, 'MARKET'),
+      (Icons.share_outlined, 'SHARE'),
+      (Icons.info_outline, 'GUIDE'),
     ];
 
     return Padding(
-      padding: .symmetric(horizontal: isDesktopOrTablet ? 48 : 24),
+      padding: EdgeInsets.symmetric(horizontal: isDesktopOrTablet ? 0 : 24),
       child: Row(
-        spacing: 16,
-        children: <Widget>[
-          for (final item in optionList)
+        children: [
+          for (var i = 0; i < options.length; i++) ...[
             Expanded(
               child: InkWell(
-                borderRadius: .circular(16),
+                onTap: () {},
+                borderRadius: BorderRadius.circular(16),
                 child: Container(
-                  padding: const .symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
-                    borderRadius: .circular(16),
-                    border: .all(color: Colors.grey[700]!),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.grey[700]!),
                   ),
                   child: Column(
-                    spacing: 8,
-                    children: <Widget>[
-                      Icon(item.icon, color: Colors.grey[500]),
+                    children: [
+                      Icon(options[i].$1, color: Colors.grey[500]),
+                      const Gap(8),
                       Text(
-                        item.label,
+                        options[i].$2,
                         style: TextStyle(
                           fontSize: 11,
                           color: Colors.grey[500],
@@ -286,6 +400,8 @@ final class _ActionButtons extends StatelessWidget {
                 ),
               ),
             ),
+            if (i < options.length - 1) const Gap(16),
+          ],
         ],
       ),
     );
@@ -300,18 +416,14 @@ final class _RegionalReleasesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const .symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
-        spacing: 12,
-        crossAxisAlignment: .start,
-        children: <Widget>[
-          const Padding(
-            padding: .only(bottom: 4),
-            child: _SectionTitle(title: 'REGIONAL RELEASES'),
-          ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _SectionTitle(title: 'REGIONAL RELEASES'),
+          const Gap(16),
           Row(
-            spacing: 12,
-            children: <Widget>[
+            children: [
               Expanded(
                 child: _ReleaseDateCard(
                   flag: '🇺🇸',
@@ -319,6 +431,7 @@ final class _RegionalReleasesSection extends StatelessWidget {
                   date: releaseDate.northAm,
                 ),
               ),
+              const Gap(12),
               Expanded(
                 child: _ReleaseDateCard(
                   flag: '🇯🇵',
@@ -328,9 +441,9 @@ final class _RegionalReleasesSection extends StatelessWidget {
               ),
             ],
           ),
+          const Gap(12),
           Row(
-            spacing: 12,
-            children: <Widget>[
+            children: [
               Expanded(
                 child: _ReleaseDateCard(
                   flag: '🇪🇺',
@@ -338,6 +451,7 @@ final class _RegionalReleasesSection extends StatelessWidget {
                   date: releaseDate.europe,
                 ),
               ),
+              const Gap(12),
               Expanded(
                 child: _ReleaseDateCard(
                   flag: '🇦🇺',
@@ -366,20 +480,20 @@ final class _ReleaseDateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formattedDate =
+        date != null ? DateFormat('yyyy-MM-dd').format(date!) : 'N/A';
+
     return Container(
-      padding: const .all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.grey[850],
-        borderRadius: .circular(16),
-        border: .all(color: Colors.grey[800]!),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey[800]!),
       ),
       child: Column(
-        spacing: 4,
-        children: <Widget>[
-          Padding(
-            padding: const .only(bottom: 4),
-            child: Text(flag, style: const TextStyle(fontSize: 24)),
-          ),
+        children: [
+          Text(flag, style: const TextStyle(fontSize: 24)),
+          const Gap(8),
           Text(
             region,
             style: TextStyle(
@@ -388,11 +502,12 @@ final class _ReleaseDateCard extends StatelessWidget {
               letterSpacing: 1,
             ),
           ),
+          const Gap(4),
           Text(
-            date != null ? DateFormat('yyyy-MM-dd').format(date!) : 'N/A',
+            formattedDate,
             style: const TextStyle(
               fontSize: 14,
-              fontWeight: .bold,
+              fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
@@ -410,21 +525,21 @@ final class _SpecificationsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const .symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
-        spacing: 12,
-        crossAxisAlignment: .start,
-        children: <Widget>[
-          const Padding(
-            padding: .only(bottom: 4),
-            child: _SectionTitle(title: 'SPECIFICATIONS'),
-          ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _SectionTitle(title: 'SPECIFICATIONS'),
+          const Gap(16),
           _SpecificationRow(
             label: 'GAME SERIES',
             value: item.gameSeries ?? 'N/A',
           ),
+          const Gap(12),
           _SpecificationRow(label: 'AMIIBO SERIES', value: item.amiiboSeries),
+          const Gap(12),
           _SpecificationRow(label: 'TYPE', value: item.type),
+          const Gap(12),
           _SpecificationRow(label: 'CHARACTER', value: item.character),
         ],
       ),
@@ -441,28 +556,28 @@ final class _SpecificationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const .symmetric(horizontal: 16, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
         color: Colors.grey[850],
-        borderRadius: .circular(12),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
-        spacing: 16,
-        mainAxisAlignment: .spaceBetween,
-        children: <Widget>[
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
           Text(
             label,
             style: TextStyle(
               fontSize: 12,
               color: Colors.grey[500],
-              letterSpacing: .5,
+              letterSpacing: 0.5,
             ),
           ),
+          const Gap(16),
           Flexible(
             child: Text(
               value,
-              textAlign: .end,
-              overflow: .ellipsis,
+              textAlign: TextAlign.end,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
@@ -480,22 +595,21 @@ final class _SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 12,
-      children: <Widget>[
-        SizedBox.fromSize(
-          size: const Size(3, 16),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.pink[400],
-              borderRadius: .circular(2),
-            ),
+      children: [
+        Container(
+          width: 3,
+          height: 16,
+          decoration: BoxDecoration(
+            color: Colors.pink[400],
+            borderRadius: BorderRadius.circular(2),
           ),
         ),
+        const Gap(12),
         Text(
           title,
           style: TextStyle(
             fontSize: 12,
-            fontWeight: .bold,
+            fontWeight: FontWeight.bold,
             color: Colors.pink[400],
             letterSpacing: 1.5,
           ),
