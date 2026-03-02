@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_amiibo_responsive/view/detail_page.dart';
+import 'package:flutter_amiibo_responsive/view/detail/detail_page.dart';
 import 'package:flutter_amiibo_responsive/view/home/home_page.dart';
 import 'package:flutter_amiibo_responsive/view/unknown_page.dart';
 
