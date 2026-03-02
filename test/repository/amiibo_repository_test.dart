@@ -28,8 +28,6 @@ void main() {
           type: any(named: 'type'),
           gameSeries: any(named: 'gameSeries'),
           amiiboSeries: any(named: 'amiiboSeries'),
-          showGames: any(named: 'showGames'),
-          showUsage: any(named: 'showUsage'),
         ),
       ).thenAnswer((_) => futureValueList);
 
@@ -49,8 +47,6 @@ void main() {
           type: any(named: 'type'),
           gameSeries: any(named: 'gameSeries'),
           amiiboSeries: any(named: 'amiiboSeries'),
-          showGames: any(named: 'showGames'),
-          showUsage: any(named: 'showUsage'),
         ),
       ).called(1);
       verifyNoMoreInteractions(mockAmiiboClient);

@@ -102,8 +102,6 @@ void main() {
             type: any(named: 'type'),
             gameSeries: any(named: 'gameSeries'),
             amiiboSeries: any(named: 'amiiboSeries'),
-            showGames: any(named: 'showGames'),
-            showUsage: any(named: 'showUsage'),
           ),
         ).thenAnswer((_) => Future.value([amiiboModel]));
         await pumpMainScreen(tester);
@@ -154,8 +152,6 @@ void main() {
               type: any(named: 'type'),
               gameSeries: any(named: 'gameSeries'),
               amiiboSeries: any(named: 'amiiboSeries'),
-              showGames: any(named: 'showGames'),
-              showUsage: any(named: 'showUsage'),
             ),
           ).thenAnswer((_) => Future.value([]));
           await pumpMainScreen(tester);
@@ -186,8 +182,6 @@ void main() {
               type: any(named: 'type'),
               gameSeries: any(named: 'gameSeries'),
               amiiboSeries: any(named: 'amiiboSeries'),
-              showGames: any(named: 'showGames'),
-              showUsage: any(named: 'showUsage'),
             ),
           ).thenThrow(Exception('Error to get data'));
           await pumpMainScreen(tester);
@@ -209,8 +203,6 @@ void main() {
             type: any(named: 'type'),
             gameSeries: any(named: 'gameSeries'),
             amiiboSeries: any(named: 'amiiboSeries'),
-            showGames: any(named: 'showGames'),
-            showUsage: any(named: 'showUsage'),
           ),
         ).thenAnswer((_) => Future.value([amiiboModel]));
         when(
@@ -276,8 +268,6 @@ void main() {
               type: any(named: 'type'),
               gameSeries: any(named: 'gameSeries'),
               amiiboSeries: any(named: 'amiiboSeries'),
-              showGames: any(named: 'showGames'),
-              showUsage: any(named: 'showUsage'),
             ),
           ).thenAnswer((_) => Future.value([amiiboModel]));
 
@@ -305,8 +295,6 @@ void main() {
                   type: any(named: 'type'),
                   gameSeries: any(named: 'gameSeries'),
                   amiiboSeries: any(named: 'amiiboSeries'),
-                  showGames: any(named: 'showGames'),
-                  showUsage: any(named: 'showUsage'),
                 ),
               ).called(greaterThan(1));
             }
@@ -341,8 +329,6 @@ void main() {
               type: any(named: 'type'),
               gameSeries: any(named: 'gameSeries'),
               amiiboSeries: any(named: 'amiiboSeries'),
-              showGames: any(named: 'showGames'),
-              showUsage: any(named: 'showUsage'),
             ),
           ).thenAnswer((_) => Future.value([amiiboModel]));
 
@@ -359,8 +345,6 @@ void main() {
                 type: any(named: 'type'),
                 gameSeries: any(named: 'gameSeries'),
                 amiiboSeries: any(named: 'amiiboSeries'),
-                showGames: any(named: 'showGames'),
-                showUsage: any(named: 'showUsage'),
               ),
             ).called(greaterThan(1));
           }

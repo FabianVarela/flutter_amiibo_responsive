@@ -18,15 +18,11 @@ class AmiiboClient {
     String? type,
     String? gameSeries,
     String? amiiboSeries,
-    bool showGames = false,
-    bool showUsage = false,
   }) async {
     final queryParams = <String, dynamic>{
       'type': ?type,
       'gameseries': ?gameSeries,
       'amiiboSeries': ?amiiboSeries,
-      if (showGames) 'showgames': '',
-      if (showUsage) 'showusage': '',
     };
 
     final response = await _client.get(

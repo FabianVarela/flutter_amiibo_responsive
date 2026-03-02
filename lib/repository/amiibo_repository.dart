@@ -11,14 +11,10 @@ class AmiiboRepository {
     String? type,
     String? gameSeries,
     String? amiiboSeries,
-    bool showGames = false,
-    bool showUsage = false,
   }) => _amiiboClient.getAmiiboList(
     type: type,
     gameSeries: gameSeries,
     amiiboSeries: amiiboSeries,
-    showGames: showGames,
-    showUsage: showUsage,
   );
 
   Future<AmiiboModel> getAmiiboItem(String? type, String id) =>

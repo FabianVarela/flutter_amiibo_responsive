@@ -23,8 +23,6 @@ void main() {
             type: any(named: 'type'),
             gameSeries: any(named: 'gameSeries'),
             amiiboSeries: any(named: 'amiiboSeries'),
-            showGames: any(named: 'showGames'),
-            showUsage: any(named: 'showUsage'),
           ),
         ).thenAnswer((_) => Future.value([amiiboModel]));
 
@@ -41,8 +39,6 @@ void main() {
             type: any(named: 'type'),
             gameSeries: any(named: 'gameSeries'),
             amiiboSeries: any(named: 'amiiboSeries'),
-            showGames: any(named: 'showGames'),
-            showUsage: any(named: 'showUsage'),
           ),
         );
         verifyNoMoreInteractions(mockAmiiboRepository);
@@ -57,8 +53,6 @@ void main() {
             type: any(named: 'type'),
             gameSeries: any(named: 'gameSeries'),
             amiiboSeries: any(named: 'amiiboSeries'),
-            showGames: any(named: 'showGames'),
-            showUsage: any(named: 'showUsage'),
           ),
         ).thenThrow(Exception());
 
@@ -75,8 +69,6 @@ void main() {
             type: any(named: 'type'),
             gameSeries: any(named: 'gameSeries'),
             amiiboSeries: any(named: 'amiiboSeries'),
-            showGames: any(named: 'showGames'),
-            showUsage: any(named: 'showUsage'),
           ),
         );
         verifyNoMoreInteractions(mockAmiiboRepository);
