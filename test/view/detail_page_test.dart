@@ -7,8 +7,8 @@ import 'package:flutter_amiibo_responsive/navigator/amiibo_router_delegate.dart'
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart';
 import 'package:flutter_amiibo_responsive/view/detail_page.dart';
-import 'package:flutter_amiibo_responsive/view/home_page.dart';
-import 'package:flutter_amiibo_responsive/view/widgets/amiibo_item.dart';
+import 'package:flutter_amiibo_responsive/view/home/home_page.dart';
+import 'package:flutter_amiibo_responsive/view/home/widgets/amiibo_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

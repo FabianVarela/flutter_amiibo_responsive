@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/game_series/game_series_cubit.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_series_model.dart';
-import 'package:flutter_amiibo_responsive/view/widgets/drawer_menu.dart';
+import 'package:flutter_amiibo_responsive/view/home/widgets/drawer_menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
