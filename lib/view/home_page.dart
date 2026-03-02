@@ -120,6 +120,7 @@ final class HomePageView extends HookWidget {
     );
 
     final mainContent = Column(
+      spacing: 8,
       children: <Widget>[
         FilterChipsSection(
           selectedAmiiboSeries: selectedAmiiboSeries.value,
