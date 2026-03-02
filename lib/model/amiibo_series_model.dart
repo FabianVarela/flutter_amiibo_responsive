@@ -30,22 +30,3 @@ class GameSeriesModel with EquatableMixin {
   @override
   List<Object?> get props => [key, name];
 }
-
-@JsonSerializable(createToJson: false)
-class GameInfoModel with EquatableMixin {
-  const GameInfoModel({
-    required this.gameID,
-    required this.gameName,
-    this.amiiboUsage,
-  });
-
-  factory GameInfoModel.fromJson(Map<String, dynamic> json) =>
-      _$GameInfoModelFromJson(json);
-
-  final String gameID;
-  final String gameName;
-  final List<String>? amiiboUsage;
-
-  @override
-  List<Object?> get props => [gameID, gameName, amiiboUsage];
-}

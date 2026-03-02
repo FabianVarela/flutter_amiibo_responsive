@@ -18,15 +18,6 @@ AmiiboModel _$AmiiboModelFromJson(Map<String, dynamic> json) => AmiiboModel(
   releaseDate: json['release'] == null
       ? null
       : ReleaseDateModel.fromJson(json['release'] as Map<String, dynamic>),
-  games3DS: (json['games3DS'] as List<dynamic>?)
-      ?.map((e) => GameInfoModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  gamesWiiU: (json['gamesWiiU'] as List<dynamic>?)
-      ?.map((e) => GameInfoModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  gamesSwitch: (json['gamesSwitch'] as List<dynamic>?)
-      ?.map((e) => GameInfoModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
 );
 
 ReleaseDateModel _$ReleaseDateModelFromJson(Map<String, dynamic> json) =>
