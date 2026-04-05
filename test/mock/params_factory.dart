@@ -22,6 +22,14 @@ const amiiboType = 'figure';
 
 const amiiboId = '01010000000e0002';
 
+const String jsonGameSeriesResponse =
+    '{ "amiibo": [ { "key": "0x000", "name": "Super Smash Bros." }, '
+    '{ "key": "0x001", "name": "The Legend of Zelda" } ] }';
+
+const String jsonAmiiboSeriesResponse =
+    '{ "amiibo": [ { "key": "0x06", "name": "8-bit Mario" }, '
+    '{ "key": "0x05", "name": "Animal Crossing" } ] }';
+
 AmiiboModel get amiiboModel {
   final amiiboMap = jsonDecode(jsonDetailResponse) as Map<String, dynamic>;
   return AmiiboModel.fromJson(amiiboMap['amiibo'] as Map<String, dynamic>);

@@ -28,6 +28,20 @@ void main() {
 
     registerFallbackValue(MyAmiiboFake());
 
+    when(
+      () => mockAmiiboClient.getGameSeriesList(
+        key: any(named: 'key'),
+        name: any(named: 'name'),
+      ),
+    ).thenAnswer((_) => Future.value([]));
+
+    when(
+      () => mockAmiiboClient.getAmiiboSeriesList(
+        key: any(named: 'key'),
+        name: any(named: 'name'),
+      ),
+    ).thenAnswer((_) => Future.value([]));
+
     amiiboRouterDelegate = AmiiboRouterDelegate();
     amiiboInfoParser = AmiiboInfoParser();
   });
@@ -51,7 +65,13 @@ void main() {
 
   group('$UnknownPageUI UI screen', () {
     testWidgets('Force the redirect to a $UnknownPageUI', (tester) async {
-      when(() => amiiboRepository.getAmiiboList(any())).thenAnswer(
+      when(
+        () => amiiboRepository.getAmiiboList(
+          type: any(named: 'type'),
+          gameSeries: any(named: 'gameSeries'),
+          amiiboSeries: any(named: 'amiiboSeries'),
+        ),
+      ).thenAnswer(
         (_) => Future.delayed(
           const Duration(milliseconds: 100),
           () => Future.value([amiiboModel]),
