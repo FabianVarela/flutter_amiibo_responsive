@@ -40,7 +40,7 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.13.1
   mocktail: ^1.0.5
-  mocktail_image_network: ^1.2.0
+  mocktail_image_network: ^1.3.0
   remove_from_coverage: ^2.0.0
   very_good_analysis: ^10.2.0
 
