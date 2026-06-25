@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:app_links/app_links.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.dart';
@@ -17,6 +21,21 @@ final class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   final _routerDelegate = AmiiboRouterDelegate();
   final _informationParser = AmiiboInfoParser();
+
+  final _appLinks = AppLinks();
+  StreamSubscription<Uri?>? _linkSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_initDeepLinks());
+  }
+
+  @override
+  void dispose() {
+    unawaited(_linkSubscription?.cancel());
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +62,18 @@ class MyAppState extends State<MyApp> {
         routeInformationParser: _informationParser,
         backButtonDispatcher: RootBackButtonDispatcher(),
       ),
+    );
+  }
+
+  Future<void> _initDeepLinks() async {
+    _linkSubscription = _appLinks.uriLinkStream.listen(
+      _routerDelegate.parseRoute,
+      onError: (Object error) {
+        if (kDebugMode) print('Uri incoming error: $error');
+        if (error is FormatException) {
+          if (kDebugMode) print('Failed in format initial Uri');
+        }
+      },
     );
   }
 }
