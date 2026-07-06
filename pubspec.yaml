@@ -24,7 +24,7 @@ dependencies:
   intl: ^0.20.3
   json_annotation: ^4.12.0
   shimmer_animation: ^2.2.2+1
-  window_manager: ^0.5.1
+  window_manager: ^0.5.2
 
 dev_dependencies:
   bloc_test: ^10.0.0
