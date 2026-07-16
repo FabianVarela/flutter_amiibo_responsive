@@ -19,7 +19,7 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   gap: ^3.0.1
-  google_fonts: ^8.1.0
+  google_fonts: ^8.2.0
   http: ^1.6.0
   intl: ^0.20.3
   json_annotation: ^4.12.0
