@@ -5,8 +5,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'amiibo_model.g.dart';
 
 @JsonSerializable(createToJson: false)
-class AmiiboModel with EquatableMixin {
-  const AmiiboModel({
+class AmiiboModel with Equatable {
+  const new({
     required this.amiiboSeries,
     required this.character,
     required this.head,
@@ -18,8 +18,7 @@ class AmiiboModel with EquatableMixin {
     this.releaseDate,
   });
 
-  factory AmiiboModel.fromJson(Map<String, dynamic> json) =>
-      _$AmiiboModelFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AmiiboModelFromJson(json);
 
   final String amiiboSeries;
   final String character;
@@ -52,15 +51,15 @@ class AmiiboModel with EquatableMixin {
 }
 
 @JsonSerializable(createToJson: false)
-class ReleaseDateModel with EquatableMixin {
-  const ReleaseDateModel({
+class ReleaseDateModel with Equatable {
+  const new({
     this.australia,
     this.europe,
     this.japan,
     this.northAm,
   });
 
-  factory ReleaseDateModel.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$ReleaseDateModelFromJson(json);
 
   @JsonKey(name: 'au', fromJson: _getDateTime)

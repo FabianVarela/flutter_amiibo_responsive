@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_router_delegate.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/view/unknown_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
 

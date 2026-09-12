@@ -3,7 +3,7 @@ import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_series_model.dart';
 
 class AmiiboRepository {
-  AmiiboRepository(this._amiiboClient);
+  new(this._amiiboClient);
 
   final AmiiboClient _amiiboClient;
 

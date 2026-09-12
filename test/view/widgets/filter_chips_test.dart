@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_series/amiibo_series_cubit.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_series_model.dart';
 import 'package:flutter_amiibo_responsive/view/home/widgets/filter_chips.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../mock/mocks.dart';

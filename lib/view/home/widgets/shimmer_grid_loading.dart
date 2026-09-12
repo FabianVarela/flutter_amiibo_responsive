@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 final class ShimmerGridLoading extends StatelessWidget {
-  const ShimmerGridLoading({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

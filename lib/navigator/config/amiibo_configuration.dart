@@ -1,20 +1,20 @@
 sealed class AmiiboConfiguration {
-  const AmiiboConfiguration();
+  const new();
 }
 
 final class AmiiboConfigurationHome extends AmiiboConfiguration {
-  const AmiiboConfigurationHome({this.type});
+  const new({this.type});
 
   final String? type;
 }
 
 final class AmiiboConfigurationDetail extends AmiiboConfiguration {
-  const AmiiboConfigurationDetail({required this.amiiboId, this.type});
+  const new({required this.amiiboId, this.type});
 
   final String amiiboId;
   final String? type;
 }
 
 final class AmiiboConfigurationUnknown extends AmiiboConfiguration {
-  const AmiiboConfigurationUnknown();
+  const new();
 }

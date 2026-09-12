@@ -1,18 +1,18 @@
 part of 'amiibo_list_cubit.dart';
 
-sealed class AmiiboListState with EquatableMixin {
-  const AmiiboListState();
+sealed class AmiiboListState with Equatable {
+  const new();
 
   @override
   List<Object?> get props => [];
 }
 
 final class AmiiboListStateInitial extends AmiiboListState {
-  const AmiiboListStateInitial();
+  const new();
 }
 
 final class AmiiboListStateSuccess extends AmiiboListState {
-  const AmiiboListStateSuccess({required this.amiiboList});
+  const new({required this.amiiboList});
 
   final List<AmiiboModel> amiiboList;
 
@@ -21,5 +21,5 @@ final class AmiiboListStateSuccess extends AmiiboListState {
 }
 
 final class AmiiboListStateError extends AmiiboListState {
-  const AmiiboListStateError();
+  const new();
 }

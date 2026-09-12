@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_pages.dart';
 import 'package:flutter_amiibo_responsive/navigator/config/amiibo_configuration.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class AmiiboRouterDelegate extends RouterDelegate<AmiiboConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AmiiboConfiguration> {
-  AmiiboRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
+  new() : _navigatorKey = GlobalKey<NavigatorState>();
 
   final GlobalKey<NavigatorState> _navigatorKey;
   final _heroController = HeroController();
