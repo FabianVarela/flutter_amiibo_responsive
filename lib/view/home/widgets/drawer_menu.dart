@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/game_series/game_series_cubit.dart';
 import 'package:flutter_amiibo_responsive/utils/enum.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({
+  const new({
     required this.onSelectType,
     required this.onSelectGameSeries,
     this.makePop = true,
@@ -49,7 +49,7 @@ final class DrawerMenu extends StatelessWidget {
 }
 
 class _GameSeriesSection extends StatelessWidget {
-  const _GameSeriesSection({
+  const new({
     required this.onSelect,
     required this.makePop,
     this.selectedGameSeries,
@@ -130,7 +130,7 @@ class _GameSeriesSection extends StatelessWidget {
 }
 
 class _GameSeriesItem extends StatelessWidget {
-  const _GameSeriesItem({
+  const new({
     required this.name,
     required this.icon,
     required this.onSelect,
@@ -171,7 +171,7 @@ class _GameSeriesItem extends StatelessWidget {
 }
 
 class _FormatTypeSection extends StatelessWidget {
-  const _FormatTypeSection({
+  const new({
     required this.onSelect,
     required this.makePop,
     this.selectedType,

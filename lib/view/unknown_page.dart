@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/utils/adaptive_contextual_layout.dart';
 import 'package:gap/gap.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class UnknownPageUI extends StatelessWidget {
-  const UnknownPageUI({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

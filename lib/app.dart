@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_router_delegate.dart';
@@ -6,9 +5,10 @@ import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
 import 'package:flutter_amiibo_responsive/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const new({super.key});
 
   @override
   MyAppState createState() => MyAppState();

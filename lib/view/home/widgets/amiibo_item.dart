@@ -1,12 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class AmiiboItem extends StatelessWidget {
-  const AmiiboItem({
-    required this.amiibo,
-    required this.onSelectAmiibo,
-    super.key,
-  });
+  const new({required this.amiibo, required this.onSelectAmiibo, super.key});
 
   final AmiiboModel amiibo;
   final VoidCallback onSelectAmiibo;
@@ -85,7 +81,7 @@ final class AmiiboItem extends StatelessWidget {
 }
 
 class _TypeBadge extends StatelessWidget {
-  const _TypeBadge({required this.type});
+  const new({required this.type});
 
   final String type;
 

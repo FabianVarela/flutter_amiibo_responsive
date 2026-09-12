@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/app.dart';
 import 'package:flutter_amiibo_responsive/client/amiibo_client.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
@@ -8,10 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
 
-class MockClient extends Mock implements Client {}
+class MockClient extends Mock implements Client;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

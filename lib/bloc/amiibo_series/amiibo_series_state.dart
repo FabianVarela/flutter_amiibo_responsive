@@ -1,22 +1,22 @@
 part of 'amiibo_series_cubit.dart';
 
 sealed class AmiiboSeriesState extends Equatable {
-  const AmiiboSeriesState();
+  const new();
 
   @override
   List<Object?> get props => [];
 }
 
 final class AmiiboSeriesStateInitial extends AmiiboSeriesState {
-  const AmiiboSeriesStateInitial();
+  const new();
 }
 
 final class AmiiboSeriesStateLoading extends AmiiboSeriesState {
-  const AmiiboSeriesStateLoading();
+  const new();
 }
 
 final class AmiiboSeriesStateSuccess extends AmiiboSeriesState {
-  const AmiiboSeriesStateSuccess({required this.amiiboSeriesList});
+  const new({required this.amiiboSeriesList});
 
   final List<AmiiboSeriesModel> amiiboSeriesList;
 
@@ -25,5 +25,5 @@ final class AmiiboSeriesStateSuccess extends AmiiboSeriesState {
 }
 
 final class AmiiboSeriesStateError extends AmiiboSeriesState {
-  const AmiiboSeriesStateError();
+  const new();
 }

@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/view/detail/detail_page.dart';
 import 'package:flutter_amiibo_responsive/view/home/home_page.dart';
 import 'package:flutter_amiibo_responsive/view/unknown_page.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class HomePageRoute extends Page<dynamic> {
-  HomePageRoute({
+  new({
     required this.onChangeType,
     required this.onChangeGameSeries,
     required this.onGoToDetail,
@@ -38,7 +38,7 @@ final class HomePageRoute extends Page<dynamic> {
 }
 
 final class DetailPageRoute extends Page<dynamic> {
-  DetailPageRoute({required this.amiiboId, this.type})
+  new({required this.amiiboId, this.type})
     : super(key: ValueKey('DetailPageRoute_$amiiboId'));
 
   final String? type;

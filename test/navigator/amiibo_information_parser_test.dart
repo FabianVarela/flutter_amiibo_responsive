@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.dart';
 import 'package:flutter_amiibo_responsive/navigator/config/amiibo_configuration.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   late AmiiboInfoParser parser;

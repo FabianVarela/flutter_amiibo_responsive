@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/navigator/config/amiibo_configuration.dart';
 import 'package:flutter_amiibo_responsive/utils/enum.dart';
+import 'package:material_ui/material_ui.dart';
 
 enum AmiiboPath {
   home('amiibos'),
   detail('amiibo'),
-  notFound('404')
-  ;
+  notFound('404');
 
-  const AmiiboPath(this.name);
+  new(this.name);
 
   final String name;
 }

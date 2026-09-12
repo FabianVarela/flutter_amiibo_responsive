@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_series_model.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_information_parser.dart';
 import 'package:flutter_amiibo_responsive/navigator/amiibo_router_delegate.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_amiibo_responsive/view/home/widgets/drawer_menu.dart';
 import 'package:flutter_amiibo_responsive/view/home/widgets/shimmer_grid_loading.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
 

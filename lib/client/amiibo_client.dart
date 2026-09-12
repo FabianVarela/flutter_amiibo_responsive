@@ -5,7 +5,7 @@ import 'package:flutter_amiibo_responsive/model/amiibo_series_model.dart';
 import 'package:http/http.dart';
 
 class AmiiboClient {
-  AmiiboClient(this._client) : _baseUrl = 'www.amiiboapi.org';
+  new(this._client) : _baseUrl = 'www.amiiboapi.org';
 
   final Client _client;
   final String _baseUrl;

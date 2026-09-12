@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_list/amiibo_list_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_series/amiibo_series_cubit.dart';
 import 'package:flutter_amiibo_responsive/bloc/game_series/game_series_cubit.dart';
@@ -13,9 +12,10 @@ import 'package:flutter_amiibo_responsive/view/home/widgets/filter_chips.dart';
 import 'package:flutter_amiibo_responsive/view/home/widgets/shimmer_grid_loading.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class HomePage extends StatelessWidget {
-  const HomePage({
+  const new({
     required this.onChangeType,
     required this.onChangeGameSeries,
     required this.onGoToDetail,
@@ -56,7 +56,7 @@ final class HomePage extends StatelessWidget {
 }
 
 final class HomePageView extends HookWidget {
-  const HomePageView({
+  const new({
     required this.onChangeType,
     required this.onChangeGameSeries,
     required this.onGoToDetail,
@@ -179,7 +179,7 @@ final class HomePageView extends HookWidget {
 }
 
 final class _AmiiboList extends StatelessWidget {
-  const _AmiiboList({required this.onTapAmiibo});
+  const new({required this.onTapAmiibo});
 
   final ValueSetter<String> onTapAmiibo;
 

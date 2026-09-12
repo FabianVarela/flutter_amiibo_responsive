@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_item/amiibo_item_cubit.dart';
 import 'package:flutter_amiibo_responsive/model/amiibo_model.dart';
 import 'package:flutter_amiibo_responsive/repository/amiibo_repository.dart';
@@ -9,13 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 
 part 'widgets/detail_layout.dart';
-
 part 'widgets/shared_widgets.dart';
 
 final class DetailPage extends StatelessWidget {
-  const DetailPage({required this.amiiboId, super.key, this.type});
+  const new({required this.amiiboId, super.key, this.type});
 
   final String? type;
   final String amiiboId;
@@ -30,7 +29,7 @@ final class DetailPage extends StatelessWidget {
 }
 
 final class DetailView extends HookWidget {
-  const DetailView({required this.amiiboId, super.key, this.type});
+  const new({required this.amiiboId, super.key, this.type});
 
   final String? type;
   final String amiiboId;

@@ -1,7 +1,7 @@
 part of '../detail_page.dart';
 
 final class _SeriesBadge extends StatelessWidget {
-  const _SeriesBadge({required this.series});
+  const new({required this.series});
 
   final String series;
 
@@ -35,7 +35,7 @@ final class _SeriesBadge extends StatelessWidget {
 }
 
 final class _ActionButtons extends StatelessWidget {
-  const _ActionButtons({required this.isDesktopOrTablet});
+  const new({required this.isDesktopOrTablet});
 
   final bool isDesktopOrTablet;
 
@@ -87,7 +87,7 @@ final class _ActionButtons extends StatelessWidget {
 }
 
 final class _RegionalReleasesSection extends StatelessWidget {
-  const _RegionalReleasesSection({required this.releaseDate});
+  const new({required this.releaseDate});
 
   final ReleaseDateModel releaseDate;
 
@@ -148,7 +148,7 @@ final class _RegionalReleasesSection extends StatelessWidget {
 }
 
 final class _ReleaseDateCard extends StatelessWidget {
-  const _ReleaseDateCard({
+  const new({
     required this.flag,
     required this.region,
     required this.date,
@@ -199,7 +199,7 @@ final class _ReleaseDateCard extends StatelessWidget {
 }
 
 final class _SpecificationsSection extends StatelessWidget {
-  const _SpecificationsSection({required this.item});
+  const new({required this.item});
 
   final AmiiboModel item;
 
@@ -229,7 +229,7 @@ final class _SpecificationsSection extends StatelessWidget {
 }
 
 final class _SpecificationRow extends StatelessWidget {
-  const _SpecificationRow({required this.label, required this.value});
+  const new({required this.label, required this.value});
 
   final String label;
   final String value;
@@ -269,7 +269,7 @@ final class _SpecificationRow extends StatelessWidget {
 }
 
 final class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.title});
+  const new({required this.title});
 
   final String title;
 

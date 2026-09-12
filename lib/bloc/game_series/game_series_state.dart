@@ -1,22 +1,22 @@
 part of 'game_series_cubit.dart';
 
-sealed class GameSeriesState with EquatableMixin {
-  const GameSeriesState();
+sealed class GameSeriesState with Equatable {
+  const new();
 
   @override
   List<Object?> get props => [];
 }
 
 final class GameSeriesStateInitial extends GameSeriesState {
-  const GameSeriesStateInitial();
+  const new();
 }
 
 final class GameSeriesStateLoading extends GameSeriesState {
-  const GameSeriesStateLoading();
+  const new();
 }
 
 final class GameSeriesStateSuccess extends GameSeriesState {
-  const GameSeriesStateSuccess({required this.gameSeriesList});
+  const new({required this.gameSeriesList});
 
   final List<GameSeriesModel> gameSeriesList;
 
@@ -25,5 +25,5 @@ final class GameSeriesStateSuccess extends GameSeriesState {
 }
 
 final class GameSeriesStateError extends GameSeriesState {
-  const GameSeriesStateError();
+  const new();
 }

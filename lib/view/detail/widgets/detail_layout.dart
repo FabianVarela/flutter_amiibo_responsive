@@ -1,7 +1,7 @@
 part of '../detail_page.dart';
 
 final class _DesktopLayout extends StatelessWidget {
-  const _DesktopLayout({required this.item});
+  const new({required this.item});
 
   final AmiiboModel item;
 
@@ -86,7 +86,7 @@ final class _DesktopLayout extends StatelessWidget {
 }
 
 final class _MobileLayout extends StatelessWidget {
-  const _MobileLayout({required this.item});
+  const new({required this.item});
 
   final AmiiboModel item;
 
@@ -102,7 +102,7 @@ final class _MobileLayout extends StatelessWidget {
 }
 
 final class _MobileImageSection extends StatelessWidget {
-  const _MobileImageSection({required this.item});
+  const new({required this.item});
 
   final AmiiboModel item;
 
@@ -156,7 +156,7 @@ final class _MobileImageSection extends StatelessWidget {
 }
 
 final class _MobileInfoSection extends StatelessWidget {
-  const _MobileInfoSection({required this.item});
+  const new({required this.item});
 
   final AmiiboModel item;
 

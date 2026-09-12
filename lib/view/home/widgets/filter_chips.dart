@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_amiibo_responsive/bloc/amiibo_series/amiibo_series_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class FilterChipsSection extends StatelessWidget {
-  const FilterChipsSection({
+  const new({
     required this.onSelectAmiiboSeries,
     this.selectedAmiiboSeries,
     super.key,
