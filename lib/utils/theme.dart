@@ -1,3 +1,4 @@
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_ui/material_ui.dart';
 
 class AmiiboTheme {
@@ -5,8 +6,6 @@ class AmiiboTheme {
     return ThemeData.from(
       useMaterial3: true,
       colorScheme: colorScheme,
-      // TODO(FV): Uncomment when package is ready
-      /*
       textTheme: GoogleFonts.nunitoTextTheme(
         Theme.of(context).textTheme.apply(
           bodyColor: colorScheme.onSurface,
@@ -14,7 +13,6 @@ class AmiiboTheme {
           decorationColor: colorScheme.onSurface,
         ),
       ),
-      */
     );
   }
 }
