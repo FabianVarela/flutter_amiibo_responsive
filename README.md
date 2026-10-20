@@ -2,7 +2,9 @@
 
 ![Coverage](./coverage_badge.svg?sanitize=true)
 
-Flutter application to explore the world of Nintendo Amiibo figures using the Amiibo API. Built with BLoC pattern for state management, responsive design for all screen sizes, and Navigator 2.0 for advanced navigation with deep linking support.
+Flutter application to explore the world of Nintendo Amiibo figures using the Amiibo API. Built with BLoC pattern for
+state management, responsive design for all screen sizes, and Navigator 2.0 for advanced navigation with deep linking
+support.
 
 ## Prerequisites
 
@@ -12,11 +14,11 @@ Before getting started, make sure you have the following installed:
 - **Dart SDK**: >=3.10.0 <4.0.0
 - **IDE**: VSCode or Android Studio with Flutter extensions
 - **Platforms**:
-  - For iOS: Xcode (macOS only)
-  - For Android: Android Studio or Android SDK
-  - For macOS: Xcode
-  - For Web: Google Chrome
-  - For Windows: Visual Studio 2019 or later
+    - For iOS: Xcode (macOS only)
+    - For Android: Android Studio or Android SDK
+    - For macOS: Xcode
+    - For Web: Google Chrome
+    - For Windows: Visual Studio 2019 or later
 
 ## Initial Setup
 
@@ -128,20 +130,20 @@ assets/
 ### Amiibo Details
 
 - **Detailed Information**: View complete Amiibo information
-  - Character name and series
-  - Game series
-  - Release dates by region
-  - Amiibo type
-  - High-quality images
+    - Character name and series
+    - Game series
+    - Release dates by region
+    - Amiibo type
+    - High-quality images
 - **Related Amiibos**: See related figures from the same series
 - **Deep Linking**: Direct navigation to specific Amiibo
 
 ### Responsive Design
 
 - **Adaptive Layouts**: Optimized for all screen sizes
-  - Mobile: Single column layout
-  - Tablet: 2-3 column grid
-  - Desktop: 4-6 column grid
+    - Mobile: Single column layout
+    - Tablet: 2-3 column grid
+    - Desktop: 4-6 column grid
 - **Breakpoints**: Custom responsive breakpoints
 - **Orientation Support**: Portrait and landscape modes
 - **Platform-Specific UI**: Native look and feel on each platform
@@ -266,11 +268,24 @@ adb shell am start -a android.intent.action.VIEW \
   <your_package_id>
 ```
 
+**macOS and Windows**
+
+```
+amiiboapp://amiiboexample.com/amiibos/{type}/amiibo/{id}
+
+# Using HTTPS
+https://amiiboexample.com/amiibos/{type}/amiibo/{id}
+```
+
 Replace `{type}` and `{id}` with actual Amiibo type and ID from the API.
 
 ### Configuring Deep Links
 
-For detailed information on deep linking setup, see [Flutter Deep Linking Guide](https://flutter.dev/docs/development/ui/navigation/deep-linking).
+- For detailed information on deep linking setup,
+  see [Flutter Deep Linking Guide](https://flutter.dev/docs/development/ui/navigation/deep-linking).
+- For **iOS** (maybe **macOS**) using *app_links*, you must associate the domain in Xcode in the "Signing
+  and Capabilities" section and add the "Associated Domains" capability. However, you must have and add an
+  ***Apple Developer*** account.
 
 ## Testing
 
@@ -347,7 +362,8 @@ flutter test integration_test/app_test.dart -d android
 flutter test integration_test/app_test.dart -d chrome
 ```
 
-For more information, see [Flutter Integration Testing Guide](https://docs.flutter.dev/cookbook/testing/integration/introduction).
+For more information,
+see [Flutter Integration Testing Guide](https://docs.flutter.dev/cookbook/testing/integration/introduction).
 
 ## Code Quality
 
@@ -490,7 +506,7 @@ flutter pub run build_runner build --delete-conflicting-outputs
 - Check image URLs are valid
 - Clear app cache and restart
 
-### Deep linking not working on iOS
+### Deep linking not working on iOS/macOS
 
 - Verify URL schemes in `Info.plist`
 - Check Associated Domains entitlement
