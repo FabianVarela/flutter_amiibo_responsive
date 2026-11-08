@@ -34,11 +34,10 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     WidgetsFlutterBinding.ensureInitialized();
 
     if (!kIsWeb && currentDevice == .desktop) {
-      await windowManager.ensureInitialized();
-      await windowManager.setTitle('Flutter Amiibo');
-
-      await windowManager.setMinimumSize(const Size(300, 500));
-      await windowManager.setMaximumSize(const Size(1500, 900));
+      WindowManager.instance.getCurrent()!
+        ..title = 'Flutter Amiibo'
+        ..minimumSize = const Size(300, 500).toNative()
+        ..maximumSize = const Size(1500, 900).toNative();
     }
 
     runApp(await builder());
