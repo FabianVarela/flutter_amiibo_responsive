@@ -18,6 +18,20 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
+    <!-- Deep Links -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>amiiboexample.com</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>amiiboapp</string>
+                <string>https</string>
+            </array>
+        </dict>
+    </array>
+    <!-- End Deep Links -->
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSMinimumSystemVersion</key>
